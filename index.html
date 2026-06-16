@@ -18,6 +18,10 @@
   .header-top { display:flex; justify-content:space-between; align-items:flex-start; }
   .brand { font-size:19px; font-weight:700; color:#fff; }
   .brand-sub { font-size:10px; color:#C9921A; margin-top:2px; font-weight:600; }
+  .header-actions { display:flex; gap:8px; align-items:center; }
+  .view-toggle { display:flex; background:rgba(255,255,255,0.08); border-radius:10px; padding:2px; }
+  .view-btn { font-size:10.5px; font-weight:700; padding:6px 11px; border-radius:8px; color:#7ec8c0; cursor:pointer; border:none; background:transparent; }
+  .view-btn.active { background:#C9921A; color:#fff; }
   .refresh-btn { background:rgba(255,255,255,0.1); border:none; color:#fff; width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; }
   .refresh-btn:active { background:rgba(255,255,255,0.2); }
   .refresh-btn.spinning i { animation: spin 0.8s linear infinite; }
@@ -25,8 +29,9 @@
   .updated { font-size:9px; color:#7ec8c0; margin-top:8px; }
 
   .tabs { display:flex; gap:6px; padding:12px 14px 0; overflow-x:auto; background:#0C3C35; }
-  .tab { flex-shrink:0; padding:7px 14px; border-radius:16px; font-size:12px; font-weight:600; color:#7ec8c0; background:rgba(255,255,255,0.06); white-space:nowrap; }
+  .tab { flex-shrink:0; padding:7px 14px; border-radius:16px; font-size:12px; font-weight:600; color:#7ec8c0; background:rgba(255,255,255,0.06); white-space:nowrap; cursor:pointer; }
   .tab.active { background:#C9921A; color:#fff; }
+  .tab.hidden-supervisor { display:none; }
 
   .content { padding:16px 14px; }
   .section { display:none; }
@@ -45,16 +50,26 @@
   .kpi-change.up { background:#E1F5EE; color:#085041; }
   .kpi-change.down { background:#FAECE7; color:#712B13; }
 
-  .guest-row { display:flex; justify-content:space-between; align-items:flex-start; padding:11px 0; border-bottom:1px solid #F0F0F0; }
-  .guest-row:last-child { border-bottom:none; }
-  .guest-name { font-size:14px; font-weight:700; color:#0C3C35; }
-  .guest-meta { font-size:11.5px; color:#4A6160; margin-top:3px; }
-  .guest-comment { font-size:11px; color:#8B6310; margin-top:5px; background:#FFF8E7; padding:5px 8px; border-radius:6px; border-left:2px solid #C9921A; }
+  .guest-card { padding:13px 0; border-bottom:1px solid #F0F0F0; }
+  .guest-card:last-child { border-bottom:none; }
+  .guest-card-top { display:flex; justify-content:space-between; align-items:flex-start; }
+  .guest-name { font-size:14.5px; font-weight:700; color:#0C3C35; }
+  .res-badge { font-size:9.5px; font-weight:700; color:#fff; background:#1A7A6E; padding:2px 8px; border-radius:8px; margin-top:3px; display:inline-block; }
   .guest-right { text-align:right; flex-shrink:0; padding-left:10px; }
-  .outstanding { font-size:13px; font-weight:800; }
+  .outstanding { font-size:13.5px; font-weight:800; }
   .outstanding.zero { color:#1A7A6E; }
   .outstanding.due { color:#C0392B; }
   .outstanding-label { font-size:9px; color:#999; margin-top:1px; }
+
+  .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; margin-top:9px; font-size:11.5px; }
+  .detail-item { display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px dashed #F0F0F0; }
+  .detail-label { color:#999; }
+  .detail-value { color:#1A2622; font-weight:600; text-align:right; }
+
+  .guest-comment { font-size:11px; color:#8B6310; margin-top:4px; background:#FFF8E7; padding:6px 9px; border-radius:6px; border-left:2px solid #C9921A; }
+  .comment-box { margin-top:9px; }
+  .comment-label { font-size:9.5px; font-weight:700; color:#999; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px; display:flex; align-items:center; gap:4px; }
+  .comment-placeholder { font-size:11px; color:#bbb; font-style:italic; padding:6px 9px; background:#FAFAFA; border-radius:6px; }
 
   .empty-state { text-align:center; padding:24px 10px; color:#999; font-size:13px; }
   .empty-state i { font-size:28px; color:#ccc; display:block; margin-bottom:8px; }
@@ -70,17 +85,45 @@
   .table-mini td { padding:8px 0; border-bottom:1px solid #F0F0F0; }
   .table-mini tr:last-child td { border-bottom:none; }
 
+  .password-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; padding:20px; }
+  .password-box { background:#fff; border-radius:16px; padding:32px 24px; max-width:320px; width:100%; box-shadow:0 4px 20px rgba(0,0,0,0.2); }
+  .password-icon { width:54px; height:54px; border-radius:14px; background:#0C3C35; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:24px; color:#C9921A; }
+  .password-title { font-size:17px; font-weight:700; color:#0C3C35; text-align:center; }
+  .password-sub { font-size:11.5px; color:#888; text-align:center; margin-top:4px; margin-bottom:20px; }
+  .password-input { width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid #E0E0E0; font-size:16px; text-align:center; letter-spacing:2px; outline:none; }
+  .password-input:focus { border-color:#C9921A; }
+  .password-btn { width:100%; padding:12px; border-radius:10px; background:#0C3C35; color:#fff; border:none; font-size:14px; font-weight:700; margin-top:12px; cursor:pointer; }
+  .password-btn:active { background:#1A7A6E; }
+  .password-error { font-size:11.5px; color:#C0392B; text-align:center; margin-top:10px; min-height:14px; }
+  .password-brand { font-size:18px; font-weight:700; color:#fff; text-align:center; margin-bottom:6px; }
+  .password-brand-sub { font-size:10px; color:#C9921A; text-align:center; margin-bottom:28px; font-weight:600; }
+
   .loading-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; color:#fff; }
   .loading-screen i { font-size:32px; margin-bottom:12px; animation:spin 1s linear infinite; }
 
   .error-box { background:#FAECE7; color:#712B13; padding:14px; border-radius:10px; font-size:12px; margin:14px; }
 
   .alert-box { background:#FAEEDA; border-left:3px solid #BA7517; padding:10px 12px; border-radius:0 8px 8px 0; font-size:11.5px; color:#633806; margin-bottom:12px; }
+
+  .supervisor-note { background:#F0EAF8; border-left:3px solid #6A3FA0; padding:9px 12px; border-radius:0 8px 8px 0; font-size:11px; color:#3B1F5E; margin-bottom:12px; }
 </style>
 </head>
 <body>
 
-<div id="loading" class="loading-screen">
+<div id="passwordScreen" class="password-screen" style="background:#0C3C35;">
+  <div class="password-brand">Ideal Homes Nadi</div>
+  <div class="password-brand-sub">Enter password to continue</div>
+  <div class="password-box">
+    <div class="password-icon"><i class="ti ti-lock" aria-hidden="true"></i></div>
+    <div class="password-title">Dashboard Access</div>
+    <div class="password-sub">Enter your access code</div>
+    <input type="password" id="passwordInput" class="password-input" placeholder="••••••" autocomplete="off" maxlength="20">
+    <button class="password-btn" onclick="checkPassword()">Unlock</button>
+    <div class="password-error" id="passwordError"></div>
+  </div>
+</div>
+
+<div id="loading" class="loading-screen" style="display:none;">
   <i class="ti ti-loader-2"></i>
   <div style="font-size:13px;color:#7ec8c0;">Loading dashboard...</div>
 </div>
@@ -91,28 +134,36 @@
     <div class="header-top">
       <div>
         <div class="brand">Ideal Homes Nadi</div>
-        <div class="brand-sub">Live Sales Dashboard</div>
+        <div class="brand-sub" id="brandSub">Live Sales Dashboard</div>
       </div>
-      <button class="refresh-btn" id="refreshBtn" onclick="loadData()" aria-label="Refresh">
-        <i class="ti ti-refresh"></i>
-      </button>
+      <div class="header-actions" id="headerActionsToggle">
+        <button class="refresh-btn" id="logoutBtn" onclick="logout()" aria-label="Lock" style="margin-right:4px;">
+          <i class="ti ti-lock"></i>
+        </button>
+        <button class="refresh-btn" id="refreshBtn" onclick="loadData()" aria-label="Refresh">
+          <i class="ti ti-refresh"></i>
+        </button>
+      </div>
     </div>
     <div class="updated" id="updatedLabel">—</div>
   </div>
 
   <div class="tabs">
     <div class="tab active" data-tab="today">Today</div>
-    <div class="tab" data-tab="week">Week</div>
-    <div class="tab" data-tab="month">Month</div>
-    <div class="tab" data-tab="quarter">Quarter VAT</div>
+    <div class="tab tab-financial" data-tab="week">Week</div>
+    <div class="tab tab-financial" data-tab="month">Month</div>
+    <div class="tab tab-financial" data-tab="quarter">Quarter VAT</div>
     <div class="tab" data-tab="upcoming">Upcoming</div>
   </div>
 
   <div class="content">
 
     <div class="section active" id="section-today">
+      <div id="supervisorNote" style="display:none;" class="supervisor-note">
+        <i class="ti ti-info-circle" aria-hidden="true"></i> Showing check-in and check-out details only
+      </div>
       <div id="todayAlerts"></div>
-      <div class="kpi-grid three">
+      <div class="kpi-grid three tab-financial-grid">
         <div class="kpi">
           <div class="kpi-label">Check-ins</div>
           <div class="kpi-value" id="todayCheckinCount">0</div>
@@ -121,7 +172,7 @@
           <div class="kpi-label">Checkouts</div>
           <div class="kpi-value" id="todayCheckoutCount">0</div>
         </div>
-        <div class="kpi">
+        <div class="kpi tab-financial">
           <div class="kpi-label">Revenue</div>
           <div class="kpi-value" id="todayRevenue">$0</div>
         </div>
@@ -243,56 +294,136 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-// ⚠️ REPLACE THIS WITH YOUR APPS SCRIPT WEB APP URL
 const DASH_API_URL = "https://script.google.com/macros/s/AKfycbznYlHuc-y9w7SrCddNUb0AgxzR7mlSQ7NMgciyKA6rrDQQ3o98zgi7sxQu1WTST0gCAA/exec";
+
+const PASSWORDS = {
+  "ituomo": "admin",
+  "agpl12": "supervisor"
+};
 
 let monthlyChartInstance = null;
 let quarterlyChartInstance = null;
+let currentView = 'admin';
+let cachedData = null;
 
-function fmt(n) {
-  return new Intl.NumberFormat('en-FJ', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(n || 0));
-}
-function fmtFull(n) {
-  return (n || 0).toFixed(2);
+function checkPassword() {
+  const input = document.getElementById('passwordInput').value.trim().toLowerCase();
+  const errorEl = document.getElementById('passwordError');
+  const matchedView = PASSWORDS[input];
+
+  if (!matchedView) {
+    errorEl.textContent = 'Incorrect password. Please try again.';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
+    return;
+  }
+
+  errorEl.textContent = '';
+  currentView = matchedView;
+  sessionStorage.setItem('ihn_view', matchedView);
+
+  document.getElementById('passwordScreen').style.display = 'none';
+  document.getElementById('loading').style.display = 'flex';
+
+  loadData();
 }
 
+function logout() {
+  sessionStorage.removeItem('ihn_view');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('passwordError').textContent = '';
+  document.getElementById('passwordScreen').style.display = 'flex';
+}
+
+document.getElementById('passwordInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+// Auto-unlock if already verified this session
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = sessionStorage.getItem('ihn_view');
+  if (saved && (saved === 'admin' || saved === 'supervisor')) {
+    currentView = saved;
+    document.getElementById('passwordScreen').style.display = 'none';
+    document.getElementById('loading').style.display = 'flex';
+    loadData();
+  }
+});
+
+function fmt(n) { return new Intl.NumberFormat('en-FJ', { maximumFractionDigits: 0 }).format(Math.round(n || 0)); }
+function fmtFull(n) { return (n || 0).toFixed(2); }
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+function setView(view) {
+  currentView = view;
+  document.getElementById('supervisorNote').style.display = view === 'supervisor' ? 'block' : 'none';
+  document.getElementById('brandSub').textContent = view === 'supervisor' ? 'Supervisor View — Check-In/Out Only' : 'Live Sales Dashboard';
+
+  document.querySelectorAll('.tab-financial').forEach(el => {
+    el.style.display = view === 'supervisor' ? 'none' : '';
+  });
+
+  if (view === 'supervisor') {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelector('.tab[data-tab="today"]').classList.add('active');
+    document.getElementById('section-today').classList.add('active');
+  }
+
+  if (cachedData) render(cachedData);
+}
 async function loadData() {
   const btn = document.getElementById('refreshBtn');
-  btn.classList.add('spinning');
+  const icon = btn.querySelector('i');
+  icon.style.animation = 'spin 0.8s linear infinite';
+  document.getElementById('updatedLabel').textContent = 'Loading...';
   try {
     const res = await fetch(DASH_API_URL);
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch(parseErr) { throw new Error('Response was not valid JSON: ' + text.substring(0,150)); }
     if (data.error) throw new Error(data.error);
-    render(data);
+    cachedData = data;
     document.getElementById('loading').style.display = 'none';
     document.getElementById('app').style.display = 'block';
+    setView(currentView);
   } catch (err) {
     document.getElementById('loading').innerHTML =
-      '<div class="error-box">Could not load data.<br>' + err.message + '<br><br>Check the API URL is set correctly.</div>';
+      '<div class="error-box">Could not load data.<br>' + esc(err.message) + '<br><br>Check the API URL is set correctly.</div>';
   }
-  btn.classList.remove('spinning');
+  icon.style.animation = 'none';
 }
 
 function render(data) {
   document.getElementById('updatedLabel').textContent = 'Updated ' + data.generatedAt;
 
-  // TODAY
-  document.getElementById('todayCheckinCount').textContent = data.today.checkIns.length;
-  document.getElementById('todayCheckoutCount').textContent = data.today.checkOuts.length;
+  const isSupervisor = currentView === 'supervisor';
+  const checkIns  = isSupervisor ? data.today.checkInsSupervisor  : data.today.checkIns;
+  const checkOuts = isSupervisor ? data.today.checkOutsSupervisor : data.today.checkOuts;
+
+  document.getElementById('todayCheckinCount').textContent = checkIns.length;
+  document.getElementById('todayCheckoutCount').textContent = checkOuts.length;
   document.getElementById('todayRevenue').textContent = '$' + fmt(data.today.revenue);
 
-  document.getElementById('todayCheckins').innerHTML = renderGuestList(data.today.checkIns, 'checkin');
-  document.getElementById('todayCheckouts').innerHTML = renderGuestList(data.today.checkOuts, 'checkout');
+  document.getElementById('todayCheckins').innerHTML = renderGuestList(checkIns, 'checkin', isSupervisor);
+  document.getElementById('todayCheckouts').innerHTML = renderGuestList(checkOuts, 'checkout', isSupervisor);
 
   let alertsHtml = '';
-  if (data.alerts.refundedThisMonth > 0 || data.alerts.cancelledThisMonth > 0) {
+  if (!isSupervisor && (data.alerts.refundedThisMonth > 0 || data.alerts.cancelledThisMonth > 0)) {
     alertsHtml = '<div class="alert-box"><i class="ti ti-alert-triangle" aria-hidden="true"></i> ' +
       data.alerts.refundedThisMonth + ' refunded (FJD ' + fmtFull(data.alerts.refundedAmount) + ') + ' +
       data.alerts.cancelledThisMonth + ' cancelled this month — excluded from totals</div>';
   }
   document.getElementById('todayAlerts').innerHTML = alertsHtml;
 
-  // WEEK
+  const upcomingData = isSupervisor ? data.upcomingSupervisor : data.upcoming;
+  document.getElementById('upcomingList').innerHTML = renderUpcoming(upcomingData, isSupervisor);
+
+  if (isSupervisor) return; // skip financial sections entirely
+
   document.getElementById('weekRevenue').textContent = '$' + fmt(data.week.revenue);
   document.getElementById('weekLabel').textContent = data.week.label;
   document.getElementById('weekBookings').textContent = data.week.bookings;
@@ -300,7 +431,6 @@ function render(data) {
   document.getElementById('weekPaid').textContent = '$' + fmt(data.week.paid);
   document.getElementById('weekOutstanding').textContent = '$' + fmt(data.week.outstanding);
 
-  // MONTH
   document.getElementById('monthRevenue').textContent = '$' + fmt(data.month.revenue);
   document.getElementById('monthBookings').textContent = data.month.bookings;
   document.getElementById('monthNights').textContent = data.month.nights + ' nights';
@@ -313,7 +443,6 @@ function render(data) {
       '<span class="kpi-change ' + (up ? 'up' : 'down') + '">' + (up ? '▲' : '▼') + ' ' + Math.abs(data.month.momChange) + '% vs last month</span>';
   }
 
-  // QUARTER
   document.getElementById('quarterLabel').textContent = data.quarter.label;
   document.getElementById('quarterRevenue').textContent = '$' + fmt(data.quarter.revenue);
   document.getElementById('quarterVat').textContent = '$' + fmt(data.quarter.vat);
@@ -328,71 +457,126 @@ function render(data) {
   document.getElementById('monthChartYear').textContent = data.ytd.year;
   document.getElementById('quarterChartYear').textContent = data.ytd.year;
 
-  // UPCOMING
-  document.getElementById('upcomingList').innerHTML = renderUpcoming(data.upcoming);
-
   drawMonthlyChart(data.monthlyChart);
   drawQuarterlyChart(data.quarterlyChart);
 }
 
-function renderGuestList(list, type) {
+function renderGuestList(list, type, isSupervisor) {
   if (!list || list.length === 0) {
     return '<div class="empty-state"><i class="ti ti-mood-empty" aria-hidden="true"></i>No ' + (type === 'checkin' ? 'check-ins' : 'checkouts') + ' today</div>';
   }
   return list.map(g => {
-    const out = g.outstanding > 0;
     const room = g.roomNumber ? g.roomType + ' · Rm ' + g.roomNumber : g.roomType;
-    return '<div class="guest-row">' +
-      '<div>' +
-        '<div class="guest-name">' + esc(g.guestName) + '</div>' +
-        '<div class="guest-meta">' + esc(room) + ' · ' + g.nights + ' nights · ' + esc(g.bookingId) + '</div>' +
-        (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '') +
+
+    if (isSupervisor) {
+      const balance = g.outstanding;
+      const balColor = balance > 0 ? '#C0392B' : '#1A7A6E';
+      return '<div class="guest-card">' +
+        '<div class="guest-card-top">' +
+          '<div>' +
+            '<div class="guest-name">' + esc(g.guestName) + '</div>' +
+            '<div class="res-badge">Res: ' + esc(g.bookingId) + '</div>' +
+          '</div>' +
+          '<div class="guest-right">' +
+            '<div class="outstanding" style="color:' + balColor + ';">$' + fmtFull(balance) + '</div>' +
+            '<div class="outstanding-label">balance due</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="detail-grid">' +
+          '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(room) + '</span></div>' +
+          '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + g.nights + '</span></div>' +
+          (g.adults !== undefined ? '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + g.adults + 'A / ' + g.kids + 'K</span></div>' : '') +
+          '<div class="detail-item"><span class="detail-label">Total charge</span><span class="detail-value">$' + fmtFull(g.totalCost) + '</span></div>' +
+          (g.depositPaid !== undefined ? '<div class="detail-item"><span class="detail-label">Deposit paid</span><span class="detail-value" style="color:#1A7A6E;">$' + fmtFull(g.depositPaid) + '</span></div>' : '') +
+          '<div class="detail-item"><span class="detail-label">Balance due</span><span class="detail-value" style="color:' + balColor + ';font-weight:800;">$' + fmtFull(balance) + '</span></div>' +
+        '</div>' +
+        '<div class="comment-box">' +
+          '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Comment / note</div>' +
+          (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '<div class="comment-placeholder">No comment added</div>') +
+        '</div>' +
+      '</div>';
+    }
+
+    const out = g.outstanding > 0;
+    return '<div class="guest-card">' +
+      '<div class="guest-card-top">' +
+        '<div>' +
+          '<div class="guest-name">' + esc(g.guestName) + '</div>' +
+          '<div class="res-badge">Res: ' + esc(g.bookingId) + '</div>' +
+        '</div>' +
+        '<div class="guest-right">' +
+          '<div class="outstanding ' + (out ? 'due' : 'zero') + '">$' + fmtFull(g.outstanding) + '</div>' +
+          '<div class="outstanding-label">' + (out ? 'due' : 'paid') + '</div>' +
+        '</div>' +
       '</div>' +
-      '<div class="guest-right">' +
-        '<div class="outstanding ' + (out ? 'due' : 'zero') + '">$' + fmtFull(g.outstanding) + '</div>' +
-        '<div class="outstanding-label">' + (out ? 'due' : 'paid') + '</div>' +
+      '<div class="detail-grid">' +
+        '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(room) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + g.nights + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + g.adults + 'A / ' + g.kids + 'K</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Status</span><span class="detail-value">' + esc(g.status) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">' + esc(g.phone) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Channel</span><span class="detail-value">' + esc(g.channel) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Total cost</span><span class="detail-value">$' + fmtFull(g.totalCost) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Paid</span><span class="detail-value">$' + fmtFull(g.totalPaid) + '</span></div>' +
       '</div>' +
+      (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '') +
     '</div>';
   }).join('');
 }
 
-function renderUpcoming(list) {
+function renderUpcoming(list, isSupervisor) {
   if (!list || list.length === 0) {
     return '<div class="empty-state"><i class="ti ti-calendar-off" aria-hidden="true"></i>No check-ins in the next 7 days</div>';
   }
   return list.map(g => {
     const out = g.outstanding > 0;
-    return '<div class="guest-row">' +
-      '<div>' +
-        '<div class="guest-name">' + esc(g.guestName) + '</div>' +
-        '<div class="guest-meta">' + esc(g.roomType) + ' · ' + g.nights + ' nights · ' + esc(g.bookingId) + '</div>' +
+    const room = g.roomNumber ? g.roomType + ' · Rm ' + g.roomNumber : g.roomType;
+    const dateLabel = (g.arrivalDay ? g.arrivalDay + ' ' : '') + g.arrivalDate;
+
+    let detailRows =
+      '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(room) + '</span></div>' +
+      '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + g.nights + '</span></div>' +
+      (g.adults !== undefined ? '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + g.adults + 'A / ' + g.kids + 'K</span></div>' : '');
+
+    if (g.totalCost !== undefined) {
+      detailRows += '<div class="detail-item"><span class="detail-label">Total charge</span><span class="detail-value">$' + fmtFull(g.totalCost) + '</span></div>';
+    }
+    if (g.depositPaid !== undefined) {
+      detailRows += '<div class="detail-item"><span class="detail-label">Deposit paid</span><span class="detail-value" style="color:#1A7A6E;">$' + fmtFull(g.depositPaid) + '</span></div>';
+    }
+    if (!isSupervisor && g.channel) {
+      detailRows += '<div class="detail-item"><span class="detail-label">Channel</span><span class="detail-value">' + esc(g.channel) + '</span></div>';
+    }
+
+    return '<div class="guest-card">' +
+      '<div class="guest-card-top">' +
+        '<div>' +
+          '<div class="guest-name">' + esc(g.guestName) + '</div>' +
+          '<div class="res-badge">Res: ' + esc(g.bookingId) + '</div>' +
+        '</div>' +
+        '<div class="guest-right">' +
+          '<div class="badge gold">' + dateLabel + '</div>' +
+          '<div class="outstanding ' + (out ? 'due' : 'zero') + '" style="margin-top:4px;">$' + fmtFull(g.outstanding) + '</div>' +
+          '<div class="outstanding-label">balance due</div>' +
+        '</div>' +
       '</div>' +
-      '<div class="guest-right">' +
-        '<div class="badge gold">' + g.arrivalDate + '</div>' +
-        '<div class="outstanding ' + (out ? 'due' : 'zero') + '" style="margin-top:4px;">$' + fmtFull(g.outstanding) + '</div>' +
+      '<div class="detail-grid">' + detailRows + '</div>' +
+      '<div class="comment-box">' +
+        '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Comment / note</div>' +
+        (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '<div class="comment-placeholder">No comment added</div>') +
       '</div>' +
     '</div>';
   }).join('');
-}
-
-function esc(s) {
-  const div = document.createElement('div');
-  div.textContent = s || '';
-  return div.innerHTML;
 }
 
 function drawMonthlyChart(monthlyData) {
   const ctx = document.getElementById('monthlyChart');
   const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const values = monthlyData.map(m => m.revenue);
-
   if (monthlyChartInstance) monthlyChartInstance.destroy();
   monthlyChartInstance = new Chart(ctx, {
     type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [{ label: 'Revenue', data: values, backgroundColor: '#6A3FA0', borderRadius: 4 }]
-    },
+    data: { labels: labels, datasets: [{ label: 'Revenue', data: values, backgroundColor: '#6A3FA0', borderRadius: 4 }] },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
@@ -409,17 +593,13 @@ function drawQuarterlyChart(quarterlyData) {
   const labels = quarterlyData.map(q => 'Q' + q.quarter);
   const revenue = quarterlyData.map(q => q.revenue);
   const vat = quarterlyData.map(q => q.vat);
-
   if (quarterlyChartInstance) quarterlyChartInstance.destroy();
   quarterlyChartInstance = new Chart(ctx, {
     type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [
-        { label: 'Revenue', data: revenue, backgroundColor: '#1A7A6E', borderRadius: 4 },
-        { label: 'VAT', data: vat, backgroundColor: '#C9921A', borderRadius: 4 }
-      ]
-    },
+    data: { labels: labels, datasets: [
+      { label: 'Revenue', data: revenue, backgroundColor: '#1A7A6E', borderRadius: 4 },
+      { label: 'VAT', data: vat, backgroundColor: '#C9921A', borderRadius: 4 }
+    ]},
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
@@ -429,7 +609,6 @@ function drawQuarterlyChart(quarterlyData) {
       }
     }
   });
-  // Custom legend
   const wrap = ctx.parentElement;
   let legend = wrap.parentElement.querySelector('.custom-legend');
   if (!legend) {
@@ -443,9 +622,9 @@ function drawQuarterlyChart(quarterlyData) {
   }
 }
 
-// Tab switching
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
+    if (currentView === 'supervisor' && !['today','upcoming'].includes(tab.dataset.tab)) return;
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     tab.classList.add('active');
@@ -453,9 +632,7 @@ document.querySelectorAll('.tab').forEach(tab => {
   });
 });
 
-loadData();
-// Auto-refresh every 5 minutes
-setInterval(loadData, 5 * 60 * 1000);
+setInterval(() => { if (cachedData) loadData(); }, 5 * 60 * 1000);
 </script>
 
 </body>
