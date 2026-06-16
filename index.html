@@ -67,6 +67,7 @@
   .detail-value { color:#1A2622; font-weight:600; text-align:right; }
 
   .guest-comment { font-size:11px; color:#8B6310; margin-top:4px; background:#FFF8E7; padding:6px 9px; border-radius:6px; border-left:2px solid #C9921A; }
+  .staff-comment { font-size:11px; color:#1A4D8A; margin-top:4px; background:#EAF2FC; padding:6px 9px; border-radius:6px; border-left:2px solid #378ADD; }
   .comment-box { margin-top:9px; }
   .comment-label { font-size:9.5px; font-weight:700; color:#999; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px; display:flex; align-items:center; gap:4px; }
   .comment-placeholder { font-size:11px; color:#bbb; font-style:italic; padding:6px 9px; background:#FAFAFA; border-radius:6px; }
@@ -491,8 +492,12 @@ function renderGuestList(list, type, isSupervisor) {
           '<div class="detail-item"><span class="detail-label">Balance due</span><span class="detail-value" style="color:' + balColor + ';font-weight:800;">$' + fmtFull(balance) + '</span></div>' +
         '</div>' +
         '<div class="comment-box">' +
-          '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Comment / note</div>' +
+          '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Guest comment</div>' +
           (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '<div class="comment-placeholder">No comment added</div>') +
+        '</div>' +
+        '<div class="comment-box">' +
+          '<div class="comment-label"><i class="ti ti-notes" aria-hidden="true"></i> Staff comment</div>' +
+          (g.staffComment ? '<div class="staff-comment">' + esc(g.staffComment) + '</div>' : '<div class="comment-placeholder">No staff comment added</div>') +
         '</div>' +
       '</div>';
     }
@@ -519,7 +524,14 @@ function renderGuestList(list, type, isSupervisor) {
         '<div class="detail-item"><span class="detail-label">Total cost</span><span class="detail-value">$' + fmtFull(g.totalCost) + '</span></div>' +
         '<div class="detail-item"><span class="detail-label">Paid</span><span class="detail-value">$' + fmtFull(g.totalPaid) + '</span></div>' +
       '</div>' +
-      (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '') +
+      '<div class="comment-box">' +
+        '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Guest comment</div>' +
+        (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '<div class="comment-placeholder">No comment added</div>') +
+      '</div>' +
+      '<div class="comment-box">' +
+        '<div class="comment-label"><i class="ti ti-notes" aria-hidden="true"></i> Staff comment</div>' +
+        (g.staffComment ? '<div class="staff-comment">' + esc(g.staffComment) + '</div>' : '<div class="comment-placeholder">No staff comment added</div>') +
+      '</div>' +
     '</div>';
   }).join('');
 }
@@ -562,8 +574,12 @@ function renderUpcoming(list, isSupervisor) {
       '</div>' +
       '<div class="detail-grid">' + detailRows + '</div>' +
       '<div class="comment-box">' +
-        '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Comment / note</div>' +
+        '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Guest comment</div>' +
         (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '<div class="comment-placeholder">No comment added</div>') +
+      '</div>' +
+      '<div class="comment-box">' +
+        '<div class="comment-label"><i class="ti ti-notes" aria-hidden="true"></i> Staff comment</div>' +
+        (g.staffComment ? '<div class="staff-comment">' + esc(g.staffComment) + '</div>' : '<div class="comment-placeholder">No staff comment added</div>') +
       '</div>' +
     '</div>';
   }).join('');
