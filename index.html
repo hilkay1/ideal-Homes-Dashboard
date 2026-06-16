@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ideal Homes">
+<meta name="theme-color" content="#0C3C35">
+<title>Ideal Homes Nadi — Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { background:#0C3C35; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; overscroll-behavior:none; }
+  body { color:#1A2622; padding-bottom:40px; min-height:100vh; }
+
+  .header { background:#0C3C35; padding:18px 18px 16px; position:sticky; top:0; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
+  .header-top { display:flex; justify-content:space-between; align-items:flex-start; }
+  .brand { font-size:19px; font-weight:700; color:#fff; }
+  .brand-sub { font-size:10px; color:#C9921A; margin-top:2px; font-weight:600; }
+  .refresh-btn { background:rgba(255,255,255,0.1); border:none; color:#fff; width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+  .refresh-btn:active { background:rgba(255,255,255,0.2); }
+  .refresh-btn.spinning i { animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .updated { font-size:9px; color:#7ec8c0; margin-top:8px; }
+
+  .tabs { display:flex; gap:6px; padding:12px 14px 0; overflow-x:auto; background:#0C3C35; }
+  .tab { flex-shrink:0; padding:7px 14px; border-radius:16px; font-size:12px; font-weight:600; color:#7ec8c0; background:rgba(255,255,255,0.06); white-space:nowrap; }
+  .tab.active { background:#C9921A; color:#fff; }
+
+  .content { padding:16px 14px; }
+  .section { display:none; }
+  .section.active { display:block; }
+
+  .card { background:#fff; border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .card-title { font-size:11px; font-weight:700; color:#4A6160; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+
+  .kpi-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+  .kpi-grid.three { grid-template-columns:1fr 1fr 1fr; }
+  .kpi { background:#fff; border-radius:14px; padding:14px 12px; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .kpi-label { font-size:9.5px; color:#888; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
+  .kpi-value { font-size:21px; font-weight:800; color:#0C3C35; margin-top:4px; line-height:1.1; }
+  .kpi-sub { font-size:10px; color:#999; margin-top:3px; }
+  .kpi-change { font-size:9.5px; font-weight:700; padding:2px 7px; border-radius:8px; display:inline-block; margin-top:5px; }
+  .kpi-change.up { background:#E1F5EE; color:#085041; }
+  .kpi-change.down { background:#FAECE7; color:#712B13; }
+
+  .guest-row { display:flex; justify-content:space-between; align-items:flex-start; padding:11px 0; border-bottom:1px solid #F0F0F0; }
+  .guest-row:last-child { border-bottom:none; }
+  .guest-name { font-size:14px; font-weight:700; color:#0C3C35; }
+  .guest-meta { font-size:11.5px; color:#4A6160; margin-top:3px; }
+  .guest-comment { font-size:11px; color:#8B6310; margin-top:5px; background:#FFF8E7; padding:5px 8px; border-radius:6px; border-left:2px solid #C9921A; }
+  .guest-right { text-align:right; flex-shrink:0; padding-left:10px; }
+  .outstanding { font-size:13px; font-weight:800; }
+  .outstanding.zero { color:#1A7A6E; }
+  .outstanding.due { color:#C0392B; }
+  .outstanding-label { font-size:9px; color:#999; margin-top:1px; }
+
+  .empty-state { text-align:center; padding:24px 10px; color:#999; font-size:13px; }
+  .empty-state i { font-size:28px; color:#ccc; display:block; margin-bottom:8px; }
+
+  .badge { font-size:10px; font-weight:700; padding:3px 9px; border-radius:10px; display:inline-block; }
+  .badge.teal { background:#E1F5EE; color:#085041; }
+  .badge.gold { background:#FAEEDA; color:#633806; }
+  .badge.coral { background:#FAECE7; color:#712B13; }
+
+  .chart-wrap { position:relative; height:180px; margin-top:8px; }
+
+  .table-mini { width:100%; font-size:11.5px; }
+  .table-mini td { padding:8px 0; border-bottom:1px solid #F0F0F0; }
+  .table-mini tr:last-child td { border-bottom:none; }
+
+  .loading-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; color:#fff; }
+  .loading-screen i { font-size:32px; margin-bottom:12px; animation:spin 1s linear infinite; }
+
+  .error-box { background:#FAECE7; color:#712B13; padding:14px; border-radius:10px; font-size:12px; margin:14px; }
+
+  .alert-box { background:#FAEEDA; border-left:3px solid #BA7517; padding:10px 12px; border-radius:0 8px 8px 0; font-size:11.5px; color:#633806; margin-bottom:12px; }
+</style>
+</head>
+<body>
+
+<div id="loading" class="loading-screen">
+  <i class="ti ti-loader-2"></i>
+  <div style="font-size:13px;color:#7ec8c0;">Loading dashboard...</div>
+</div>
+
+<div id="app" style="display:none;">
+
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="brand">Ideal Homes Nadi</div>
+        <div class="brand-sub">Live Sales Dashboard</div>
+      </div>
+      <button class="refresh-btn" id="refreshBtn" onclick="loadData()" aria-label="Refresh">
+        <i class="ti ti-refresh"></i>
+      </button>
+    </div>
+    <div class="updated" id="updatedLabel">—</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="today">Today</div>
+    <div class="tab" data-tab="week">Week</div>
+    <div class="tab" data-tab="month">Month</div>
+    <div class="tab" data-tab="quarter">Quarter VAT</div>
+    <div class="tab" data-tab="upcoming">Upcoming</div>
+  </div>
+
+  <div class="content">
+
+    <div class="section active" id="section-today">
+      <div id="todayAlerts"></div>
+      <div class="kpi-grid three">
+        <div class="kpi">
+          <div class="kpi-label">Check-ins</div>
+          <div class="kpi-value" id="todayCheckinCount">0</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Checkouts</div>
+          <div class="kpi-value" id="todayCheckoutCount">0</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Revenue</div>
+          <div class="kpi-value" id="todayRevenue">$0</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-door-enter"></i> Check-ins today</div>
+        <div id="todayCheckins"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-door-exit"></i> Checkouts today</div>
+        <div id="todayCheckouts"></div>
+      </div>
+    </div>
+
+    <div class="section" id="section-week">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label">Revenue</div>
+          <div class="kpi-value" id="weekRevenue">$0</div>
+          <div class="kpi-sub" id="weekLabel"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Bookings</div>
+          <div class="kpi-value" id="weekBookings">0</div>
+          <div class="kpi-sub" id="weekNights"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Collected</div>
+          <div class="kpi-value" id="weekPaid">$0</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Outstanding</div>
+          <div class="kpi-value" id="weekOutstanding">$0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section-month">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label">Revenue</div>
+          <div class="kpi-value" id="monthRevenue">$0</div>
+          <div id="monthChange"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Bookings</div>
+          <div class="kpi-value" id="monthBookings">0</div>
+          <div class="kpi-sub" id="monthNights"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">VAT (12.5%)</div>
+          <div class="kpi-value" id="monthVat">$0</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Outstanding</div>
+          <div class="kpi-value" id="monthOutstanding">$0</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-chart-bar"></i> Revenue by month — <span id="monthChartYear"></span></div>
+        <div class="chart-wrap">
+          <canvas id="monthlyChart" role="img" aria-label="Bar chart of monthly revenue for the current year"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section-quarter">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label" id="quarterLabel">This Quarter</div>
+          <div class="kpi-value" id="quarterRevenue">$0</div>
+          <div class="kpi-sub">Total inc. VAT</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">VAT payable</div>
+          <div class="kpi-value" id="quarterVat">$0</div>
+          <div class="kpi-sub">FRCS output tax</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Excl. VAT</div>
+          <div class="kpi-value" id="quarterExcVat">$0</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Bookings</div>
+          <div class="kpi-value" id="quarterBookings">0</div>
+          <div class="kpi-sub" id="quarterNights"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-receipt-tax"></i> VAT by quarter — <span id="quarterChartYear"></span></div>
+        <div class="chart-wrap">
+          <canvas id="quarterlyChart" role="img" aria-label="Bar chart of VAT amount by quarter"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-calendar-stats"></i> Year to date</div>
+        <table class="table-mini">
+          <tr><td>Total revenue (inc. VAT)</td><td style="text-align:right;font-weight:700;" id="ytdRevenue">$0</td></tr>
+          <tr><td>Total VAT collected</td><td style="text-align:right;font-weight:700;color:#085041;" id="ytdVat">$0</td></tr>
+          <tr><td>Total bookings</td><td style="text-align:right;font-weight:700;" id="ytdBookings">0</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section" id="section-upcoming">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-calendar-event"></i> Next 7 days check-ins</div>
+        <div id="upcomingList"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ⚠️ REPLACE THIS WITH YOUR APPS SCRIPT WEB APP URL
+const DASH_API_URL = "https://script.google.com/macros/s/AKfycbznYlHuc-y9w7SrCddNUb0AgxzR7mlSQ7NMgciyKA6rrDQQ3o98zgi7sxQu1WTST0gCAA/exec";
+
+let monthlyChartInstance = null;
+let quarterlyChartInstance = null;
+
+function fmt(n) {
+  return new Intl.NumberFormat('en-FJ', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(n || 0));
+}
+function fmtFull(n) {
+  return (n || 0).toFixed(2);
+}
+
+async function loadData() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  try {
+    const res = await fetch(DASH_API_URL);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    render(data);
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  } catch (err) {
+    document.getElementById('loading').innerHTML =
+      '<div class="error-box">Could not load data.<br>' + err.message + '<br><br>Check the API URL is set correctly.</div>';
+  }
+  btn.classList.remove('spinning');
+}
+
+function render(data) {
+  document.getElementById('updatedLabel').textContent = 'Updated ' + data.generatedAt;
+
+  // TODAY
+  document.getElementById('todayCheckinCount').textContent = data.today.checkIns.length;
+  document.getElementById('todayCheckoutCount').textContent = data.today.checkOuts.length;
+  document.getElementById('todayRevenue').textContent = '$' + fmt(data.today.revenue);
+
+  document.getElementById('todayCheckins').innerHTML = renderGuestList(data.today.checkIns, 'checkin');
+  document.getElementById('todayCheckouts').innerHTML = renderGuestList(data.today.checkOuts, 'checkout');
+
+  let alertsHtml = '';
+  if (data.alerts.refundedThisMonth > 0 || data.alerts.cancelledThisMonth > 0) {
+    alertsHtml = '<div class="alert-box"><i class="ti ti-alert-triangle" aria-hidden="true"></i> ' +
+      data.alerts.refundedThisMonth + ' refunded (FJD ' + fmtFull(data.alerts.refundedAmount) + ') + ' +
+      data.alerts.cancelledThisMonth + ' cancelled this month — excluded from totals</div>';
+  }
+  document.getElementById('todayAlerts').innerHTML = alertsHtml;
+
+  // WEEK
+  document.getElementById('weekRevenue').textContent = '$' + fmt(data.week.revenue);
+  document.getElementById('weekLabel').textContent = data.week.label;
+  document.getElementById('weekBookings').textContent = data.week.bookings;
+  document.getElementById('weekNights').textContent = data.week.nights + ' nights';
+  document.getElementById('weekPaid').textContent = '$' + fmt(data.week.paid);
+  document.getElementById('weekOutstanding').textContent = '$' + fmt(data.week.outstanding);
+
+  // MONTH
+  document.getElementById('monthRevenue').textContent = '$' + fmt(data.month.revenue);
+  document.getElementById('monthBookings').textContent = data.month.bookings;
+  document.getElementById('monthNights').textContent = data.month.nights + ' nights';
+  document.getElementById('monthVat').textContent = '$' + fmt(data.month.vat);
+  document.getElementById('monthOutstanding').textContent = '$' + fmt(data.month.outstanding);
+
+  if (data.month.momChange !== null) {
+    const up = data.month.momChange >= 0;
+    document.getElementById('monthChange').innerHTML =
+      '<span class="kpi-change ' + (up ? 'up' : 'down') + '">' + (up ? '▲' : '▼') + ' ' + Math.abs(data.month.momChange) + '% vs last month</span>';
+  }
+
+  // QUARTER
+  document.getElementById('quarterLabel').textContent = data.quarter.label;
+  document.getElementById('quarterRevenue').textContent = '$' + fmt(data.quarter.revenue);
+  document.getElementById('quarterVat').textContent = '$' + fmt(data.quarter.vat);
+  document.getElementById('quarterExcVat').textContent = '$' + fmt(data.quarter.excVat);
+  document.getElementById('quarterBookings').textContent = data.quarter.bookings;
+  document.getElementById('quarterNights').textContent = data.quarter.nights + ' nights';
+
+  document.getElementById('ytdRevenue').textContent = '$' + fmt(data.ytd.revenue);
+  document.getElementById('ytdVat').textContent = '$' + fmt(data.ytd.vat);
+  document.getElementById('ytdBookings').textContent = data.ytd.bookings;
+
+  document.getElementById('monthChartYear').textContent = data.ytd.year;
+  document.getElementById('quarterChartYear').textContent = data.ytd.year;
+
+  // UPCOMING
+  document.getElementById('upcomingList').innerHTML = renderUpcoming(data.upcoming);
+
+  drawMonthlyChart(data.monthlyChart);
+  drawQuarterlyChart(data.quarterlyChart);
+}
+
+function renderGuestList(list, type) {
+  if (!list || list.length === 0) {
+    return '<div class="empty-state"><i class="ti ti-mood-empty" aria-hidden="true"></i>No ' + (type === 'checkin' ? 'check-ins' : 'checkouts') + ' today</div>';
+  }
+  return list.map(g => {
+    const out = g.outstanding > 0;
+    const room = g.roomNumber ? g.roomType + ' · Rm ' + g.roomNumber : g.roomType;
+    return '<div class="guest-row">' +
+      '<div>' +
+        '<div class="guest-name">' + esc(g.guestName) + '</div>' +
+        '<div class="guest-meta">' + esc(room) + ' · ' + g.nights + ' nights · ' + esc(g.bookingId) + '</div>' +
+        (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '') +
+      '</div>' +
+      '<div class="guest-right">' +
+        '<div class="outstanding ' + (out ? 'due' : 'zero') + '">$' + fmtFull(g.outstanding) + '</div>' +
+        '<div class="outstanding-label">' + (out ? 'due' : 'paid') + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderUpcoming(list) {
+  if (!list || list.length === 0) {
+    return '<div class="empty-state"><i class="ti ti-calendar-off" aria-hidden="true"></i>No check-ins in the next 7 days</div>';
+  }
+  return list.map(g => {
+    const out = g.outstanding > 0;
+    return '<div class="guest-row">' +
+      '<div>' +
+        '<div class="guest-name">' + esc(g.guestName) + '</div>' +
+        '<div class="guest-meta">' + esc(g.roomType) + ' · ' + g.nights + ' nights · ' + esc(g.bookingId) + '</div>' +
+      '</div>' +
+      '<div class="guest-right">' +
+        '<div class="badge gold">' + g.arrivalDate + '</div>' +
+        '<div class="outstanding ' + (out ? 'due' : 'zero') + '" style="margin-top:4px;">$' + fmtFull(g.outstanding) + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function esc(s) {
+  const div = document.createElement('div');
+  div.textContent = s || '';
+  return div.innerHTML;
+}
+
+function drawMonthlyChart(monthlyData) {
+  const ctx = document.getElementById('monthlyChart');
+  const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const values = monthlyData.map(m => m.revenue);
+
+  if (monthlyChartInstance) monthlyChartInstance.destroy();
+  monthlyChartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{ label: 'Revenue', data: values, backgroundColor: '#6A3FA0', borderRadius: 4 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 10 } }, grid: { display: false } },
+        y: { ticks: { font: { size: 10 }, callback: v => '$' + v }, grid: { color: '#f0f0f0' } }
+      }
+    }
+  });
+}
+
+function drawQuarterlyChart(quarterlyData) {
+  const ctx = document.getElementById('quarterlyChart');
+  const labels = quarterlyData.map(q => 'Q' + q.quarter);
+  const revenue = quarterlyData.map(q => q.revenue);
+  const vat = quarterlyData.map(q => q.vat);
+
+  if (quarterlyChartInstance) quarterlyChartInstance.destroy();
+  quarterlyChartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Revenue', data: revenue, backgroundColor: '#1A7A6E', borderRadius: 4 },
+        { label: 'VAT', data: vat, backgroundColor: '#C9921A', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 11 } }, grid: { display: false } },
+        y: { ticks: { font: { size: 10 }, callback: v => '$' + v }, grid: { color: '#f0f0f0' } }
+      }
+    }
+  });
+  // Custom legend
+  const wrap = ctx.parentElement;
+  let legend = wrap.parentElement.querySelector('.custom-legend');
+  if (!legend) {
+    legend = document.createElement('div');
+    legend.className = 'custom-legend';
+    legend.style.cssText = 'display:flex;gap:14px;margin-top:8px;font-size:11px;color:#666;';
+    legend.innerHTML =
+      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:9px;height:9px;border-radius:2px;background:#1A7A6E;"></span>Revenue</span>' +
+      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:9px;height:9px;border-radius:2px;background:#C9921A;"></span>VAT</span>';
+    wrap.after(legend);
+  }
+}
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('section-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+loadData();
+// Auto-refresh every 5 minutes
+setInterval(loadData, 5 * 60 * 1000);
+</script>
+
+</body>
+</html>
