@@ -55,6 +55,10 @@
   .guest-card { padding:13px 0; border-bottom:1px solid #F0F0F0; }
   .guest-card:last-child { border-bottom:none; }
   .guest-card-top { display:flex; justify-content:space-between; align-items:flex-start; }
+  .card.card-checkin { background:#EAF8F3; border-left:4px solid #1A7A6E; }
+  .card.card-checkout { background:#FFF3E8; border-left:4px solid #E07B20; }
+  .card.card-checkin .card-title { color:#085041; }
+  .card.card-checkout .card-title { color:#8B4000; }
   .guest-name { font-size:14.5px; font-weight:700; color:#0C3C35; }
   .res-badge { font-size:9.5px; font-weight:700; color:#fff; background:#1A7A6E; padding:2px 8px; border-radius:8px; margin-top:3px; display:inline-block; }
   .guest-right { text-align:right; flex-shrink:0; padding-left:10px; }
@@ -109,6 +113,16 @@
   .alert-box { background:#FAEEDA; border-left:3px solid #BA7517; padding:10px 12px; border-radius:0 8px 8px 0; font-size:11.5px; color:#633806; margin-bottom:12px; }
 
   .supervisor-note { background:#F0EAF8; border-left:3px solid #6A3FA0; padding:9px 12px; border-radius:0 8px 8px 0; font-size:11px; color:#3B1F5E; margin-bottom:12px; }
+  .tab.tab-bcom { background:#003580; color:#fff; }
+  .tab.tab-bcom.active { background:#003580; opacity:1; }
+  .bcom-filter-btn { font-size:10px; font-weight:700; padding:4px 12px; border-radius:10px; border:1.5px solid #E0E0E0; background:#fff; color:#555; cursor:pointer; }
+  .bcom-filter-btn.active { background:#003580; color:#fff; border-color:#003580; }
+  .bcom-card { padding:12px 0; border-bottom:1px solid #F0F0F0; }
+  .bcom-card:last-child { border-bottom:none; }
+  .bcom-badge-approved { font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:8px;background:#E1F5EE;color:#085041;display:inline-block; }
+  .bcom-badge-pending { font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:8px;background:#FFF8E7;color:#8B6310;display:inline-block; }
+  .bcom-approve-btn { font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#003580;color:#fff;border:none;cursor:pointer;margin-top:6px; }
+  .bcom-unapprove-btn { font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#f0f2f5;color:#666;border:none;cursor:pointer;margin-top:6px;margin-left:6px; }
 </style>
 </head>
 <body>
@@ -160,6 +174,7 @@
     <div class="tab tab-financial" data-tab="month">Month</div>
     <div class="tab tab-financial" data-tab="quarter">Quarter VAT</div>
     <div class="tab" data-tab="upcoming">Upcoming</div>
+    <div class="tab tab-bcom" data-tab="bookingcom">🔵 Booking.com</div>
   </div>
 
   <div class="content">
@@ -184,12 +199,12 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card card-checkin">
         <div class="card-title"><i class="ti ti-door-enter"></i> Check-ins today</div>
         <div id="todayCheckins"></div>
       </div>
 
-      <div class="card">
+      <div class="card card-checkout">
         <div class="card-title"><i class="ti ti-door-exit"></i> Checkouts today</div>
         <div id="todayCheckouts"></div>
       </div>
@@ -295,6 +310,21 @@
       </div>
     </div>
 
+    <div class="section" id="section-bookingcom">
+      <div class="card">
+        <div class="card-title" style="justify-content:space-between;">
+          <span><i class="ti ti-building-store"></i> Booking.com Reservations</span>
+          <span id="bcomPendingBadge" style="font-size:9px;background:#FFF8E7;color:#8B6310;padding:2px 8px;border-radius:8px;font-weight:700;display:none;">⏳ Pending</span>
+        </div>
+        <div id="bcomFilter" style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
+          <button onclick="setBcomFilter('all')" id="bfAll" class="bcom-filter-btn active">All</button>
+          <button onclick="setBcomFilter('pending')" id="bfPending" class="bcom-filter-btn">⏳ Pending</button>
+          <button onclick="setBcomFilter('approved')" id="bfApproved" class="bcom-filter-btn">✅ Approved</button>
+        </div>
+        <div id="bcomList"></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -368,6 +398,9 @@ function setView(view) {
   document.getElementById('brandSub').textContent = view === 'supervisor' ? 'Supervisor View — Check-In/Out Only' : 'Live Sales Dashboard';
 
   document.querySelectorAll('.tab-financial').forEach(el => {
+    el.style.display = view === 'supervisor' ? 'none' : '';
+  });
+  document.querySelectorAll('.tab-bcom').forEach(el => {
     el.style.display = view === 'supervisor' ? 'none' : '';
   });
 
@@ -465,6 +498,27 @@ function render(data) {
 
   drawMonthlyChart(data.monthlyChart);
   drawQuarterlyChart(data.quarterlyChart);
+
+  // Booking.com — admin only
+  if (!isSupervisor && data.bookingCom) {
+    renderBcomTab(data.bookingCom.all || []);
+    // Inject approved bcom into today's check-ins display
+    const approvedIn  = (data.bookingCom.todayCheckIns  || []).filter(b => b.approved === 'Yes');
+    const approvedOut = (data.bookingCom.todayCheckOuts || []).filter(b => b.approved === 'Yes');
+    const approvedUp  = (data.bookingCom.upcoming       || []).filter(b => b.approved === 'Yes');
+    if (approvedIn.length)  renderBcomInjectToday(approvedIn, 'checkin');
+    if (approvedOut.length) renderBcomInjectToday(approvedOut, 'checkout');
+    if (approvedUp.length)  renderBcomInjectUpcoming(approvedUp);
+    // Update KPI count
+    const ciCount = parseInt(document.getElementById('todayCheckinCount').textContent) + approvedIn.length;
+    const coCount = parseInt(document.getElementById('todayCheckoutCount').textContent) + approvedOut.length;
+    document.getElementById('todayCheckinCount').textContent  = ciCount;
+    document.getElementById('todayCheckoutCount').textContent = coCount;
+    // Pending badge
+    const pending = (data.bookingCom.all || []).filter(b => b.approved !== 'Yes').length;
+    const badge = document.getElementById('bcomPendingBadge');
+    if (badge) { badge.textContent = `⏳ ${pending} pending`; badge.style.display = pending > 0 ? 'inline-block' : 'none'; }
+  }
 }
 
 function renderGuestList(list, type, isSupervisor) {
@@ -590,6 +644,154 @@ function renderUpcoming(list, isSupervisor) {
   }).join('');
 }
 
+// ── BOOKING.COM TAB ──────────────────────────────────────────
+let bcomData = [];
+let bcomFilter = 'all';
+
+function setBcomFilter(f) {
+  bcomFilter = f;
+  document.querySelectorAll('.bcom-filter-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('bf' + f.charAt(0).toUpperCase() + f.slice(1)).classList.add('active');
+  renderBcomTab(bcomData);
+}
+
+function renderBcomTab(list) {
+  bcomData = list || [];
+  const el = document.getElementById('bcomList');
+  if (!el) return;
+
+  const filtered = bcomData.filter(b => {
+    if (bcomFilter === 'pending')  return b.approved !== 'Yes';
+    if (bcomFilter === 'approved') return b.approved === 'Yes';
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="empty-state"><i class="ti ti-building-store" aria-hidden="true"></i>' +
+      (bcomFilter === 'pending' ? 'No pending reservations' : bcomFilter === 'approved' ? 'No approved reservations' : 'No Booking.com reservations yet') +
+      '</div>';
+    return;
+  }
+
+  el.innerHTML = filtered.map(b => {
+    const approved = b.approved === 'Yes';
+    const badge = approved
+      ? '<span class="bcom-badge-approved">✅ Approved — visible to supervisor</span>'
+      : '<span class="bcom-badge-pending">⏳ Pending approval</span>';
+    const approveBtn = !approved
+      ? `<button class="bcom-approve-btn" onclick="bcomApprove('${esc(b.bookingNo)}', true)">✅ Approve → Supervisor</button>`
+      : `<button class="bcom-unapprove-btn" onclick="bcomApprove('${esc(b.bookingNo)}', false)">↩ Unapprove</button>`;
+
+    return '<div class="bcom-card">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;">' +
+        '<div>' +
+          '<div style="font-size:14px;font-weight:700;color:#003580;">' + esc(b.guestName) + '</div>' +
+          '<div style="font-size:10px;color:#888;margin-top:2px;">BK: ' + esc(b.bookingNo) + '&nbsp;·&nbsp;Booking.com</div>' +
+          '<div style="margin-top:4px;">' + badge + '</div>' +
+        '</div>' +
+        '<div style="text-align:right;">' +
+          '<div style="font-size:14px;font-weight:800;color:#003580;">FJD ' + esc(b.totalCost) + '</div>' +
+          '<div style="font-size:9px;color:#888;">Net: FJD ' + esc(b.netAmount) + '</div>' +
+          '<div style="font-size:9px;color:#888;">Comm: FJD ' + esc(b.commission) + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="detail-grid" style="margin-top:8px;">' +
+        '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(b.roomType) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + esc(b.nights) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Check-In</span><span class="detail-value">' + esc(b.checkIn) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Check-Out</span><span class="detail-value">' + esc(b.checkOut) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + esc(b.adults) + 'A / ' + esc(b.kids) + 'K</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Payment</span><span class="detail-value">' + esc(b.payMethod) + '</span></div>' +
+        (b.phone ? '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">' + esc(b.phone) + '</span></div>' : '') +
+      '</div>' +
+      (b.notes ? '<div class="guest-comment" style="margin-top:8px;">💬 ' + esc(b.notes) + '</div>' : '') +
+      (b.screenshot ? '<div style="margin-top:8px;"><a href="' + b.screenshot + '" target="_blank" style="font-size:10.5px;color:#003580;font-weight:700;">📷 View Screenshot</a></div>' : '') +
+      '<div style="margin-top:6px;">' + approveBtn + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderBcomInjectToday(list, type) {
+  const id = type === 'checkin' ? 'todayCheckins' : 'todayCheckouts';
+  const el = document.getElementById(id);
+  if (!el) return;
+  const existingEmpty = el.querySelector('.empty-state');
+  if (existingEmpty) el.innerHTML = '';
+  const bcomHTML = list.map(b => {
+    const out = parseFloat(b.totalCost) > 0;
+    return '<div class="guest-card" style="border-top:2px solid #003580;margin-top:8px;">' +
+      '<div class="guest-card-top">' +
+        '<div>' +
+          '<div class="guest-name">' + esc(b.guestName) + '</div>' +
+          '<div class="res-badge" style="background:#003580;">BK.com: ' + esc(b.bookingNo) + '</div>' +
+        '</div>' +
+        '<div class="guest-right">' +
+          '<div style="font-size:13px;font-weight:800;color:#003580;">FJD ' + esc(b.totalCost) + '</div>' +
+          '<div style="font-size:9px;color:#888;">net: FJD ' + esc(b.netAmount) + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="detail-grid">' +
+        '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(b.roomType) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + esc(b.nights) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + esc(b.adults) + 'A / ' + esc(b.kids) + 'K</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Payment</span><span class="detail-value">' + esc(b.payMethod) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">' + esc(b.phone) + '</span></div>' +
+      '</div>' +
+      (b.notes ? '<div class="guest-comment">💬 ' + esc(b.notes) + '</div>' : '') +
+    '</div>';
+  }).join('');
+  el.insertAdjacentHTML('beforeend', bcomHTML);
+}
+
+function renderBcomInjectUpcoming(list) {
+  const el = document.getElementById('upcomingList');
+  if (!el) return;
+  const existingEmpty = el.querySelector('.empty-state');
+  if (existingEmpty) el.innerHTML = '';
+  const html = list.map(b =>
+    '<div class="guest-card" style="border-top:2px solid #003580;margin-top:8px;">' +
+      '<div class="guest-card-top">' +
+        '<div>' +
+          '<div class="guest-name">' + esc(b.guestName) + '</div>' +
+          '<div class="res-badge" style="background:#003580;">BK.com: ' + esc(b.bookingNo) + '</div>' +
+        '</div>' +
+        '<div class="guest-right">' +
+          '<div class="badge gold">' + esc(b.checkIn) + '</div>' +
+          '<div style="font-size:13px;font-weight:800;color:#003580;margin-top:4px;">FJD ' + esc(b.totalCost) + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="detail-grid">' +
+        '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(b.roomType) + '</span></div>' +
+        '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + esc(b.nights) + '</span></div>' +
+      '</div>' +
+    '</div>'
+  ).join('');
+  el.insertAdjacentHTML('beforeend', html);
+}
+
+async function bcomApprove(bookingNo, approve) {
+  try {
+    const res  = await fetch(DASH_API_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ action: approve ? 'approve' : 'unapprove', bookingNo }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      // Update local data
+      const entry = bcomData.find(b => b.bookingNo === bookingNo);
+      if (entry) entry.approved = approve ? 'Yes' : 'Pending';
+      renderBcomTab(bcomData);
+      // Refresh data after short delay
+      setTimeout(loadData, 1500);
+    } else {
+      alert('Error: ' + (data.error || 'Could not update'));
+    }
+  } catch(err) {
+    alert('Network error: ' + err.message);
+  }
+}
+
 function drawMonthlyChart(monthlyData) {
   const ctx = document.getElementById('monthlyChart');
   const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -646,6 +848,7 @@ function drawQuarterlyChart(quarterlyData) {
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     if (currentView === 'supervisor' && !['today','upcoming'].includes(tab.dataset.tab)) return;
+    if (tab.classList.contains('tab-bcom') && currentView === 'supervisor') return;
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     tab.classList.add('active');
