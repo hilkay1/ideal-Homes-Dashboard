@@ -12,852 +12,824 @@
 <link rel="apple-touch-icon" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html, body { background:#0C3C35; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; overscroll-behavior:none; }
-  body { color:#1A2622; padding-bottom:40px; min-height:100vh; }
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overscroll-behavior:none;color:#1A2622;padding-bottom:40px;min-height:100vh}
 
-  .header { background:#0C3C35; padding:18px 18px 16px; position:sticky; top:0; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
-  .header-top { display:flex; justify-content:space-between; align-items:flex-start; }
-  .brand { font-size:19px; font-weight:700; color:#fff; }
-  .brand-sub { font-size:10px; color:#C9921A; margin-top:2px; font-weight:600; }
-  .header-actions { display:flex; gap:8px; align-items:center; }
-  .view-toggle { display:flex; background:rgba(255,255,255,0.08); border-radius:10px; padding:2px; }
-  .view-btn { font-size:10.5px; font-weight:700; padding:6px 11px; border-radius:8px; color:#7ec8c0; cursor:pointer; border:none; background:transparent; }
-  .view-btn.active { background:#C9921A; color:#fff; }
-  .refresh-btn { background:rgba(255,255,255,0.1); border:none; color:#fff; width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; }
-  .refresh-btn:active { background:rgba(255,255,255,0.2); }
-  .refresh-btn.spinning i { animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform:rotate(360deg); } }
-  .updated { font-size:9px; color:#7ec8c0; margin-top:8px; }
+/* HEADER */
+.hdr{background:#0C3C35;padding:16px 16px 14px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.hdr-top{display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:17px;font-weight:700;color:#fff}
+.brand-sub{font-size:9.5px;color:#C9921A;font-weight:600;margin-top:2px}
+.hdr-btns{display:flex;gap:6px;align-items:center}
+.ico-btn{background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer}
+.ico-btn:active{background:rgba(255,255,255,.2)}
+.upd{font-size:9px;color:#7ec8c0;margin-top:7px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinning{animation:spin .8s linear infinite}
 
-  .tabs { display:flex; gap:6px; padding:12px 14px 0; overflow-x:auto; background:#0C3C35; }
-  .tab { flex-shrink:0; padding:7px 14px; border-radius:16px; font-size:12px; font-weight:600; color:#7ec8c0; background:rgba(255,255,255,0.06); white-space:nowrap; cursor:pointer; }
-  .tab.active { background:#C9921A; color:#fff; }
-  .tab.hidden-supervisor { display:none; }
+/* TABS */
+.tabs{display:flex;gap:5px;padding:10px 12px 0;overflow-x:auto;background:#0C3C35;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:6px 13px;border-radius:14px;font-size:11.5px;font-weight:600;color:#7ec8c0;background:rgba(255,255,255,.06);cursor:pointer;white-space:nowrap;border:none}
+.tab.active{background:#C9921A;color:#fff}
+.tab.bcom-tab{background:#003580;color:#fff}
 
-  .content { padding:16px 14px; }
-  .section { display:none; }
-  .section.active { display:block; }
+/* CONTENT */
+.content{padding:14px 13px}
+.sec{display:none}
+.sec.active{display:block}
 
-  .card { background:#fff; border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
-  .card-title { font-size:11px; font-weight:700; color:#4A6160; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+/* CARDS */
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.card.ci{background:#EAF8F3;border-left:4px solid #1A7A6E}
+.card.co{background:#FFF3E8;border-left:4px solid #E07B20}
+.ctitle{font-size:10.5px;font-weight:700;color:#4A6160;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.card.ci .ctitle{color:#085041}
+.card.co .ctitle{color:#8B4000}
 
-  .kpi-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
-  .kpi-grid.three { grid-template-columns:1fr 1fr 1fr; }
-  .kpi { background:#fff; border-radius:14px; padding:14px 12px; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
-  .kpi-label { font-size:9.5px; color:#888; text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
-  .kpi-value { font-size:21px; font-weight:800; color:#0C3C35; margin-top:4px; line-height:1.1; }
-  .kpi-sub { font-size:10px; color:#999; margin-top:3px; }
-  .kpi-change { font-size:9.5px; font-weight:700; padding:2px 7px; border-radius:8px; display:inline-block; margin-top:5px; }
-  .kpi-change.up { background:#E1F5EE; color:#085041; }
-  .kpi-change.down { background:#FAECE7; color:#712B13; }
+/* KPI */
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.kgrid3{grid-template-columns:1fr 1fr 1fr}
+.kpi{background:#fff;border-radius:13px;padding:13px 11px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.klbl{font-size:9px;color:#888;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.kval{font-size:20px;font-weight:800;color:#0C3C35;margin-top:4px;line-height:1.1}
+.ksub{font-size:9.5px;color:#999;margin-top:3px}
+.kchg{font-size:9px;font-weight:700;padding:2px 6px;border-radius:7px;display:inline-block;margin-top:4px}
+.kchg.up{background:#E1F5EE;color:#085041}
+.kchg.down{background:#FAECE7;color:#712B13}
 
-  .guest-card { padding:13px 0; border-bottom:1px solid #F0F0F0; }
-  .guest-card:last-child { border-bottom:none; }
-  .guest-card-top { display:flex; justify-content:space-between; align-items:flex-start; }
-  .card.card-checkin { background:#EAF8F3; border-left:4px solid #1A7A6E; }
-  .card.card-checkout { background:#FFF3E8; border-left:4px solid #E07B20; }
-  .card.card-checkin .card-title { color:#085041; }
-  .card.card-checkout .card-title { color:#8B4000; }
-  .guest-name { font-size:14.5px; font-weight:700; color:#0C3C35; }
-  .res-badge { font-size:9.5px; font-weight:700; color:#fff; background:#1A7A6E; padding:2px 8px; border-radius:8px; margin-top:3px; display:inline-block; }
-  .guest-right { text-align:right; flex-shrink:0; padding-left:10px; }
-  .outstanding { font-size:13.5px; font-weight:800; }
-  .outstanding.zero { color:#1A7A6E; }
-  .outstanding.due { color:#C0392B; }
-  .outstanding-label { font-size:9px; color:#999; margin-top:1px; }
+/* GUEST CARDS */
+.gc{padding:12px 0;border-bottom:1px solid #F0F0F0}
+.gc:last-child{border-bottom:none}
+.gc-top{display:flex;justify-content:space-between;align-items:flex-start}
+.gname{font-size:14px;font-weight:700;color:#0C3C35}
+.rbadge{font-size:9px;font-weight:700;color:#fff;background:#1A7A6E;padding:2px 7px;border-radius:7px;margin-top:3px;display:inline-block}
+.gright{text-align:right;flex-shrink:0;padding-left:8px}
+.out{font-size:13px;font-weight:800}
+.out.z{color:#1A7A6E}
+.out.d{color:#C0392B}
+.outlbl{font-size:9px;color:#999;margin-top:1px}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px;margin-top:8px;font-size:11px}
+.di{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed #F0F0F0}
+.dlbl{color:#999}
+.dval{color:#1A2622;font-weight:600;text-align:right}
+.gcmt{font-size:10.5px;color:#8B6310;margin-top:6px;background:#FFF8E7;padding:5px 8px;border-radius:6px;border-left:2px solid #C9921A}
+.scmt{font-size:10.5px;color:#1A4D8A;margin-top:4px;background:#EAF2FC;padding:5px 8px;border-radius:6px;border-left:2px solid #378ADD}
+.cbox{margin-top:8px}
+.clbl{font-size:9px;font-weight:700;color:#aaa;text-transform:uppercase;margin-bottom:3px}
+.cph{font-size:10.5px;color:#bbb;font-style:italic;padding:5px 8px;background:#FAFAFA;border-radius:6px}
 
-  .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; margin-top:9px; font-size:11.5px; }
-  .detail-item { display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px dashed #F0F0F0; }
-  .detail-label { color:#999; }
-  .detail-value { color:#1A2622; font-weight:600; text-align:right; }
+/* MISC */
+.empty{text-align:center;padding:22px 10px;color:#aaa;font-size:12.5px}
+.empty i{font-size:26px;color:#ccc;display:block;margin-bottom:7px}
+.badge{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:9px;display:inline-block}
+.badge.gold{background:#FAEEDA;color:#633806}
+.badge.teal{background:#E1F5EE;color:#085041}
+.chwrap{position:relative;height:175px;margin-top:8px}
+.tmini{width:100%;font-size:11px}
+.tmini td{padding:7px 0;border-bottom:1px solid #F0F0F0}
+.tmini tr:last-child td{border-bottom:none}
 
-  .guest-comment { font-size:11px; color:#8B6310; margin-top:4px; background:#FFF8E7; padding:6px 9px; border-radius:6px; border-left:2px solid #C9921A; }
-  .staff-comment { font-size:11px; color:#1A4D8A; margin-top:4px; background:#EAF2FC; padding:6px 9px; border-radius:6px; border-left:2px solid #378ADD; }
-  .comment-box { margin-top:9px; }
-  .comment-label { font-size:9.5px; font-weight:700; color:#999; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px; display:flex; align-items:center; gap:4px; }
-  .comment-placeholder { font-size:11px; color:#bbb; font-style:italic; padding:6px 9px; background:#FAFAFA; border-radius:6px; }
+/* PASSWORD */
+.pscr{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:20px}
+.pbox{background:#fff;border-radius:16px;padding:30px 22px;max-width:310px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.pico{width:52px;height:52px;border-radius:13px;background:#0C3C35;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;color:#C9921A}
+.ptitle{font-size:16px;font-weight:700;color:#0C3C35;text-align:center}
+.psub{font-size:11px;color:#888;text-align:center;margin-top:4px;margin-bottom:18px}
+.pinp{width:100%;padding:12px;border-radius:10px;border:1.5px solid #E0E0E0;font-size:18px;text-align:center;letter-spacing:3px;outline:none}
+.pinp:focus{border-color:#C9921A}
+.pbtn{width:100%;padding:12px;border-radius:10px;background:#0C3C35;color:#fff;border:none;font-size:14px;font-weight:700;margin-top:10px;cursor:pointer}
+.perr{font-size:11px;color:#C0392B;text-align:center;margin-top:8px;min-height:14px}
+.pbrand{font-size:17px;font-weight:700;color:#fff;text-align:center;margin-bottom:4px}
+.pbsub{font-size:9.5px;color:#C9921A;text-align:center;margin-bottom:26px;font-weight:600}
 
-  .empty-state { text-align:center; padding:24px 10px; color:#999; font-size:13px; }
-  .empty-state i { font-size:28px; color:#ccc; display:block; margin-bottom:8px; }
+/* SUPERVISOR NOTE */
+.supnote{background:#F0EAF8;border-left:3px solid #6A3FA0;padding:9px 12px;border-radius:0 8px 8px 0;font-size:11px;color:#3B1F5E;margin-bottom:12px}
 
-  .badge { font-size:10px; font-weight:700; padding:3px 9px; border-radius:10px; display:inline-block; }
-  .badge.teal { background:#E1F5EE; color:#085041; }
-  .badge.gold { background:#FAEEDA; color:#633806; }
-  .badge.coral { background:#FAECE7; color:#712B13; }
+/* LOADING */
+.ldg{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;color:#fff}
+.ldg i{font-size:30px;margin-bottom:10px;animation:spin 1s linear infinite}
 
-  .chart-wrap { position:relative; height:180px; margin-top:8px; }
+/* ALERT */
+.alertbox{background:#FAEEDA;border-left:3px solid #BA7517;padding:9px 11px;border-radius:0 8px 8px 0;font-size:11px;color:#633806;margin-bottom:10px}
 
-  .table-mini { width:100%; font-size:11.5px; }
-  .table-mini td { padding:8px 0; border-bottom:1px solid #F0F0F0; }
-  .table-mini tr:last-child td { border-bottom:none; }
+/* BOOKING.COM */
+.bfbtn{font-size:10px;font-weight:700;padding:4px 11px;border-radius:9px;border:1.5px solid #DDD;background:#fff;color:#555;cursor:pointer}
+.bfbtn.active{background:#003580;color:#fff;border-color:#003580}
+.bcard{padding:12px 0;border-bottom:1px solid #F0F0F0}
+.bcard:last-child{border-bottom:none}
+.bappr{font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;background:#E1F5EE;color:#085041;display:inline-block}
+.bpend{font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;background:#FFF8E7;color:#8B6310;display:inline-block}
+.bapprbtn{font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#003580;color:#fff;border:none;cursor:pointer;margin-top:5px}
+.bunapprbtn{font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#f0f2f5;color:#666;border:none;cursor:pointer;margin-top:5px;margin-left:5px}
 
-  .password-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; padding:20px; }
-  .password-box { background:#fff; border-radius:16px; padding:32px 24px; max-width:320px; width:100%; box-shadow:0 4px 20px rgba(0,0,0,0.2); }
-  .password-icon { width:54px; height:54px; border-radius:14px; background:#0C3C35; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:24px; color:#C9921A; }
-  .password-title { font-size:17px; font-weight:700; color:#0C3C35; text-align:center; }
-  .password-sub { font-size:11.5px; color:#888; text-align:center; margin-top:4px; margin-bottom:20px; }
-  .password-input { width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid #E0E0E0; font-size:16px; text-align:center; letter-spacing:2px; outline:none; }
-  .password-input:focus { border-color:#C9921A; }
-  .password-btn { width:100%; padding:12px; border-radius:10px; background:#0C3C35; color:#fff; border:none; font-size:14px; font-weight:700; margin-top:12px; cursor:pointer; }
-  .password-btn:active { background:#1A7A6E; }
-  .password-error { font-size:11.5px; color:#C0392B; text-align:center; margin-top:10px; min-height:14px; }
-  .password-brand { font-size:18px; font-weight:700; color:#fff; text-align:center; margin-bottom:6px; }
-  .password-brand-sub { font-size:10px; color:#C9921A; text-align:center; margin-bottom:28px; font-weight:600; }
-
-  .loading-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; color:#fff; }
-  .loading-screen i { font-size:32px; margin-bottom:12px; animation:spin 1s linear infinite; }
-
-  .error-box { background:#FAECE7; color:#712B13; padding:14px; border-radius:10px; font-size:12px; margin:14px; }
-
-  .alert-box { background:#FAEEDA; border-left:3px solid #BA7517; padding:10px 12px; border-radius:0 8px 8px 0; font-size:11.5px; color:#633806; margin-bottom:12px; }
-
-  .supervisor-note { background:#F0EAF8; border-left:3px solid #6A3FA0; padding:9px 12px; border-radius:0 8px 8px 0; font-size:11px; color:#3B1F5E; margin-bottom:12px; }
-  .tab.tab-bcom { background:#003580; color:#fff; }
-  .tab.tab-bcom.active { background:#003580; opacity:1; }
-  .bcom-filter-btn { font-size:10px; font-weight:700; padding:4px 12px; border-radius:10px; border:1.5px solid #E0E0E0; background:#fff; color:#555; cursor:pointer; }
-  .bcom-filter-btn.active { background:#003580; color:#fff; border-color:#003580; }
-  .bcom-card { padding:12px 0; border-bottom:1px solid #F0F0F0; }
-  .bcom-card:last-child { border-bottom:none; }
-  .bcom-badge-approved { font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:8px;background:#E1F5EE;color:#085041;display:inline-block; }
-  .bcom-badge-pending { font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:8px;background:#FFF8E7;color:#8B6310;display:inline-block; }
-  .bcom-approve-btn { font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#003580;color:#fff;border:none;cursor:pointer;margin-top:6px; }
-  .bcom-unapprove-btn { font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#f0f2f5;color:#666;border:none;cursor:pointer;margin-top:6px;margin-left:6px; }
+/* MODAL */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(0,0,0,.5)}
+.modal-box{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:18px 18px 0 0;max-height:92vh;overflow-y:auto;padding-bottom:32px}
+.modal-handle{text-align:center;padding:10px 0 0;cursor:pointer}
+.modal-handle-bar{width:36px;height:4px;background:#DDD;border-radius:4px;display:inline-block}
+.modal-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 12px;border-bottom:1px solid #F0F0F0}
+.modal-title{font-size:14px;font-weight:700;color:#003580}
+.modal-sub{font-size:10px;color:#888;margin-top:2px}
+.modal-close{background:#f0f2f5;border:none;border-radius:8px;width:28px;height:28px;font-size:15px;cursor:pointer}
+.modal-body{padding:14px 16px}
+.mupload{border:2px dashed #003580;border-radius:12px;padding:22px 16px;text-align:center;cursor:pointer;margin-bottom:10px}
+.mupload.ok{border-color:#1A7A6E}
+.mprev{display:none;width:100%;border-radius:10px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.mexbtn{width:100%;padding:11px;background:#003580;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;margin-bottom:10px;cursor:pointer}
+.mexbtn:disabled{opacity:.45;cursor:not-allowed}
+.mstatus{display:none;font-size:11px;padding:8px 11px;border-radius:8px;margin-bottom:10px}
+.mstatus.ok{background:#EEF3FB;color:#003580}
+.mstatus.err{background:#FAECE7;color:#712B13}
+.mfields{display:none}
+.mseclbl{font-size:10px;font-weight:700;color:#003580;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #EEF3FB}
+.mfg{margin-bottom:9px}
+.mfg label{font-size:10.5px;font-weight:600;color:#555;display:block;margin-bottom:3px}
+.mfg input,.mfg select,.mfg textarea{width:100%;padding:9px 10px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;color:#1A2622;outline:none;background:#fff}
+.mfg input:focus,.mfg select:focus{border-color:#003580}
+.mfg textarea{height:60px;resize:none}
+.mfrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mnet{background:#EEF3FB;padding:9px 11px;border-radius:8px;font-size:12.5px;font-weight:700;color:#003580;margin-bottom:9px}
+.msavebtn{width:100%;padding:14px;background:#1A7A6E;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer}
+.msavebtn:disabled{opacity:.5;cursor:not-allowed}
 </style>
 </head>
 <body>
 
-<div id="passwordScreen" class="password-screen" style="background:#0C3C35;">
-  <div class="password-brand">Ideal Homes Nadi</div>
-  <div class="password-brand-sub">Enter password to continue</div>
-  <div class="password-box">
-    <div class="password-icon"><i class="ti ti-lock" aria-hidden="true"></i></div>
-    <div class="password-title">Dashboard Access</div>
-    <div class="password-sub">Enter your access code</div>
-    <input type="password" id="passwordInput" class="password-input" placeholder="••••••" autocomplete="off" maxlength="20">
-    <button class="password-btn" onclick="checkPassword()">Unlock</button>
-    <div class="password-error" id="passwordError"></div>
+<!-- PASSWORD SCREEN -->
+<div id="pscr" class="pscr">
+  <div class="pbrand">Ideal Homes Nadi</div>
+  <div class="pbsub">Enter your access code</div>
+  <div class="pbox">
+    <div class="pico"><i class="ti ti-lock"></i></div>
+    <div class="ptitle">Dashboard Access</div>
+    <div class="psub">Enter your password to continue</div>
+    <input type="password" id="pinp" class="pinp" placeholder="••••••" autocomplete="off" maxlength="20">
+    <button class="pbtn" onclick="checkPw()">Unlock</button>
+    <div class="perr" id="perr"></div>
   </div>
 </div>
 
-<div id="loading" class="loading-screen" style="display:none;">
+<!-- LOADING -->
+<div id="ldg" class="ldg" style="display:none">
   <i class="ti ti-loader-2"></i>
-  <div style="font-size:13px;color:#7ec8c0;">Loading dashboard...</div>
+  <div style="font-size:12px;color:#7ec8c0">Loading dashboard...</div>
 </div>
 
-<div id="app" style="display:none;">
+<!-- APP -->
+<div id="app" style="display:none">
 
-  <div class="header">
-    <div class="header-top">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <img src="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg" alt="Adesanmi Global logo" style="height:32px; width:auto; border-radius:6px;">
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-top">
+      <div style="display:flex;align-items:center;gap:9px">
+        <img src="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg" alt="Logo" style="height:30px;width:auto;border-radius:6px">
         <div>
           <div class="brand">Ideal Homes Nadi</div>
           <div class="brand-sub" id="brandSub">Live Sales Dashboard</div>
         </div>
       </div>
-      <div class="header-actions" id="headerActionsToggle">
-        <button class="refresh-btn" id="logoutBtn" onclick="logout()" aria-label="Lock" style="margin-right:4px;">
-          <i class="ti ti-lock"></i>
-        </button>
-        <button class="refresh-btn" id="refreshBtn" onclick="loadData()" aria-label="Refresh">
-          <i class="ti ti-refresh"></i>
-        </button>
+      <div class="hdr-btns">
+        <button class="ico-btn" onclick="logout()" title="Lock"><i class="ti ti-lock"></i></button>
+        <button class="ico-btn" id="refBtn" onclick="loadData()" title="Refresh"><i class="ti ti-refresh" id="refIco"></i></button>
       </div>
     </div>
-    <div class="updated" id="updatedLabel">—</div>
+    <div class="upd" id="upd">—</div>
   </div>
 
+  <!-- TABS -->
   <div class="tabs">
-    <div class="tab active" data-tab="today">Today</div>
-    <div class="tab tab-financial" data-tab="week">Week</div>
-    <div class="tab tab-financial" data-tab="month">Month</div>
-    <div class="tab tab-financial" data-tab="quarter">Quarter VAT</div>
-    <div class="tab" data-tab="upcoming">Upcoming</div>
-    <div class="tab tab-bcom" data-tab="bookingcom">🔵 Booking.com</div>
+    <button class="tab active" data-tab="today">Today</button>
+    <button class="tab fin-tab" data-tab="week">Week</button>
+    <button class="tab fin-tab" data-tab="month">Month</button>
+    <button class="tab fin-tab" data-tab="quarter">Quarter VAT</button>
+    <button class="tab" data-tab="upcoming">Upcoming</button>
+    <button class="tab bcom-tab" data-tab="bookingcom">🔵 Booking.com</button>
   </div>
 
+  <!-- CONTENT -->
   <div class="content">
 
-    <div class="section active" id="section-today">
-      <div id="supervisorNote" style="display:none;" class="supervisor-note">
-        <i class="ti ti-info-circle" aria-hidden="true"></i> Showing check-in and check-out details only
+    <!-- TODAY -->
+    <div class="sec active" id="sec-today">
+      <div id="supnote" class="supnote" style="display:none"><i class="ti ti-info-circle"></i> Check-in &amp; checkout details only</div>
+      <div id="todayAlert"></div>
+      <div class="kgrid kgrid3" style="margin-bottom:12px">
+        <div class="kpi"><div class="klbl">Check-ins</div><div class="kval" id="kCI">0</div></div>
+        <div class="kpi"><div class="klbl">Checkouts</div><div class="kval" id="kCO">0</div></div>
+        <div class="kpi fin-tab"><div class="klbl">Revenue</div><div class="kval" id="kRev">$0</div></div>
       </div>
-      <div id="todayAlerts"></div>
-      <div class="kpi-grid three tab-financial-grid">
-        <div class="kpi">
-          <div class="kpi-label">Check-ins</div>
-          <div class="kpi-value" id="todayCheckinCount">0</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Checkouts</div>
-          <div class="kpi-value" id="todayCheckoutCount">0</div>
-        </div>
-        <div class="kpi tab-financial">
-          <div class="kpi-label">Revenue</div>
-          <div class="kpi-value" id="todayRevenue">$0</div>
-        </div>
+      <div class="card ci">
+        <div class="ctitle"><i class="ti ti-door-enter"></i> Check-ins today</div>
+        <div id="listCI"></div>
       </div>
-
-      <div class="card card-checkin">
-        <div class="card-title"><i class="ti ti-door-enter"></i> Check-ins today</div>
-        <div id="todayCheckins"></div>
-      </div>
-
-      <div class="card card-checkout">
-        <div class="card-title"><i class="ti ti-door-exit"></i> Checkouts today</div>
-        <div id="todayCheckouts"></div>
+      <div class="card co">
+        <div class="ctitle"><i class="ti ti-door-exit"></i> Checkouts today</div>
+        <div id="listCO"></div>
       </div>
     </div>
 
-    <div class="section" id="section-week">
-      <div class="kpi-grid">
-        <div class="kpi">
-          <div class="kpi-label">Revenue</div>
-          <div class="kpi-value" id="weekRevenue">$0</div>
-          <div class="kpi-sub" id="weekLabel"></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Bookings</div>
-          <div class="kpi-value" id="weekBookings">0</div>
-          <div class="kpi-sub" id="weekNights"></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Collected</div>
-          <div class="kpi-value" id="weekPaid">$0</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Outstanding</div>
-          <div class="kpi-value" id="weekOutstanding">$0</div>
-        </div>
+    <!-- WEEK -->
+    <div class="sec" id="sec-week">
+      <div class="kgrid">
+        <div class="kpi"><div class="klbl">Revenue</div><div class="kval" id="wRev">$0</div><div class="ksub" id="wLbl"></div></div>
+        <div class="kpi"><div class="klbl">Bookings</div><div class="kval" id="wBk">0</div><div class="ksub" id="wNi"></div></div>
+        <div class="kpi"><div class="klbl">Collected</div><div class="kval" id="wPd" style="color:#085041">$0</div></div>
+        <div class="kpi"><div class="klbl">Outstanding</div><div class="kval" id="wOut" style="color:#C0392B">$0</div></div>
       </div>
     </div>
 
-    <div class="section" id="section-month">
-      <div class="kpi-grid">
-        <div class="kpi">
-          <div class="kpi-label">Revenue</div>
-          <div class="kpi-value" id="monthRevenue">$0</div>
-          <div id="monthChange"></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Bookings</div>
-          <div class="kpi-value" id="monthBookings">0</div>
-          <div class="kpi-sub" id="monthNights"></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">VAT (12.5%)</div>
-          <div class="kpi-value" id="monthVat">$0</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Outstanding</div>
-          <div class="kpi-value" id="monthOutstanding">$0</div>
-        </div>
+    <!-- MONTH -->
+    <div class="sec" id="sec-month">
+      <div class="kgrid">
+        <div class="kpi"><div class="klbl">Revenue</div><div class="kval" id="mRev">$0</div><div id="mChg"></div></div>
+        <div class="kpi"><div class="klbl">Bookings</div><div class="kval" id="mBk">0</div><div class="ksub" id="mNi"></div></div>
+        <div class="kpi"><div class="klbl">VAT 12.5%</div><div class="kval" id="mVat" style="color:#085041">$0</div></div>
+        <div class="kpi"><div class="klbl">Outstanding</div><div class="kval" id="mOut" style="color:#C0392B">$0</div></div>
       </div>
-
       <div class="card">
-        <div class="card-title"><i class="ti ti-chart-bar"></i> Revenue by month — <span id="monthChartYear"></span></div>
-        <div class="chart-wrap">
-          <canvas id="monthlyChart" role="img" aria-label="Bar chart of monthly revenue for the current year"></canvas>
-        </div>
+        <div class="ctitle"><i class="ti ti-chart-bar"></i> Revenue by month — <span id="mYear"></span></div>
+        <div class="chwrap"><canvas id="mChart"></canvas></div>
       </div>
     </div>
 
-    <div class="section" id="section-quarter">
-      <div class="kpi-grid">
-        <div class="kpi">
-          <div class="kpi-label" id="quarterLabel">This Quarter</div>
-          <div class="kpi-value" id="quarterRevenue">$0</div>
-          <div class="kpi-sub">Total inc. VAT</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">VAT payable</div>
-          <div class="kpi-value" id="quarterVat">$0</div>
-          <div class="kpi-sub">FRCS output tax</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Excl. VAT</div>
-          <div class="kpi-value" id="quarterExcVat">$0</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Bookings</div>
-          <div class="kpi-value" id="quarterBookings">0</div>
-          <div class="kpi-sub" id="quarterNights"></div>
-        </div>
+    <!-- QUARTER -->
+    <div class="sec" id="sec-quarter">
+      <div class="kgrid">
+        <div class="kpi"><div class="klbl" id="qLbl">Quarter</div><div class="kval" id="qRev">$0</div><div class="ksub">inc. VAT</div></div>
+        <div class="kpi"><div class="klbl">VAT payable</div><div class="kval" id="qVat" style="color:#085041">$0</div><div class="ksub">FRCS</div></div>
+        <div class="kpi"><div class="klbl">Excl. VAT</div><div class="kval" id="qExc">$0</div></div>
+        <div class="kpi"><div class="klbl">Bookings</div><div class="kval" id="qBk">0</div><div class="ksub" id="qNi"></div></div>
       </div>
-
       <div class="card">
-        <div class="card-title"><i class="ti ti-receipt-tax"></i> VAT by quarter — <span id="quarterChartYear"></span></div>
-        <div class="chart-wrap">
-          <canvas id="quarterlyChart" role="img" aria-label="Bar chart of VAT amount by quarter"></canvas>
-        </div>
+        <div class="ctitle"><i class="ti ti-receipt-tax"></i> VAT by quarter — <span id="qYear"></span></div>
+        <div class="chwrap"><canvas id="qChart"></canvas></div>
+        <div id="qLeg" style="display:flex;gap:12px;margin-top:7px;font-size:10.5px;color:#666"></div>
       </div>
-
       <div class="card">
-        <div class="card-title"><i class="ti ti-calendar-stats"></i> Year to date</div>
-        <table class="table-mini">
-          <tr><td>Total revenue (inc. VAT)</td><td style="text-align:right;font-weight:700;" id="ytdRevenue">$0</td></tr>
-          <tr><td>Total VAT collected</td><td style="text-align:right;font-weight:700;color:#085041;" id="ytdVat">$0</td></tr>
-          <tr><td>Total bookings</td><td style="text-align:right;font-weight:700;" id="ytdBookings">0</td></tr>
+        <div class="ctitle"><i class="ti ti-calendar-stats"></i> Year to date</div>
+        <table class="tmini">
+          <tr><td>Total revenue (inc. VAT)</td><td style="text-align:right;font-weight:700" id="ytdRev">$0</td></tr>
+          <tr><td>Total VAT collected</td><td style="text-align:right;font-weight:700;color:#085041" id="ytdVat">$0</td></tr>
+          <tr><td>Total bookings</td><td style="text-align:right;font-weight:700" id="ytdBk">0</td></tr>
         </table>
       </div>
     </div>
 
-    <div class="section" id="section-upcoming">
+    <!-- UPCOMING -->
+    <div class="sec" id="sec-upcoming">
       <div class="card">
-        <div class="card-title"><i class="ti ti-calendar-event"></i> Next 7 days check-ins</div>
-        <div id="upcomingList"></div>
+        <div class="ctitle"><i class="ti ti-calendar-event"></i> Next 7 days check-ins</div>
+        <div id="listUp"></div>
       </div>
     </div>
 
-    <div class="section" id="section-bookingcom">
+    <!-- BOOKING.COM -->
+    <div class="sec" id="sec-bookingcom">
       <div class="card">
-        <div class="card-title" style="justify-content:space-between;">
-          <span><i class="ti ti-building-store"></i> Booking.com Reservations</span>
-          <span id="bcomPendingBadge" style="font-size:9px;background:#FFF8E7;color:#8B6310;padding:2px 8px;border-radius:8px;font-weight:700;display:none;">⏳ Pending</span>
+        <!-- Header row with + Add button -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-size:10.5px;font-weight:700;color:#4A6160;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
+            <i class="ti ti-building-store"></i> Booking.com Reservations
+            <span id="bPendBadge" style="font-size:9px;background:#FFF8E7;color:#8B6310;padding:2px 7px;border-radius:7px;font-weight:700;display:none">⏳</span>
+          </div>
+          <button id="addBcomBtn" onclick="openModal()" style="background:#003580;color:#fff;border:none;border-radius:9px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0">+ Add</button>
         </div>
-        <div id="bcomFilter" style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
-          <button onclick="setBcomFilter('all')" id="bfAll" class="bcom-filter-btn active">All</button>
-          <button onclick="setBcomFilter('pending')" id="bfPending" class="bcom-filter-btn">⏳ Pending</button>
-          <button onclick="setBcomFilter('approved')" id="bfApproved" class="bcom-filter-btn">✅ Approved</button>
+        <!-- Filter buttons -->
+        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+          <button class="bfbtn active" id="bfAll" onclick="bFilter('all')">All</button>
+          <button class="bfbtn" id="bfPend" onclick="bFilter('pending')">⏳ Pending</button>
+          <button class="bfbtn" id="bfAppr" onclick="bFilter('approved')">✅ Approved</button>
         </div>
-        <div id="bcomList"></div>
+        <div id="bList"></div>
       </div>
     </div>
 
   </div>
 </div>
 
+<!-- BOOKING.COM MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title">📷 Add Booking.com Reservation</div><div class="modal-sub">Upload screenshot · AI fills details</div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mupload" id="mUpArea" onclick="document.getElementById('mFile').click()" ondragover="event.preventDefault()" ondrop="mDrop(event)">
+        <div style="font-size:34px">📸</div>
+        <div style="font-size:13px;font-weight:600;color:#003580;margin-top:6px">Tap to upload screenshot</div>
+        <div style="font-size:10.5px;color:#888;margin-top:3px">JPG · PNG · PDF</div>
+      </div>
+      <img class="mprev" id="mPrev">
+      <input type="file" id="mFile" accept="image/*,.pdf" style="display:none" onchange="mPickFile(this.files[0])">
+      <button class="mexbtn" id="mExBtn" onclick="mExtract()" disabled>✨ Extract with AI</button>
+      <div class="mstatus" id="mSt"></div>
+      <div class="mfields" id="mFields">
+        <div class="mseclbl">Review &amp; Confirm Details</div>
+        <div class="mfrow">
+          <div class="mfg"><label>Booking No *</label><input id="mBNo" type="text" placeholder="5647264806"></div>
+          <div class="mfg"><label>Status</label>
+            <select id="mBSt"><option value="Confirmed">Confirmed</option><option value="Cancelled">Cancelled</option><option value="No Show">No Show</option></select>
+          </div>
+        </div>
+        <div class="mfg"><label>Guest Name *</label><input id="mGN" type="text" placeholder="Full name"></div>
+        <div class="mfrow">
+          <div class="mfg"><label>Adults</label><input id="mAd" type="number" placeholder="2" min="1"></div>
+          <div class="mfg"><label>Kids</label><input id="mKd" type="number" placeholder="0" min="0"></div>
+        </div>
+        <div class="mfrow">
+          <div class="mfg"><label>Check-In (DD-MM-YYYY) *</label><input id="mCI" type="text" placeholder="20-06-2026" oninput="mNights()"></div>
+          <div class="mfg"><label>Check-Out (DD-MM-YYYY) *</label><input id="mCO" type="text" placeholder="21-06-2026" oninput="mNights()"></div>
+        </div>
+        <div class="mfrow">
+          <div class="mfg"><label>Nights</label><input id="mNi" type="number" placeholder="1" min="1"></div>
+          <div class="mfg"><label>Room Type *</label>
+            <select id="mRT">
+              <option value="">Select...</option>
+              <option value="1-Bedroom Apartment">1-Bedroom Apartment</option>
+              <option value="2-Bedroom Deluxe Apartment">2-Bedroom Deluxe Apartment</option>
+              <option value="3-Bedroom Deluxe Apartment">3-Bedroom Deluxe Apartment</option>
+            </select>
+          </div>
+        </div>
+        <div class="mfrow">
+          <div class="mfg"><label>Total Price (FJD) *</label><input id="mTot" type="number" step="0.01" placeholder="283.50" oninput="mNet()"></div>
+          <div class="mfg"><label>Commission (FJD)</label><input id="mCom" type="number" step="0.01" placeholder="42.52" oninput="mNet()"></div>
+        </div>
+        <div class="mnet">Net Amount: <span id="mNetVal">FJD 0.00</span></div>
+        <div class="mfg"><label>Payment Method</label>
+          <select id="mPM"><option value="Booking.com Collect">Booking.com Collect</option><option value="Property Collect">Property Collect</option></select>
+        </div>
+        <div class="mfg"><label>Notes</label><textarea id="mNotes" placeholder="Special requests..."></textarea></div>
+        <button class="msavebtn" id="mSaveBtn" onclick="mSave()">✅ Save Reservation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const DASH_API_URL = "https://script.google.com/macros/s/AKfycbznYlHuc-y9w7SrCddNUb0AgxzR7mlSQ7NMgciyKA6rrDQQ3o98zgi7sxQu1WTST0gCAA/exec";
+// ─── CONFIG ──────────────────────────────────────────────────
+const API = "https://script.google.com/macros/s/AKfycbznYlHuc-y9w7SrCddNUb0AgxzR7mlSQ7NMgciyKA6rrDQQ3o98zgi7sxQu1WTST0gCAA/exec";
+const BAPI = "https://script.google.com/macros/s/AKfycbxqsGJOSY5Gpk2GklD84gS_7iqu0aVcNBADfYEuo1rtH5yjbsVkvuLKhZUA31SaJD1pTg/exec";
+const PW = { ituomo:"admin", agpl12:"supervisor" };
 
-const PASSWORDS = {
-  "ituomo": "admin",
-  "agpl12": "supervisor"
-};
+let view = "admin", cache = null, mCh1 = null, mCh2 = null;
+let bAll = [], bFilterVal = "all";
+let mB64 = null, mMime = null;
 
-let monthlyChartInstance = null;
-let quarterlyChartInstance = null;
-let currentView = 'admin';
-let cachedData = null;
-
-function checkPassword() {
-  const input = document.getElementById('passwordInput').value.trim().toLowerCase();
-  const errorEl = document.getElementById('passwordError');
-  const matchedView = PASSWORDS[input];
-
-  if (!matchedView) {
-    errorEl.textContent = 'Incorrect password. Please try again.';
-    document.getElementById('passwordInput').value = '';
-    document.getElementById('passwordInput').focus();
+// ─── PASSWORD ────────────────────────────────────────────────
+function checkPw() {
+  const v = document.getElementById("pinp").value.trim().toLowerCase();
+  const matched = PW[v];
+  if (!matched) {
+    document.getElementById("perr").textContent = "Incorrect password. Try again.";
+    document.getElementById("pinp").value = "";
     return;
   }
-
-  errorEl.textContent = '';
-  currentView = matchedView;
-  sessionStorage.setItem('ihn_view', matchedView);
-
-  document.getElementById('passwordScreen').style.display = 'none';
-  document.getElementById('loading').style.display = 'flex';
-
+  view = matched;
+  sessionStorage.setItem("ihv", matched);
+  document.getElementById("pscr").style.display = "none";
+  document.getElementById("ldg").style.display = "flex";
   loadData();
 }
-
-function logout() {
-  sessionStorage.removeItem('ihn_view');
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('passwordInput').value = '';
-  document.getElementById('passwordError').textContent = '';
-  document.getElementById('passwordScreen').style.display = 'flex';
-}
-
-document.getElementById('passwordInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') checkPassword();
-});
-
-// Auto-unlock if already verified this session
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = sessionStorage.getItem('ihn_view');
-  if (saved && (saved === 'admin' || saved === 'supervisor')) {
-    currentView = saved;
-    document.getElementById('passwordScreen').style.display = 'none';
-    document.getElementById('loading').style.display = 'flex';
+document.getElementById("pinp").addEventListener("keydown", e => { if (e.key === "Enter") checkPw(); });
+window.addEventListener("DOMContentLoaded", () => {
+  const sv = sessionStorage.getItem("ihv");
+  if (sv === "admin" || sv === "supervisor") {
+    view = sv;
+    document.getElementById("pscr").style.display = "none";
+    document.getElementById("ldg").style.display = "flex";
     loadData();
   }
 });
 
-function fmt(n) { return new Intl.NumberFormat('en-FJ', { maximumFractionDigits: 0 }).format(Math.round(n || 0)); }
-function fmtFull(n) { return (n || 0).toFixed(2); }
-function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
-
-function setView(view) {
-  currentView = view;
-  document.getElementById('supervisorNote').style.display = view === 'supervisor' ? 'block' : 'none';
-  document.getElementById('brandSub').textContent = view === 'supervisor' ? 'Supervisor View — Check-In/Out Only' : 'Live Sales Dashboard';
-
-  document.querySelectorAll('.tab-financial').forEach(el => {
-    el.style.display = view === 'supervisor' ? 'none' : '';
-  });
-  document.querySelectorAll('.tab-bcom').forEach(el => {
-    el.style.display = view === 'supervisor' ? 'none' : '';
-  });
-
-  if (view === 'supervisor') {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelector('.tab[data-tab="today"]').classList.add('active');
-    document.getElementById('section-today').classList.add('active');
-  }
-
-  if (cachedData) render(cachedData);
+function logout() {
+  sessionStorage.removeItem("ihv");
+  document.getElementById("app").style.display = "none";
+  document.getElementById("ldg").style.display = "none";
+  document.getElementById("pinp").value = "";
+  document.getElementById("perr").textContent = "";
+  document.getElementById("pscr").style.display = "flex";
 }
+
+// ─── LOAD DATA ───────────────────────────────────────────────
 async function loadData() {
-  const btn = document.getElementById('refreshBtn');
-  const icon = btn.querySelector('i');
-  icon.style.animation = 'spin 0.8s linear infinite';
-  document.getElementById('updatedLabel').textContent = 'Loading...';
+  const ico = document.getElementById("refIco");
+  ico.classList.add("spinning");
+  document.getElementById("upd").textContent = "Loading...";
   try {
-    const res = await fetch(DASH_API_URL);
-    const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); }
-    catch(parseErr) { throw new Error('Response was not valid JSON: ' + text.substring(0,150)); }
-    if (data.error) throw new Error(data.error);
-    cachedData = data;
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    setView(currentView);
-  } catch (err) {
-    document.getElementById('loading').innerHTML =
-      '<div class="error-box">Could not load data.<br>' + esc(err.message) + '<br><br>Check the API URL is set correctly.</div>';
+    const res = await fetch(API);
+    const txt = await res.text();
+    const d = JSON.parse(txt);
+    if (d.error) throw new Error(d.error);
+    cache = d;
+    document.getElementById("ldg").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    applyView();
+    render(d);
+  } catch(e) {
+    document.getElementById("ldg").innerHTML = '<div style="color:#FAECE7;padding:20px;font-size:13px">Error: ' + esc(e.message) + '</div>';
   }
-  icon.style.animation = 'none';
+  ico.classList.remove("spinning");
 }
 
-function render(data) {
-  document.getElementById('updatedLabel').textContent = 'Updated ' + data.generatedAt;
-
-  const isSupervisor = currentView === 'supervisor';
-  const checkIns  = isSupervisor ? data.today.checkInsSupervisor  : data.today.checkIns;
-  const checkOuts = isSupervisor ? data.today.checkOutsSupervisor : data.today.checkOuts;
-
-  document.getElementById('todayCheckinCount').textContent = checkIns.length;
-  document.getElementById('todayCheckoutCount').textContent = checkOuts.length;
-  document.getElementById('todayRevenue').textContent = '$' + fmt(data.today.revenue);
-
-  document.getElementById('todayCheckins').innerHTML = renderGuestList(checkIns, 'checkin', isSupervisor);
-  document.getElementById('todayCheckouts').innerHTML = renderGuestList(checkOuts, 'checkout', isSupervisor);
-
-  let alertsHtml = '';
-  if (!isSupervisor && (data.alerts.refundedThisMonth > 0 || data.alerts.cancelledThisMonth > 0)) {
-    alertsHtml = '<div class="alert-box"><i class="ti ti-alert-triangle" aria-hidden="true"></i> ' +
-      data.alerts.refundedThisMonth + ' refunded (FJD ' + fmtFull(data.alerts.refundedAmount) + ') + ' +
-      data.alerts.cancelledThisMonth + ' cancelled this month — excluded from totals</div>';
-  }
-  document.getElementById('todayAlerts').innerHTML = alertsHtml;
-
-  const upcomingData = isSupervisor ? data.upcomingSupervisor : data.upcoming;
-  document.getElementById('upcomingList').innerHTML = renderUpcoming(upcomingData, isSupervisor);
-
-  if (isSupervisor) return; // skip financial sections entirely
-
-  document.getElementById('weekRevenue').textContent = '$' + fmt(data.week.revenue);
-  document.getElementById('weekLabel').textContent = data.week.label;
-  document.getElementById('weekBookings').textContent = data.week.bookings;
-  document.getElementById('weekNights').textContent = data.week.nights + ' nights';
-  document.getElementById('weekPaid').textContent = '$' + fmt(data.week.paid);
-  document.getElementById('weekOutstanding').textContent = '$' + fmt(data.week.outstanding);
-
-  document.getElementById('monthRevenue').textContent = '$' + fmt(data.month.revenue);
-  document.getElementById('monthBookings').textContent = data.month.bookings;
-  document.getElementById('monthNights').textContent = data.month.nights + ' nights';
-  document.getElementById('monthVat').textContent = '$' + fmt(data.month.vat);
-  document.getElementById('monthOutstanding').textContent = '$' + fmt(data.month.outstanding);
-
-  if (data.month.momChange !== null) {
-    const up = data.month.momChange >= 0;
-    document.getElementById('monthChange').innerHTML =
-      '<span class="kpi-change ' + (up ? 'up' : 'down') + '">' + (up ? '▲' : '▼') + ' ' + Math.abs(data.month.momChange) + '% vs last month</span>';
-  }
-
-  document.getElementById('quarterLabel').textContent = data.quarter.label;
-  document.getElementById('quarterRevenue').textContent = '$' + fmt(data.quarter.revenue);
-  document.getElementById('quarterVat').textContent = '$' + fmt(data.quarter.vat);
-  document.getElementById('quarterExcVat').textContent = '$' + fmt(data.quarter.excVat);
-  document.getElementById('quarterBookings').textContent = data.quarter.bookings;
-  document.getElementById('quarterNights').textContent = data.quarter.nights + ' nights';
-
-  document.getElementById('ytdRevenue').textContent = '$' + fmt(data.ytd.revenue);
-  document.getElementById('ytdVat').textContent = '$' + fmt(data.ytd.vat);
-  document.getElementById('ytdBookings').textContent = data.ytd.bookings;
-
-  document.getElementById('monthChartYear').textContent = data.ytd.year;
-  document.getElementById('quarterChartYear').textContent = data.ytd.year;
-
-  drawMonthlyChart(data.monthlyChart);
-  drawQuarterlyChart(data.quarterlyChart);
-
-  // Booking.com — admin only
-  if (!isSupervisor && data.bookingCom) {
-    renderBcomTab(data.bookingCom.all || []);
-    // Inject approved bcom into today's check-ins display
-    const approvedIn  = (data.bookingCom.todayCheckIns  || []).filter(b => b.approved === 'Yes');
-    const approvedOut = (data.bookingCom.todayCheckOuts || []).filter(b => b.approved === 'Yes');
-    const approvedUp  = (data.bookingCom.upcoming       || []).filter(b => b.approved === 'Yes');
-    if (approvedIn.length)  renderBcomInjectToday(approvedIn, 'checkin');
-    if (approvedOut.length) renderBcomInjectToday(approvedOut, 'checkout');
-    if (approvedUp.length)  renderBcomInjectUpcoming(approvedUp);
-    // Update KPI count
-    const ciCount = parseInt(document.getElementById('todayCheckinCount').textContent) + approvedIn.length;
-    const coCount = parseInt(document.getElementById('todayCheckoutCount').textContent) + approvedOut.length;
-    document.getElementById('todayCheckinCount').textContent  = ciCount;
-    document.getElementById('todayCheckoutCount').textContent = coCount;
-    // Pending badge
-    const pending = (data.bookingCom.all || []).filter(b => b.approved !== 'Yes').length;
-    const badge = document.getElementById('bcomPendingBadge');
-    if (badge) { badge.textContent = `⏳ ${pending} pending`; badge.style.display = pending > 0 ? 'inline-block' : 'none'; }
+function applyView() {
+  const isSup = view === "supervisor";
+  document.getElementById("supnote").style.display = isSup ? "block" : "none";
+  document.getElementById("brandSub").textContent = isSup ? "Supervisor View" : "Live Sales Dashboard";
+  document.querySelectorAll(".fin-tab").forEach(el => el.style.display = isSup ? "none" : "");
+  // Booking.com tab only for admin
+  document.querySelectorAll(".bcom-tab").forEach(el => el.style.display = isSup ? "none" : "");
+  if (isSup) {
+    switchTab("today");
   }
 }
 
-function renderGuestList(list, type, isSupervisor) {
-  if (!list || list.length === 0) {
-    return '<div class="empty-state"><i class="ti ti-mood-empty" aria-hidden="true"></i>No ' + (type === 'checkin' ? 'check-ins' : 'checkouts') + ' today</div>';
+// ─── RENDER ──────────────────────────────────────────────────
+function render(d) {
+  document.getElementById("upd").textContent = "Updated " + d.generatedAt;
+  const isSup = view === "supervisor";
+  const ci  = isSup ? d.today.checkInsSupervisor  : d.today.checkIns;
+  const co  = isSup ? d.today.checkOutsSupervisor : d.today.checkOuts;
+  const up  = isSup ? d.upcomingSupervisor         : d.upcoming;
+
+  set("kCI", ci.length);
+  set("kCO", co.length);
+  set("kRev", "$" + fmt(d.today.revenue));
+  document.getElementById("listCI").innerHTML = renderGuests(ci, "ci", isSup);
+  document.getElementById("listCO").innerHTML = renderGuests(co, "co", isSup);
+
+  // Alert
+  let al = "";
+  if (!isSup && d.alerts && (d.alerts.refundedThisMonth > 0 || d.alerts.cancelledThisMonth > 0)) {
+    al = '<div class="alertbox">⚠️ ' + d.alerts.refundedThisMonth + ' refunded (FJD ' + fmtD(d.alerts.refundedAmount) + ') + ' + d.alerts.cancelledThisMonth + ' cancelled this month</div>';
   }
-  return list.map(g => {
-    const room = g.roomNumber ? g.roomType + ' · Rm ' + g.roomNumber : g.roomType;
+  document.getElementById("todayAlert").innerHTML = al;
 
-    if (isSupervisor) {
-      const balance = g.outstanding;
-      const balColor = balance > 0 ? '#C0392B' : '#1A7A6E';
-      return '<div class="guest-card">' +
-        '<div class="guest-card-top">' +
-          '<div>' +
-            '<div class="guest-name">' + esc(g.guestName) + '</div>' +
-            '<div class="res-badge">Res: ' + esc(g.bookingId) + '</div>' +
-          '</div>' +
-          '<div class="guest-right">' +
-            '<div class="outstanding" style="color:' + balColor + ';">$' + fmtFull(balance) + '</div>' +
-            '<div class="outstanding-label">balance due</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="detail-grid">' +
-          '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(room) + '</span></div>' +
-          '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + g.nights + '</span></div>' +
-          (g.adults !== undefined ? '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + g.adults + 'A / ' + g.kids + 'K</span></div>' : '') +
-          '<div class="detail-item"><span class="detail-label">Total charge</span><span class="detail-value">$' + fmtFull(g.totalCost) + '</span></div>' +
-          (g.depositPaid !== undefined ? '<div class="detail-item"><span class="detail-label">Deposit paid</span><span class="detail-value" style="color:#1A7A6E;">$' + fmtFull(g.depositPaid) + '</span></div>' : '') +
-          '<div class="detail-item"><span class="detail-label">Balance due</span><span class="detail-value" style="color:' + balColor + ';font-weight:800;">$' + fmtFull(balance) + '</span></div>' +
-        '</div>' +
-        '<div class="comment-box">' +
-          '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Guest comment</div>' +
-          (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '<div class="comment-placeholder">No comment added</div>') +
-        '</div>' +
-        '<div class="comment-box">' +
-          '<div class="comment-label"><i class="ti ti-notes" aria-hidden="true"></i> Staff comment</div>' +
-          (g.staffComment ? '<div class="staff-comment">' + esc(g.staffComment) + '</div>' : '<div class="comment-placeholder">No staff comment added</div>') +
-        '</div>' +
-      '</div>';
-    }
-
-    const out = g.outstanding > 0;
-    return '<div class="guest-card">' +
-      '<div class="guest-card-top">' +
-        '<div>' +
-          '<div class="guest-name">' + esc(g.guestName) + '</div>' +
-          '<div class="res-badge">Res: ' + esc(g.bookingId) + '</div>' +
-        '</div>' +
-        '<div class="guest-right">' +
-          '<div class="outstanding ' + (out ? 'due' : 'zero') + '">$' + fmtFull(g.outstanding) + '</div>' +
-          '<div class="outstanding-label">' + (out ? 'due' : 'paid') + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="detail-grid">' +
-        '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(room) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + g.nights + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + g.adults + 'A / ' + g.kids + 'K</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Status</span><span class="detail-value">' + esc(g.status) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">' + esc(g.phone) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Channel</span><span class="detail-value">' + esc(g.channel) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Total cost</span><span class="detail-value">$' + fmtFull(g.totalCost) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Paid</span><span class="detail-value">$' + fmtFull(g.totalPaid) + '</span></div>' +
-      '</div>' +
-      '<div class="comment-box">' +
-        '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Guest comment</div>' +
-        (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '<div class="comment-placeholder">No comment added</div>') +
-      '</div>' +
-      '<div class="comment-box">' +
-        '<div class="comment-label"><i class="ti ti-notes" aria-hidden="true"></i> Staff comment</div>' +
-        (g.staffComment ? '<div class="staff-comment">' + esc(g.staffComment) + '</div>' : '<div class="comment-placeholder">No staff comment added</div>') +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
-
-function renderUpcoming(list, isSupervisor) {
-  if (!list || list.length === 0) {
-    return '<div class="empty-state"><i class="ti ti-calendar-off" aria-hidden="true"></i>No check-ins in the next 7 days</div>';
-  }
-  return list.map(g => {
-    const out = g.outstanding > 0;
-    const room = g.roomNumber ? g.roomType + ' · Rm ' + g.roomNumber : g.roomType;
-    const dateLabel = (g.arrivalDay ? g.arrivalDay + ' ' : '') + g.arrivalDate;
-
-    let detailRows =
-      '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(room) + '</span></div>' +
-      '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + g.nights + '</span></div>' +
-      (g.adults !== undefined ? '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + g.adults + 'A / ' + g.kids + 'K</span></div>' : '');
-
-    if (g.totalCost !== undefined) {
-      detailRows += '<div class="detail-item"><span class="detail-label">Total charge</span><span class="detail-value">$' + fmtFull(g.totalCost) + '</span></div>';
-    }
-    if (g.depositPaid !== undefined) {
-      detailRows += '<div class="detail-item"><span class="detail-label">Deposit paid</span><span class="detail-value" style="color:#1A7A6E;">$' + fmtFull(g.depositPaid) + '</span></div>';
-    }
-    if (!isSupervisor && g.channel) {
-      detailRows += '<div class="detail-item"><span class="detail-label">Channel</span><span class="detail-value">' + esc(g.channel) + '</span></div>';
-    }
-
-    return '<div class="guest-card">' +
-      '<div class="guest-card-top">' +
-        '<div>' +
-          '<div class="guest-name">' + esc(g.guestName) + '</div>' +
-          '<div class="res-badge">Res: ' + esc(g.bookingId) + '</div>' +
-        '</div>' +
-        '<div class="guest-right">' +
-          '<div class="badge gold">' + dateLabel + '</div>' +
-          '<div class="outstanding ' + (out ? 'due' : 'zero') + '" style="margin-top:4px;">$' + fmtFull(g.outstanding) + '</div>' +
-          '<div class="outstanding-label">balance due</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="detail-grid">' + detailRows + '</div>' +
-      '<div class="comment-box">' +
-        '<div class="comment-label"><i class="ti ti-message-circle" aria-hidden="true"></i> Guest comment</div>' +
-        (g.comment ? '<div class="guest-comment">' + esc(g.comment) + '</div>' : '<div class="comment-placeholder">No comment added</div>') +
-      '</div>' +
-      '<div class="comment-box">' +
-        '<div class="comment-label"><i class="ti ti-notes" aria-hidden="true"></i> Staff comment</div>' +
-        (g.staffComment ? '<div class="staff-comment">' + esc(g.staffComment) + '</div>' : '<div class="comment-placeholder">No staff comment added</div>') +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
-
-// ── BOOKING.COM TAB ──────────────────────────────────────────
-let bcomData = [];
-let bcomFilter = 'all';
-
-function setBcomFilter(f) {
-  bcomFilter = f;
-  document.querySelectorAll('.bcom-filter-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('bf' + f.charAt(0).toUpperCase() + f.slice(1)).classList.add('active');
-  renderBcomTab(bcomData);
-}
-
-function renderBcomTab(list) {
-  bcomData = list || [];
-  const el = document.getElementById('bcomList');
-  if (!el) return;
-
-  const filtered = bcomData.filter(b => {
-    if (bcomFilter === 'pending')  return b.approved !== 'Yes';
-    if (bcomFilter === 'approved') return b.approved === 'Yes';
-    return true;
-  });
-
-  if (filtered.length === 0) {
-    el.innerHTML = '<div class="empty-state"><i class="ti ti-building-store" aria-hidden="true"></i>' +
-      (bcomFilter === 'pending' ? 'No pending reservations' : bcomFilter === 'approved' ? 'No approved reservations' : 'No Booking.com reservations yet') +
-      '</div>';
+  if (isSup) {
+    document.getElementById("listUp").innerHTML = renderUpcoming(up, true);
     return;
   }
 
+  // Week
+  set("wRev", "$" + fmt(d.week.revenue));
+  set("wLbl", d.week.label);
+  set("wBk", d.week.bookings);
+  set("wNi", d.week.nights + " nights");
+  set("wPd", "$" + fmt(d.week.paid));
+  set("wOut", "$" + fmt(d.week.outstanding));
+
+  // Month
+  set("mRev", "$" + fmt(d.month.revenue));
+  set("mBk", d.month.bookings);
+  set("mNi", d.month.nights + " nights");
+  set("mVat", "$" + fmt(d.month.vat));
+  set("mOut", "$" + fmt(d.month.outstanding));
+  set("mYear", d.ytd.year);
+  if (d.month.momChange !== null) {
+    const up2 = d.month.momChange >= 0;
+    document.getElementById("mChg").innerHTML = '<span class="kchg ' + (up2?"up":"down") + '">' + (up2?"▲":"▼") + " " + Math.abs(d.month.momChange) + "% vs last month</span>";
+  }
+
+  // Quarter
+  set("qLbl", d.quarter.label);
+  set("qRev", "$" + fmt(d.quarter.revenue));
+  set("qVat", "$" + fmt(d.quarter.vat));
+  set("qExc", "$" + fmt(d.quarter.excVat));
+  set("qBk", d.quarter.bookings);
+  set("qNi", d.quarter.nights + " nights");
+  set("qYear", d.ytd.year);
+  set("ytdRev", "$" + fmt(d.ytd.revenue));
+  set("ytdVat", "$" + fmt(d.ytd.vat));
+  set("ytdBk", d.ytd.bookings);
+
+  // Upcoming
+  document.getElementById("listUp").innerHTML = renderUpcoming(up, false);
+
+  // Charts
+  drawMonth(d.monthlyChart);
+  drawQuarter(d.quarterlyChart);
+
+  // Booking.com
+  if (d.bookingCom) {
+    bAll = d.bookingCom.all || [];
+    renderBcom();
+    const pend = bAll.filter(b => b.approved !== "Yes").length;
+    const pb = document.getElementById("bPendBadge");
+    pb.textContent = "⏳ " + pend;
+    pb.style.display = pend > 0 ? "inline-block" : "none";
+    // Inject approved bcom into today
+    const apCI = (d.bookingCom.todayCheckIns || []).filter(b => b.approved === "Yes");
+    const apCO = (d.bookingCom.todayCheckOuts || []).filter(b => b.approved === "Yes");
+    const apUp = (d.bookingCom.upcoming || []).filter(b => b.approved === "Yes");
+    if (apCI.length) { document.getElementById("listCI").insertAdjacentHTML("beforeend", apCI.map(b => bcomGuestCard(b)).join("")); set("kCI", ci.length + apCI.length); }
+    if (apCO.length) { document.getElementById("listCO").insertAdjacentHTML("beforeend", apCO.map(b => bcomGuestCard(b)).join("")); set("kCO", co.length + apCO.length); }
+    if (apUp.length) { document.getElementById("listUp").insertAdjacentHTML("beforeend", apUp.map(b => bcomUpCard(b)).join("")); }
+  }
+}
+
+// ─── GUEST LIST RENDER ───────────────────────────────────────
+function renderGuests(list, type, isSup) {
+  if (!list || !list.length) return '<div class="empty"><i class="ti ti-mood-empty"></i>No ' + (type==="ci"?"check-ins":"checkouts") + " today</div>";
+  return list.map(g => {
+    const out = g.outstanding > 0;
+    const room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    if (isSup) {
+      return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+        '<div class="gright"><div class="out ' + (out?"d":"z") + '">$' + fmtD(g.outstanding) + '</div><div class="outlbl">balance due</div></div></div>' +
+        '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+        (g.adults !== undefined ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + "K</span></div>" : "") +
+        '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+        (g.depositPaid !== undefined ? '<div class="di"><span class="dlbl">Deposit paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.depositPaid) + '</span></div>' : "") +
+        '</div>' + cmtBlock(g) + '</div>';
+    }
+    return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+      '<div class="gright"><div class="out ' + (out?"d":"z") + '">$' + fmtD(g.outstanding) + '</div><div class="outlbl">' + (out?"due":"paid") + '</div></div></div>' +
+      '<div class="dgrid">' +
+      '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+      '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + "K</span></div>" +
+      '<div class="di"><span class="dlbl">Status</span><span class="dval">' + esc(g.status) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Phone</span><span class="dval">' + esc(g.phone) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Paid</span><span class="dval">$' + fmtD(g.totalPaid) + '</span></div>' +
+      '</div>' + cmtBlock(g) + '</div>';
+  }).join("");
+}
+
+function cmtBlock(g) {
+  let h = "";
+  if (g.comment || g.staffComment) {
+    h += '<div class="cbox"><div class="clbl">Guest comment</div>' + (g.comment ? '<div class="gcmt">' + esc(g.comment) + '</div>' : '<div class="cph">No comment</div>') + '</div>';
+    h += '<div class="cbox"><div class="clbl">Staff comment</div>' + (g.staffComment ? '<div class="scmt">' + esc(g.staffComment) + '</div>' : '<div class="cph">No staff comment</div>') + '</div>';
+  }
+  return h;
+}
+
+function renderUpcoming(list, isSup) {
+  if (!list || !list.length) return '<div class="empty"><i class="ti ti-calendar-off"></i>No check-ins in the next 7 days</div>';
+  return list.map(g => {
+    const out = g.outstanding > 0;
+    const dateLabel = (g.arrivalDay || "") + " " + g.arrivalDate;
+    const room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+      '<div class="gright"><div class="badge gold">' + dateLabel + '</div><div class="out ' + (out?"d":"z") + '" style="margin-top:4px">$' + fmtD(g.outstanding) + '</div><div class="outlbl">balance</div></div></div>' +
+      '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div><div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+      (g.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + "K</span></div>" : "") +
+      '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+      (g.depositPaid ? '<div class="di"><span class="dlbl">Deposit</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.depositPaid) + '</span></div>' : "") +
+      (!isSup && g.channel ? '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' : "") +
+      '</div>' + cmtBlock(g) + '</div>';
+  }).join("");
+}
+
+// ─── BOOKING.COM RENDER ──────────────────────────────────────
+function bFilter(f) {
+  bFilterVal = f;
+  document.querySelectorAll(".bfbtn").forEach(b => b.classList.remove("active"));
+  document.getElementById("bf" + (f==="all"?"All":f==="pending"?"Pend":"Appr")).classList.add("active");
+  renderBcom();
+}
+
+function renderBcom() {
+  const el = document.getElementById("bList");
+  const filtered = bAll.filter(b => {
+    if (bFilterVal === "pending")  return b.approved !== "Yes";
+    if (bFilterVal === "approved") return b.approved === "Yes";
+    return true;
+  });
+  if (!filtered.length) {
+    el.innerHTML = '<div class="empty"><i class="ti ti-building-store"></i>' + (bFilterVal==="pending"?"No pending reservations":bFilterVal==="approved"?"No approved reservations":"No Booking.com reservations yet") + '</div>';
+    return;
+  }
   el.innerHTML = filtered.map(b => {
-    const approved = b.approved === 'Yes';
-    const badge = approved
-      ? '<span class="bcom-badge-approved">✅ Approved — visible to supervisor</span>'
-      : '<span class="bcom-badge-pending">⏳ Pending approval</span>';
-    const approveBtn = !approved
-      ? `<button class="bcom-approve-btn" onclick="bcomApprove('${esc(b.bookingNo)}', true)">✅ Approve → Supervisor</button>`
-      : `<button class="bcom-unapprove-btn" onclick="bcomApprove('${esc(b.bookingNo)}', false)">↩ Unapprove</button>`;
-
-    return '<div class="bcom-card">' +
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;">' +
-        '<div>' +
-          '<div style="font-size:14px;font-weight:700;color:#003580;">' + esc(b.guestName) + '</div>' +
-          '<div style="font-size:10px;color:#888;margin-top:2px;">BK: ' + esc(b.bookingNo) + '&nbsp;·&nbsp;Booking.com</div>' +
-          '<div style="margin-top:4px;">' + badge + '</div>' +
-        '</div>' +
-        '<div style="text-align:right;">' +
-          '<div style="font-size:14px;font-weight:800;color:#003580;">FJD ' + esc(b.totalCost) + '</div>' +
-          '<div style="font-size:9px;color:#888;">Net: FJD ' + esc(b.netAmount) + '</div>' +
-          '<div style="font-size:9px;color:#888;">Comm: FJD ' + esc(b.commission) + '</div>' +
-        '</div>' +
+    const appr = b.approved === "Yes";
+    return '<div class="bcard">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+        '<div><div style="font-size:13.5px;font-weight:700;color:#003580">' + esc(b.guestName) + '</div>' +
+        '<div style="font-size:9.5px;color:#888;margin-top:2px">BK: ' + esc(b.bookingNo) + '</div>' +
+        '<div style="margin-top:4px">' + (appr ? '<span class="bappr">✅ Approved</span>' : '<span class="bpend">⏳ Pending</span>') + '</div></div>' +
+        '<div style="text-align:right"><div style="font-size:14px;font-weight:800;color:#003580">FJD ' + esc(b.totalCost) + '</div>' +
+        '<div style="font-size:9px;color:#888">Net: FJD ' + esc(b.netAmount) + '</div>' +
+        '<div style="font-size:9px;color:#888">Comm: FJD ' + esc(b.commission) + '</div></div>' +
       '</div>' +
-      '<div class="detail-grid" style="margin-top:8px;">' +
-        '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(b.roomType) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + esc(b.nights) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Check-In</span><span class="detail-value">' + esc(b.checkIn) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Check-Out</span><span class="detail-value">' + esc(b.checkOut) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + esc(b.adults) + 'A / ' + esc(b.kids) + 'K</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Payment</span><span class="detail-value">' + esc(b.payMethod) + '</span></div>' +
-        (b.phone ? '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">' + esc(b.phone) + '</span></div>' : '') +
+      '<div class="dgrid" style="margin-top:8px">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(b.roomType) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Check-In</span><span class="dval">' + esc(b.checkIn) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Check-Out</span><span class="dval">' + esc(b.checkOut) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + esc(b.adults) + "A / " + esc(b.kids) + 'K</span></div>' +
+        '<div class="di"><span class="dlbl">Payment</span><span class="dval">' + esc(b.payMethod) + '</span></div>' +
+        (b.phone ? '<div class="di"><span class="dlbl">Phone</span><span class="dval">' + esc(b.phone) + '</span></div>' : "") +
       '</div>' +
-      (b.notes ? '<div class="guest-comment" style="margin-top:8px;">💬 ' + esc(b.notes) + '</div>' : '') +
-      (b.screenshot ? '<div style="margin-top:8px;"><a href="' + b.screenshot + '" target="_blank" style="font-size:10.5px;color:#003580;font-weight:700;">📷 View Screenshot</a></div>' : '') +
-      '<div style="margin-top:6px;">' + approveBtn + '</div>' +
+      (b.notes ? '<div class="gcmt" style="margin-top:8px">💬 ' + esc(b.notes) + '</div>' : "") +
+      (b.screenshot ? '<div style="margin-top:7px"><a href="' + b.screenshot + '" target="_blank" style="font-size:10.5px;color:#003580;font-weight:700">📷 View Screenshot</a></div>' : "") +
+      '<div style="margin-top:7px">' +
+        (!appr ? '<button class="bapprbtn" onclick="bApprove(\'' + esc(b.bookingNo) + '\',true)">✅ Approve → Supervisor</button>' : "") +
+        (appr  ? '<button class="bunapprbtn" onclick="bApprove(\'' + esc(b.bookingNo) + '\',false)">↩ Unapprove</button>' : "") +
+      '</div>' +
     '</div>';
-  }).join('');
+  }).join("");
 }
 
-function renderBcomInjectToday(list, type) {
-  const id = type === 'checkin' ? 'todayCheckins' : 'todayCheckouts';
-  const el = document.getElementById(id);
-  if (!el) return;
-  const existingEmpty = el.querySelector('.empty-state');
-  if (existingEmpty) el.innerHTML = '';
-  const bcomHTML = list.map(b => {
-    const out = parseFloat(b.totalCost) > 0;
-    return '<div class="guest-card" style="border-top:2px solid #003580;margin-top:8px;">' +
-      '<div class="guest-card-top">' +
-        '<div>' +
-          '<div class="guest-name">' + esc(b.guestName) + '</div>' +
-          '<div class="res-badge" style="background:#003580;">BK.com: ' + esc(b.bookingNo) + '</div>' +
-        '</div>' +
-        '<div class="guest-right">' +
-          '<div style="font-size:13px;font-weight:800;color:#003580;">FJD ' + esc(b.totalCost) + '</div>' +
-          '<div style="font-size:9px;color:#888;">net: FJD ' + esc(b.netAmount) + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="detail-grid">' +
-        '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(b.roomType) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + esc(b.nights) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Guests</span><span class="detail-value">' + esc(b.adults) + 'A / ' + esc(b.kids) + 'K</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Payment</span><span class="detail-value">' + esc(b.payMethod) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">' + esc(b.phone) + '</span></div>' +
-      '</div>' +
-      (b.notes ? '<div class="guest-comment">💬 ' + esc(b.notes) + '</div>' : '') +
-    '</div>';
-  }).join('');
-  el.insertAdjacentHTML('beforeend', bcomHTML);
+function bcomGuestCard(b) {
+  return '<div class="gc" style="border-top:2px solid #003580;margin-top:8px">' +
+    '<div class="gc-top"><div><div class="gname">' + esc(b.guestName) + '</div><div class="rbadge" style="background:#003580">BK.com: ' + esc(b.bookingNo) + '</div></div>' +
+    '<div class="gright"><div style="font-size:13px;font-weight:800;color:#003580">FJD ' + esc(b.totalCost) + '</div><div style="font-size:9px;color:#888">Net FJD ' + esc(b.netAmount) + '</div></div></div>' +
+    '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(b.roomType) + '</span></div>' +
+    '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div>' +
+    '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + esc(b.adults) + "A / " + esc(b.kids) + 'K</span></div>' +
+    '<div class="di"><span class="dlbl">Payment</span><span class="dval">' + esc(b.payMethod) + '</span></div></div>' +
+    (b.notes ? '<div class="gcmt">💬 ' + esc(b.notes) + '</div>' : "") + '</div>';
 }
 
-function renderBcomInjectUpcoming(list) {
-  const el = document.getElementById('upcomingList');
-  if (!el) return;
-  const existingEmpty = el.querySelector('.empty-state');
-  if (existingEmpty) el.innerHTML = '';
-  const html = list.map(b =>
-    '<div class="guest-card" style="border-top:2px solid #003580;margin-top:8px;">' +
-      '<div class="guest-card-top">' +
-        '<div>' +
-          '<div class="guest-name">' + esc(b.guestName) + '</div>' +
-          '<div class="res-badge" style="background:#003580;">BK.com: ' + esc(b.bookingNo) + '</div>' +
-        '</div>' +
-        '<div class="guest-right">' +
-          '<div class="badge gold">' + esc(b.checkIn) + '</div>' +
-          '<div style="font-size:13px;font-weight:800;color:#003580;margin-top:4px;">FJD ' + esc(b.totalCost) + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="detail-grid">' +
-        '<div class="detail-item"><span class="detail-label">Room</span><span class="detail-value">' + esc(b.roomType) + '</span></div>' +
-        '<div class="detail-item"><span class="detail-label">Nights</span><span class="detail-value">' + esc(b.nights) + '</span></div>' +
-      '</div>' +
-    '</div>'
-  ).join('');
-  el.insertAdjacentHTML('beforeend', html);
+function bcomUpCard(b) {
+  return '<div class="gc" style="border-top:2px solid #003580;margin-top:8px">' +
+    '<div class="gc-top"><div><div class="gname">' + esc(b.guestName) + '</div><div class="rbadge" style="background:#003580">BK.com: ' + esc(b.bookingNo) + '</div></div>' +
+    '<div class="gright"><div class="badge gold">' + esc(b.checkIn) + '</div><div style="font-size:13px;font-weight:800;color:#003580;margin-top:4px">FJD ' + esc(b.totalCost) + '</div></div></div>' +
+    '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(b.roomType) + '</span></div>' +
+    '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div></div></div>';
 }
 
-async function bcomApprove(bookingNo, approve) {
+async function bApprove(bookingNo, approve) {
   try {
-    const res  = await fetch(DASH_API_URL, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ action: approve ? 'approve' : 'unapprove', bookingNo }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      // Update local data
-      const entry = bcomData.find(b => b.bookingNo === bookingNo);
-      if (entry) entry.approved = approve ? 'Yes' : 'Pending';
-      renderBcomTab(bcomData);
-      // Refresh data after short delay
-      setTimeout(loadData, 1500);
-    } else {
-      alert('Error: ' + (data.error || 'Could not update'));
-    }
-  } catch(err) {
-    alert('Network error: ' + err.message);
-  }
+    const res = await fetch(API, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({action:approve?"approve":"unapprove", bookingNo}) });
+    const d = await res.json();
+    if (d.success) {
+      const entry = bAll.find(b => b.bookingNo === bookingNo);
+      if (entry) entry.approved = approve ? "Yes" : "Pending";
+      renderBcom();
+      setTimeout(loadData, 1000);
+    } else alert("Error: " + (d.error || "Failed"));
+  } catch(e) { alert("Network error: " + e.message); }
 }
 
-function drawMonthlyChart(monthlyData) {
-  const ctx = document.getElementById('monthlyChart');
-  const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const values = monthlyData.map(m => m.revenue);
-  if (monthlyChartInstance) monthlyChartInstance.destroy();
-  monthlyChartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: { labels: labels, datasets: [{ label: 'Revenue', data: values, backgroundColor: '#6A3FA0', borderRadius: 4 }] },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { font: { size: 10 } }, grid: { display: false } },
-        y: { ticks: { font: { size: 10 }, callback: v => '$' + v }, grid: { color: '#f0f0f0' } }
-      }
-    }
-  });
+// ─── CHARTS ──────────────────────────────────────────────────
+function drawMonth(data) {
+  const ctx = document.getElementById("mChart");
+  if (mCh1) mCh1.destroy();
+  mCh1 = new Chart(ctx, { type:"bar", data:{ labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], datasets:[{ data:data.map(m=>m.revenue), backgroundColor:"#6A3FA0", borderRadius:4 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:9}},grid:{display:false}}, y:{ticks:{font:{size:9},callback:v=>"$"+v},grid:{color:"#f0f0f0"}} } } });
 }
 
-function drawQuarterlyChart(quarterlyData) {
-  const ctx = document.getElementById('quarterlyChart');
-  const labels = quarterlyData.map(q => 'Q' + q.quarter);
-  const revenue = quarterlyData.map(q => q.revenue);
-  const vat = quarterlyData.map(q => q.vat);
-  if (quarterlyChartInstance) quarterlyChartInstance.destroy();
-  quarterlyChartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: { labels: labels, datasets: [
-      { label: 'Revenue', data: revenue, backgroundColor: '#1A7A6E', borderRadius: 4 },
-      { label: 'VAT', data: vat, backgroundColor: '#C9921A', borderRadius: 4 }
-    ]},
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { font: { size: 11 } }, grid: { display: false } },
-        y: { ticks: { font: { size: 10 }, callback: v => '$' + v }, grid: { color: '#f0f0f0' } }
-      }
-    }
-  });
-  const wrap = ctx.parentElement;
-  let legend = wrap.parentElement.querySelector('.custom-legend');
-  if (!legend) {
-    legend = document.createElement('div');
-    legend.className = 'custom-legend';
-    legend.style.cssText = 'display:flex;gap:14px;margin-top:8px;font-size:11px;color:#666;';
-    legend.innerHTML =
-      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:9px;height:9px;border-radius:2px;background:#1A7A6E;"></span>Revenue</span>' +
-      '<span style="display:flex;align-items:center;gap:4px;"><span style="width:9px;height:9px;border-radius:2px;background:#C9921A;"></span>VAT</span>';
-    wrap.after(legend);
-  }
+function drawQuarter(data) {
+  const ctx = document.getElementById("qChart");
+  if (mCh2) mCh2.destroy();
+  mCh2 = new Chart(ctx, { type:"bar", data:{ labels:data.map(q=>"Q"+q.quarter), datasets:[{label:"Revenue",data:data.map(q=>q.revenue),backgroundColor:"#1A7A6E",borderRadius:4},{label:"VAT",data:data.map(q=>q.vat),backgroundColor:"#C9921A",borderRadius:4}] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:10}},grid:{display:false}}, y:{ticks:{font:{size:9},callback:v=>"$"+v},grid:{color:"#f0f0f0"}} } } });
+  document.getElementById("qLeg").innerHTML = '<span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#1A7A6E;display:inline-block"></span>Revenue</span><span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#C9921A;display:inline-block"></span>VAT</span>';
 }
 
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    if (currentView === 'supervisor' && !['today','upcoming'].includes(tab.dataset.tab)) return;
-    if (tab.classList.contains('tab-bcom') && currentView === 'supervisor') return;
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('section-' + tab.dataset.tab).classList.add('active');
+// ─── TABS ────────────────────────────────────────────────────
+function switchTab(tabId) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll(".sec").forEach(s => s.classList.remove("active"));
+  const tb = document.querySelector('.tab[data-tab="' + tabId + '"]');
+  const sc = document.getElementById("sec-" + tabId);
+  if (tb) tb.classList.add("active");
+  if (sc) sc.classList.add("active");
+}
+
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    const id = tab.dataset.tab;
+    if (view === "supervisor" && id !== "today" && id !== "upcoming") return;
+    switchTab(id);
   });
 });
 
-setInterval(() => { if (cachedData) loadData(); }, 5 * 60 * 1000);
-</script>
+// ─── MODAL ───────────────────────────────────────────────────
+function openModal() {
+  document.getElementById("modal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
 
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+  document.body.style.overflow = "";
+  mReset();
+}
+
+function mReset() {
+  mB64 = null; mMime = null;
+  const pv = document.getElementById("mPrev"); pv.style.display = "none"; pv.src = "";
+  document.getElementById("mUpArea").classList.remove("ok");
+  const eb = document.getElementById("mExBtn"); eb.disabled = true; eb.textContent = "✨ Extract with AI";
+  document.getElementById("mSt").style.display = "none";
+  document.getElementById("mFields").style.display = "none";
+  document.getElementById("mFile").value = "";
+  ["mBNo","mGN","mAd","mKd","mCI","mCO","mNi","mTot","mCom","mNotes"].forEach(id => { const el = document.getElementById(id); if(el) el.value = ""; });
+  document.getElementById("mNetVal").textContent = "FJD 0.00";
+  document.getElementById("mBSt").value = "Confirmed";
+  document.getElementById("mRT").value = "";
+  document.getElementById("mPM").value = "Booking.com Collect";
+  const sb = document.getElementById("mSaveBtn"); sb.disabled = false; sb.textContent = "✅ Save Reservation";
+}
+
+function mDrop(e) { e.preventDefault(); const f = e.dataTransfer.files[0]; if(f) mPickFile(f); }
+
+function mPickFile(file) {
+  if (!file) return;
+  mMime = file.type || "image/jpeg";
+  const r = new FileReader();
+  r.onload = e => {
+    const res = e.target.result;
+    mB64 = res.split(",")[1];
+    if (file.type.startsWith("image/")) { const p = document.getElementById("mPrev"); p.src = res; p.style.display = "block"; }
+    document.getElementById("mExBtn").disabled = false;
+    document.getElementById("mUpArea").classList.add("ok");
+  };
+  r.readAsDataURL(file);
+}
+
+async function mExtract() {
+  if (!mB64) return;
+  const btn = document.getElementById("mExBtn");
+  btn.disabled = true; btn.textContent = "⏳ Reading...";
+  mStatus("🤖 AI is extracting details...", false);
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:1000, messages:[{ role:"user", content:[
+        { type:"image", source:{ type:"base64", media_type:mMime, data:mB64 } },
+        { type:"text", text:'Extract from this Booking.com screenshot. Return ONLY raw JSON:\n{"bookingNo":"","guestName":"","adults":"","kids":"","checkIn":"DD-MM-YYYY","checkOut":"DD-MM-YYYY","nights":"","roomType":"1-Bedroom Apartment or 2-Bedroom Deluxe Apartment or 3-Bedroom Deluxe Apartment","totalCost":"","commission":"","payMethod":"Booking.com Collect or Property Collect","bookingStatus":"Confirmed","notes":""}' }
+      ]}] })
+    });
+    const d = await res.json();
+    if (d.error) throw new Error(d.error.message || "API error");
+    const raw = d.content?.[0]?.text || "";
+    const x = JSON.parse(raw.replace(/```json|```/g,"").trim());
+    mFill("mBNo",x.bookingNo); mFill("mGN",x.guestName); mFill("mAd",x.adults); mFill("mKd",x.kids);
+    mFill("mCI",x.checkIn); mFill("mCO",x.checkOut); mFill("mNi",x.nights);
+    mFill("mTot",x.totalCost); mFill("mCom",x.commission); mFill("mNotes",x.notes);
+    if (x.bookingStatus) document.getElementById("mBSt").value = x.bookingStatus;
+    if (x.payMethod && x.payMethod.toLowerCase().includes("property")) document.getElementById("mPM").value = "Property Collect";
+    mMatchRoom(x.roomType);
+    mNet(); mNights();
+    document.getElementById("mFields").style.display = "block";
+    mStatus("✅ Details extracted — review and correct if needed", false);
+  } catch(e) {
+    mStatus("❌ " + e.message + " — fill in manually", true);
+    document.getElementById("mFields").style.display = "block";
+  }
+  btn.disabled = false; btn.textContent = "🔄 Re-extract";
+}
+
+function mFill(id, v) { const el = document.getElementById(id); if(el && v) el.value = v; }
+function mMatchRoom(r) {
+  if (!r) return; r = r.toLowerCase();
+  const el = document.getElementById("mRT");
+  if (r.includes("3")||r.includes("three")) el.value = "3-Bedroom Deluxe Apartment";
+  else if (r.includes("2")||r.includes("two")) el.value = "2-Bedroom Deluxe Apartment";
+  else if (r.includes("1")||r.includes("one")) el.value = "1-Bedroom Apartment";
+}
+function mNet() {
+  const t = parseFloat(document.getElementById("mTot").value)||0;
+  const c = parseFloat(document.getElementById("mCom").value)||0;
+  document.getElementById("mNetVal").textContent = "FJD " + (t-c).toFixed(2);
+}
+function mNights() {
+  const ci = document.getElementById("mCI").value, co = document.getElementById("mCO").value;
+  if (!ci||!co) return;
+  const m1 = ci.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+  const m2 = co.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+  if (m1&&m2) { const n = Math.round((new Date(+m1[3],+m1[2]-1,+m1[1]) - new Date(+m2[3],+m2[2]-1,+m2[1])) / -86400000); if(n>0) document.getElementById("mNi").value = n; }
+}
+function mStatus(msg, isErr) {
+  const el = document.getElementById("mSt");
+  el.textContent = msg; el.style.display = "block";
+  el.className = "mstatus " + (isErr?"err":"ok");
+}
+
+async function mSave() {
+  const bn = v("mBNo"), gn = v("mGN"), ci = v("mCI"), co = v("mCO"), tot = v("mTot"), rt = v("mRT");
+  if (!bn||!gn||!ci||!co||!tot||!rt) { mStatus("❌ Fill in all required fields (*)", true); return; }
+  const btn = document.getElementById("mSaveBtn"); btn.disabled = true; btn.textContent = "⏳ Saving...";
+  const t = parseFloat(tot)||0, c = parseFloat(v("mCom"))||0;
+  try {
+    const res = await fetch(BAPI, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({
+      action:"save", bookingNo:bn, guestName:gn, email:"", phone:"",
+      adults:v("mAd"), kids:v("mKd"), checkIn:ci, checkOut:co, nights:v("mNi"), roomType:rt,
+      totalCost:t.toFixed(2), commission:c.toFixed(2), netAmount:(t-c).toFixed(2),
+      payMethod:v("mPM"), bookingStatus:v("mBSt"), notes:v("mNotes"), screenshotUrl:""
+    }) });
+    const d = await res.json();
+    if (d.success) { mStatus("✅ Saved! Pending admin approval.", false); setTimeout(() => { closeModal(); loadData(); }, 1500); }
+    else { mStatus("❌ " + (d.message||d.error||"Save failed"), true); btn.disabled = false; btn.textContent = "✅ Save Reservation"; }
+  } catch(e) { mStatus("❌ Network error: " + e.message, true); btn.disabled = false; btn.textContent = "✅ Save Reservation"; }
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────
+function set(id, val) { const el = document.getElementById(id); if(el) el.textContent = val; }
+function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ""; }
+function fmt(n) { return new Intl.NumberFormat("en-FJ",{maximumFractionDigits:0}).format(Math.round(n||0)); }
+function fmtD(n) { return (n||0).toFixed(2); }
+function esc(s) { const d = document.createElement("div"); d.textContent = s||""; return d.innerHTML; }
+
+setInterval(() => { if (cache) loadData(); }, 5 * 60 * 1000);
+</script>
 </body>
 </html>
