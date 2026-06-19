@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#003580">
+<title>Booking.com Entry — Ideal Homes Nadi</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:#f0f2f5; min-height:100vh; padding-bottom:40px; }
+
+.header { background:#003580; padding:16px 18px; position:sticky; top:0; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+.header-title { font-size:17px; font-weight:700; color:#fff; }
+.header-sub { font-size:10px; color:rgba(255,255,255,0.6); margin-top:2px; }
+
+.content { padding:14px; max-width:520px; margin:0 auto; }
+
+/* Upload area */
+.upload-card { background:#fff; border-radius:14px; padding:20px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,0.08); text-align:center; }
+.upload-area { border:2px dashed #003580; border-radius:12px; padding:30px 20px; cursor:pointer; transition:background 0.2s; }
+.upload-area:hover, .upload-area.dragging { background:#EEF3FB; }
+.upload-icon { font-size:40px; margin-bottom:10px; }
+.upload-label { font-size:14px; font-weight:600; color:#003580; margin-bottom:6px; }
+.upload-sub { font-size:11px; color:#888; }
+.upload-preview { max-width:100%; border-radius:10px; margin-top:12px; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
+
+.btn-extract { width:100%; padding:13px; background:#003580; color:#fff; border:none; border-radius:10px; font-size:14px; font-weight:700; margin-top:12px; cursor:pointer; }
+.btn-extract:disabled { opacity:0.5; cursor:not-allowed; }
+.btn-extract.loading { background:#1a5296; }
+
+/* AI status */
+.ai-status { background:#EEF3FB; border-left:3px solid #003580; padding:10px 14px; border-radius:0 8px 8px 0; font-size:12px; color:#003580; margin-bottom:12px; display:none; }
+.ai-status.error { background:#FAECE7; border-color:#C0392B; color:#712B13; }
+
+/* Form */
+.form-card { background:#fff; border-radius:14px; padding:18px; margin-bottom:12px; box-shadow:0 1px 4px rgba(0,0,0,0.08); display:none; }
+.form-card.visible { display:block; }
+.section-title { font-size:11px; font-weight:700; color:#003580; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:12px; padding-bottom:6px; border-bottom:1px solid #EEF3FB; }
+
+.field-group { margin-bottom:12px; }
+.field-group label { font-size:11px; font-weight:600; color:#555; display:block; margin-bottom:4px; }
+.field-group input, .field-group select, .field-group textarea {
+  width:100%; padding:10px 12px; border:1.5px solid #E0E0E0; border-radius:8px;
+  font-size:13.5px; color:#1A2622; outline:none; background:#fff;
+}
+.field-group input:focus, .field-group select:focus, .field-group textarea:focus { border-color:#003580; }
+.field-group textarea { height:72px; resize:vertical; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+.net-display { background:#EEF3FB; padding:10px 12px; border-radius:8px; font-size:13px; font-weight:700; color:#003580; }
+
+/* Submit */
+.btn-submit { width:100%; padding:15px; background:#1A7A6E; color:#fff; border:none; border-radius:12px; font-size:15px; font-weight:800; cursor:pointer; margin-top:4px; }
+.btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
+.btn-reset { width:100%; padding:11px; background:#f0f2f5; color:#666; border:none; border-radius:10px; font-size:13px; font-weight:600; cursor:pointer; margin-top:8px; }
+
+/* Success */
+.success-card { background:#E1F5EE; border:1px solid #1A7A6E; border-radius:14px; padding:24px; text-align:center; display:none; margin-bottom:14px; }
+.success-icon { font-size:42px; margin-bottom:10px; }
+.success-title { font-size:16px; font-weight:700; color:#085041; margin-bottom:6px; }
+.success-sub { font-size:12px; color:#1A7A6E; }
+
+.spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; margin-right:6px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+.booking-badge { background:#003580; color:#fff; font-size:10px; font-weight:700; padding:3px 10px; border-radius:10px; display:inline-block; margin-bottom:8px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">📷 Booking.com Entry</div>
+  <div class="header-sub">Ideal Homes Nadi · AI-powered screenshot extraction</div>
+</div>
+
+<div class="content">
+
+  <!-- Upload Card -->
+  <div class="upload-card" id="uploadCard">
+    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+      <div class="upload-icon">📸</div>
+      <div class="upload-label">Upload Booking.com Screenshot</div>
+      <div class="upload-sub">Tap to select or drag & drop · JPG, PNG, PDF</div>
+    </div>
+    <img id="previewImg" class="upload-preview" style="display:none;">
+    <input type="file" id="fileInput" accept="image/*,.pdf" style="display:none;" onchange="handleFile(this.files[0])">
+    <button class="btn-extract" id="extractBtn" onclick="extractData()" disabled>
+      ✨ Extract Details with AI
+    </button>
+  </div>
+
+  <!-- AI Status -->
+  <div class="ai-status" id="aiStatus"></div>
+
+  <!-- Success -->
+  <div class="success-card" id="successCard">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Reservation Saved!</div>
+    <div class="success-sub" id="successMsg"></div>
+    <button class="btn-reset" style="margin-top:16px;" onclick="resetForm()">➕ Add Another Reservation</button>
+  </div>
+
+  <!-- Form Sections (shown after AI extraction) -->
+
+  <div class="form-card" id="sectionBooking">
+    <div class="section-title">📋 Booking Details</div>
+    <div class="booking-badge" id="bookingBadge">Booking.com</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Booking Number *</label>
+        <input type="text" id="bookingNo" placeholder="e.g. 5647264806">
+      </div>
+      <div class="field-group">
+        <label>Booking Status</label>
+        <select id="bookingStatus">
+          <option value="Confirmed">Confirmed</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="No Show">No Show</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card" id="sectionGuest">
+    <div class="section-title">👤 Guest Details</div>
+    <div class="field-group">
+      <label>Guest Full Name *</label>
+      <input type="text" id="guestName" placeholder="Full name">
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="guest@email.com">
+      </div>
+      <div class="field-group">
+        <label>Phone</label>
+        <input type="tel" id="phone" placeholder="+679...">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Adults *</label>
+        <input type="number" id="adults" min="1" placeholder="2">
+      </div>
+      <div class="field-group">
+        <label>Children</label>
+        <input type="number" id="kids" min="0" placeholder="0">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card" id="sectionStay">
+    <div class="section-title">📅 Stay Details</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Check-In (DD-MM-YYYY) *</label>
+        <input type="text" id="checkIn" placeholder="20-06-2026">
+      </div>
+      <div class="field-group">
+        <label>Check-Out (DD-MM-YYYY) *</label>
+        <input type="text" id="checkOut" placeholder="21-06-2026">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Nights</label>
+        <input type="number" id="nights" min="1" placeholder="1" oninput="updateNights()">
+      </div>
+      <div class="field-group">
+        <label>Room Type *</label>
+        <select id="roomType">
+          <option value="">Select room...</option>
+          <option value="1-Bedroom Apartment">1-Bedroom Apartment</option>
+          <option value="2-Bedroom Deluxe Apartment">2-Bedroom Deluxe Apartment</option>
+          <option value="3-Bedroom Deluxe Apartment">3-Bedroom Deluxe Apartment</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card" id="sectionFinancials">
+    <div class="section-title">💰 Financials</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Total Price (FJD) *</label>
+        <input type="number" id="totalCost" step="0.01" placeholder="283.50" oninput="calcNet()">
+      </div>
+      <div class="field-group">
+        <label>Commission (FJD)</label>
+        <input type="number" id="commission" step="0.01" placeholder="42.52" oninput="calcNet()">
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Net Amount (FJD)</label>
+      <div class="net-display" id="netDisplay">FJD 0.00</div>
+    </div>
+    <div class="field-group">
+      <label>Payment Method</label>
+      <select id="payMethod">
+        <option value="Booking.com Collect">Booking.com Collect</option>
+        <option value="Property Collect">Property Collect</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-card" id="sectionNotes">
+    <div class="section-title">💬 Notes</div>
+    <div class="field-group">
+      <label>Additional Notes / Comments</label>
+      <textarea id="notes" placeholder="Any special requests, instructions, or notes..."></textarea>
+    </div>
+  </div>
+
+  <div class="form-card" id="sectionSubmit">
+    <button class="btn-submit" id="submitBtn" onclick="submitReservation()">
+      ✅ Save Reservation
+    </button>
+    <button class="btn-reset" onclick="resetForm()">🔄 Start Over</button>
+  </div>
+
+</div>
+
+<script>
+// ⚠️ REPLACE WITH YOUR BOOKING.COM APPS SCRIPT WEB APP URL
+const BCOM_API_URL = "https://script.google.com/macros/s/AKfycbxqsGJOSY5Gpk2GklD84gS_7iqu0aVcNBADfYEuo1rtH5yjbsVkvuLKhZUA31SaJD1pTg/exec";
+
+// Claude API for image extraction
+const CLAUDE_API_URL = "https://api.anthropic.com/v1/messages";
+
+let uploadedFile = null;
+let uploadedBase64 = null;
+let uploadedMimeType = null;
+
+// ── DRAG & DROP ───────────────────────────────────────────────
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('uploadArea').classList.add('dragging');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('uploadArea').classList.remove('dragging');
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+}
+
+function handleFile(file) {
+  if (!file) return;
+  uploadedFile = file;
+  uploadedMimeType = file.type || 'image/jpeg';
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const result = e.target.result;
+    uploadedBase64 = result.split(',')[1];
+
+    // Show preview
+    if (file.type.startsWith('image/')) {
+      const img = document.getElementById('previewImg');
+      img.src = result;
+      img.style.display = 'block';
+    }
+
+    document.getElementById('extractBtn').disabled = false;
+    document.getElementById('uploadArea').style.borderColor = '#1A7A6E';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── AI EXTRACTION ─────────────────────────────────────────────
+async function extractData() {
+  if (!uploadedBase64) { showStatus("Please upload a screenshot first.", true); return; }
+
+  const btn = document.getElementById('extractBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Extracting with AI...';
+  btn.classList.add('loading');
+
+  showStatus("🤖 AI is reading your screenshot...", false);
+
+  try {
+    const response = await fetch(CLAUDE_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        messages: [{
+          role: "user",
+          content: [
+            {
+              type: "image",
+              source: {
+                type: "base64",
+                media_type: uploadedMimeType,
+                data: uploadedBase64
+              }
+            },
+            {
+              type: "text",
+              text: `Extract booking details from this Booking.com screenshot. Return ONLY a JSON object with these exact fields (no markdown, no explanation, just raw JSON):
+{
+  "bookingNo": "booking/reservation number",
+  "guestName": "full guest name",
+  "email": "email if visible, else empty string",
+  "phone": "phone if visible, else empty string",
+  "adults": "number of adults as string",
+  "kids": "number of children as string",
+  "checkIn": "date in DD-MM-YYYY format",
+  "checkOut": "date in DD-MM-YYYY format",
+  "nights": "number of nights as string",
+  "roomType": "exact room type - one of: 1-Bedroom Apartment, 2-Bedroom Deluxe Apartment, 3-Bedroom Deluxe Apartment, or the closest match",
+  "totalCost": "total price as number string e.g. 283.50",
+  "commission": "commission amount as number string e.g. 42.52",
+  "netAmount": "total minus commission as number string",
+  "payMethod": "Booking.com Collect or Property Collect",
+  "bookingStatus": "Confirmed, Cancelled, or No Show",
+  "notes": "any special requests or notes visible"
+}
+If a field is not visible in the screenshot, use an empty string. Dates must be in DD-MM-YYYY format.`
+            }
+          ]
+        }]
+      })
+    });
+
+    const data = await response.json();
+    if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+
+    const rawText = data.content?.[0]?.text || "";
+    let extracted;
+    try {
+      // Strip any markdown code fences
+      const clean = rawText.replace(/```json|```/g, "").trim();
+      extracted = JSON.parse(clean);
+    } catch(parseErr) {
+      throw new Error("Could not parse AI response. Please try again or fill manually.");
+    }
+
+    populateForm(extracted);
+    showStatus("✅ Details extracted! Please review and correct if needed.", false);
+
+  } catch(err) {
+    showStatus("❌ " + err.message, true);
+    btn.disabled = false;
+    btn.innerHTML = "✨ Extract Details with AI";
+    btn.classList.remove('loading');
+    // Still show form for manual entry
+    showFormSections();
+  }
+
+  btn.innerHTML = "🔄 Re-extract";
+  btn.disabled = false;
+  btn.classList.remove('loading');
+}
+
+// ── POPULATE FORM ─────────────────────────────────────────────
+function populateForm(data) {
+  if (data.bookingNo)     setField('bookingNo', data.bookingNo);
+  if (data.bookingStatus) setSelect('bookingStatus', data.bookingStatus);
+  if (data.guestName)     setField('guestName', data.guestName);
+  if (data.email)         setField('email', data.email);
+  if (data.phone)         setField('phone', data.phone);
+  if (data.adults)        setField('adults', data.adults);
+  if (data.kids)          setField('kids', data.kids);
+  if (data.checkIn)       setField('checkIn', data.checkIn);
+  if (data.checkOut)      setField('checkOut', data.checkOut);
+  if (data.nights)        setField('nights', data.nights);
+  if (data.roomType)      matchRoomType(data.roomType);
+  if (data.totalCost)     setField('totalCost', data.totalCost);
+  if (data.commission)    setField('commission', data.commission);
+  if (data.payMethod)     matchPayMethod(data.payMethod);
+  if (data.notes)         setField('notes', data.notes);
+
+  // Update badge and calc net
+  if (data.bookingNo) document.getElementById('bookingBadge').textContent = 'BK: ' + data.bookingNo;
+  calcNet();
+  showFormSections();
+}
+
+function setField(id, val) {
+  const el = document.getElementById(id);
+  if (el && val) el.value = val;
+}
+
+function setSelect(id, val) {
+  const el = document.getElementById(id);
+  if (!el || !val) return;
+  for (let opt of el.options) {
+    if (opt.value.toLowerCase().includes(val.toLowerCase()) ||
+        val.toLowerCase().includes(opt.value.toLowerCase())) {
+      el.value = opt.value; return;
+    }
+  }
+}
+
+function matchRoomType(raw) {
+  const el = document.getElementById('roomType');
+  const r  = raw.toLowerCase();
+  if (r.includes('3') || r.includes('three')) el.value = '3-Bedroom Deluxe Apartment';
+  else if (r.includes('2') || r.includes('two')) el.value = '2-Bedroom Deluxe Apartment';
+  else if (r.includes('1') || r.includes('one')) el.value = '1-Bedroom Apartment';
+  else el.value = raw;
+}
+
+function matchPayMethod(raw) {
+  const el = document.getElementById('payMethod');
+  if (raw.toLowerCase().includes('property')) el.value = 'Property Collect';
+  else el.value = 'Booking.com Collect';
+}
+
+function showFormSections() {
+  ['sectionBooking','sectionGuest','sectionStay','sectionFinancials','sectionNotes','sectionSubmit'].forEach(id => {
+    document.getElementById(id).classList.add('visible');
+  });
+}
+
+// ── CALCULATIONS ──────────────────────────────────────────────
+function calcNet() {
+  const total = parseFloat(document.getElementById('totalCost').value) || 0;
+  const comm  = parseFloat(document.getElementById('commission').value) || 0;
+  const net   = total - comm;
+  document.getElementById('netDisplay').textContent = 'FJD ' + net.toFixed(2);
+}
+
+function updateNights() {
+  // Auto-calculate nights from dates if both filled
+  const ci = document.getElementById('checkIn').value;
+  const co = document.getElementById('checkOut').value;
+  if (ci && co) {
+    const d1 = parseDate(ci), d2 = parseDate(co);
+    if (d1 && d2) {
+      const n = Math.round((d2 - d1) / 86400000);
+      if (n > 0) document.getElementById('nights').value = n;
+    }
+  }
+}
+
+function parseDate(s) {
+  const m = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+  if (m) return new Date(+m[3], +m[2]-1, +m[1]);
+  return null;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────
+async function submitReservation() {
+  const bookingNo = document.getElementById('bookingNo').value.trim();
+  const guestName = document.getElementById('guestName').value.trim();
+  const checkIn   = document.getElementById('checkIn').value.trim();
+  const checkOut  = document.getElementById('checkOut').value.trim();
+  const totalCost = document.getElementById('totalCost').value.trim();
+  const roomType  = document.getElementById('roomType').value;
+
+  if (!bookingNo || !guestName || !checkIn || !checkOut || !totalCost || !roomType) {
+    showStatus("❌ Please fill in all required fields (marked with *)", true);
+    return;
+  }
+
+  if (BCOM_API_URL === "PASTE_YOUR_BCOM_WEB_APP_URL_HERE") {
+    showStatus("❌ API URL not set. Please configure BCOM_API_URL.", true);
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+
+  const total = parseFloat(totalCost) || 0;
+  const comm  = parseFloat(document.getElementById('commission').value) || 0;
+
+  const payload = {
+    action:        "save",
+    bookingNo,
+    guestName,
+    email:         document.getElementById('email').value.trim(),
+    phone:         document.getElementById('phone').value.trim(),
+    adults:        document.getElementById('adults').value.trim(),
+    kids:          document.getElementById('kids').value.trim(),
+    checkIn,
+    checkOut,
+    nights:        document.getElementById('nights').value.trim(),
+    roomType,
+    totalCost:     total.toFixed(2),
+    commission:    comm.toFixed(2),
+    netAmount:     (total - comm).toFixed(2),
+    payMethod:     document.getElementById('payMethod').value,
+    bookingStatus: document.getElementById('bookingStatus').value,
+    notes:         document.getElementById('notes').value.trim(),
+    screenshotUrl: "",
+  };
+
+  try {
+    const res  = await fetch(BCOM_API_URL, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      document.getElementById('successMsg').textContent =
+        `Booking ${bookingNo} for ${guestName} has been saved. Admin will review and approve it on the dashboard.`;
+      document.getElementById('successCard').style.display = 'block';
+      document.getElementById('uploadCard').style.display = 'none';
+      document.getElementById('aiStatus').style.display = 'none';
+      ['sectionBooking','sectionGuest','sectionStay','sectionFinancials','sectionNotes','sectionSubmit'].forEach(id => {
+        document.getElementById(id).classList.remove('visible');
+      });
+    } else {
+      showStatus("❌ " + (data.message || data.error || "Save failed"), true);
+      btn.disabled = false;
+      btn.innerHTML = "✅ Save Reservation";
+    }
+  } catch(err) {
+    showStatus("❌ Network error: " + err.message, true);
+    btn.disabled = false;
+    btn.innerHTML = "✅ Save Reservation";
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────────────
+function showStatus(msg, isError) {
+  const el = document.getElementById('aiStatus');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.className = 'ai-status' + (isError ? ' error' : '');
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function resetForm() {
+  uploadedFile = uploadedBase64 = uploadedMimeType = null;
+  document.getElementById('previewImg').style.display = 'none';
+  document.getElementById('previewImg').src = '';
+  document.getElementById('extractBtn').disabled = true;
+  document.getElementById('extractBtn').innerHTML = '✨ Extract Details with AI';
+  document.getElementById('uploadArea').style.borderColor = '#003580';
+  document.getElementById('aiStatus').style.display = 'none';
+  document.getElementById('successCard').style.display = 'none';
+  document.getElementById('uploadCard').style.display = 'block';
+  document.getElementById('bookingBadge').textContent = 'Booking.com';
+  ['sectionBooking','sectionGuest','sectionStay','sectionFinancials','sectionNotes','sectionSubmit'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+  // Clear all fields
+  ['bookingNo','guestName','email','phone','adults','kids','checkIn','checkOut','nights','totalCost','commission','notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('netDisplay').textContent = 'FJD 0.00';
+  document.getElementById('bookingStatus').value = 'Confirmed';
+  document.getElementById('roomType').value = '';
+  document.getElementById('payMethod').value = 'Booking.com Collect';
+  document.getElementById('fileInput').value = '';
+}
+
+// Auto-calc nights when dates change
+document.addEventListener('change', e => {
+  if (e.target.id === 'checkIn' || e.target.id === 'checkOut') updateNights();
+});
+</script>
+</body>
+</html>
