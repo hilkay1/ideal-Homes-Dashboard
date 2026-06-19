@@ -7,7 +7,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ideal Homes">
 <meta name="theme-color" content="#0C3C35">
-<title>Ideal Homes Nadi — Dashboard</title>
+<title>Ideal Homes Nadi — Dashboard v3</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <link rel="icon" type="image/jpeg" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
 <link rel="apple-touch-icon" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
@@ -161,7 +164,7 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
   <div class="pbrand">Ideal Homes Nadi</div>
   <div class="pbsub">Enter your access code</div>
   <div class="pbox">
-    <div class="pico"><i class="ti ti-lock"></i></div>
+    <div class="pico">🔒</div>
     <div class="ptitle">Dashboard Access</div>
     <div class="psub">Enter your password to continue</div>
     <input type="password" id="pinp" class="pinp" placeholder="••••••" autocomplete="off" maxlength="20">
@@ -172,7 +175,7 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 
 <!-- LOADING -->
 <div id="ldg" class="ldg" style="display:none">
-  <i class="ti ti-loader-2"></i>
+  ⏳
   <div style="font-size:12px;color:#7ec8c0">Loading dashboard...</div>
 </div>
 
@@ -190,8 +193,8 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
         </div>
       </div>
       <div class="hdr-btns">
-        <button class="ico-btn" onclick="logout()" title="Lock"><i class="ti ti-lock"></i></button>
-        <button class="ico-btn" id="refBtn" onclick="loadData()" title="Refresh"><i class="ti ti-refresh" id="refIco"></i></button>
+        <button class="ico-btn" onclick="logout()" title="Lock">🔒</button>
+        <button class="ico-btn" id="refBtn" onclick="loadData()" title="Refresh"><span id="refIco">↻</span></button>
       </div>
     </div>
     <div class="upd" id="upd">—</div>
@@ -212,7 +215,7 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 
     <!-- TODAY -->
     <div class="sec active" id="sec-today">
-      <div id="supnote" class="supnote" style="display:none"><i class="ti ti-info-circle"></i> Check-in &amp; checkout details only</div>
+      <div id="supnote" class="supnote" style="display:none">ℹ️ Check-in &amp; checkout details only</div>
       <div id="todayAlert"></div>
       <div class="kgrid kgrid3" style="margin-bottom:12px">
         <div class="kpi"><div class="klbl">Check-ins</div><div class="kval" id="kCI">0</div></div>
@@ -220,11 +223,11 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
         <div class="kpi fin-tab"><div class="klbl">Revenue</div><div class="kval" id="kRev">$0</div></div>
       </div>
       <div class="card ci">
-        <div class="ctitle"><i class="ti ti-door-enter"></i> Check-ins today</div>
+        <div class="ctitle">🏠 Check-ins today</div>
         <div id="listCI"></div>
       </div>
       <div class="card co">
-        <div class="ctitle"><i class="ti ti-door-exit"></i> Checkouts today</div>
+        <div class="ctitle">🚪 Checkouts today</div>
         <div id="listCO"></div>
       </div>
     </div>
@@ -248,7 +251,7 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
         <div class="kpi"><div class="klbl">Outstanding</div><div class="kval" id="mOut" style="color:#C0392B">$0</div></div>
       </div>
       <div class="card">
-        <div class="ctitle"><i class="ti ti-chart-bar"></i> Revenue by month — <span id="mYear"></span></div>
+        <div class="ctitle">📊 Revenue by month — <span id="mYear"></span></div>
         <div class="chwrap"><canvas id="mChart"></canvas></div>
       </div>
     </div>
@@ -262,12 +265,12 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
         <div class="kpi"><div class="klbl">Bookings</div><div class="kval" id="qBk">0</div><div class="ksub" id="qNi"></div></div>
       </div>
       <div class="card">
-        <div class="ctitle"><i class="ti ti-receipt-tax"></i> VAT by quarter — <span id="qYear"></span></div>
+        <div class="ctitle">🧾 VAT by quarter — <span id="qYear"></span></div>
         <div class="chwrap"><canvas id="qChart"></canvas></div>
         <div id="qLeg" style="display:flex;gap:12px;margin-top:7px;font-size:10.5px;color:#666"></div>
       </div>
       <div class="card">
-        <div class="ctitle"><i class="ti ti-calendar-stats"></i> Year to date</div>
+        <div class="ctitle">📅 Year to date</div>
         <table class="tmini">
           <tr><td>Total revenue (inc. VAT)</td><td style="text-align:right;font-weight:700" id="ytdRev">$0</td></tr>
           <tr><td>Total VAT collected</td><td style="text-align:right;font-weight:700;color:#085041" id="ytdVat">$0</td></tr>
@@ -279,7 +282,7 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
     <!-- UPCOMING -->
     <div class="sec" id="sec-upcoming">
       <div class="card">
-        <div class="ctitle"><i class="ti ti-calendar-event"></i> Next 7 days check-ins</div>
+        <div class="ctitle">📅 Next 7 days check-ins</div>
         <div id="listUp"></div>
       </div>
     </div>
@@ -287,15 +290,12 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
     <!-- BOOKING.COM -->
     <div class="sec" id="sec-bookingcom">
       <div class="card">
-        <!-- Header row with + Add button -->
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-          <div style="font-size:10.5px;font-weight:700;color:#4A6160;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
-            <i class="ti ti-building-store"></i> Booking.com Reservations
-            <span id="bPendBadge" style="font-size:9px;background:#FFF8E7;color:#8B6310;padding:2px 7px;border-radius:7px;font-weight:700;display:none">⏳</span>
+          <div style="font-size:10.5px;font-weight:700;color:#4A6160;text-transform:uppercase;letter-spacing:.5px">
+            🔵 Booking.com Reservations
+            <span id="bPendBadge" style="font-size:9px;background:#FFF8E7;color:#8B6310;padding:2px 7px;border-radius:7px;font-weight:700;display:none;margin-left:4px">⏳</span>
           </div>
-          <button id="addBcomBtn" onclick="openModal()" style="background:#003580;color:#fff;border:none;border-radius:9px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0">+ Add</button>
         </div>
-        <!-- Filter buttons -->
         <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
           <button class="bfbtn active" id="bfAll" onclick="bFilter('all')">All</button>
           <button class="bfbtn" id="bfPend" onclick="bFilter('pending')">⏳ Pending</button>
@@ -307,6 +307,9 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 
   </div>
 </div>
+
+<!-- FLOATING + BUTTON for Booking.com (admin only, always visible) -->
+<button id="fab" onclick="openModal()" style="position:fixed;bottom:28px;right:20px;z-index:99;width:60px;height:60px;border-radius:50%;background:#003580;color:#fff;border:none;font-size:30px;box-shadow:0 4px 18px rgba(0,53,128,.55);cursor:pointer">+</button>
 
 <!-- BOOKING.COM MODAL -->
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
@@ -418,7 +421,8 @@ function logout() {
 // ─── LOAD DATA ───────────────────────────────────────────────
 async function loadData() {
   const ico = document.getElementById("refIco");
-  ico.classList.add("spinning");
+  ico.style.display = "inline-block";
+  ico.style.animation = "spin .8s linear infinite";
   document.getElementById("upd").textContent = "Loading...";
   try {
     const res = await fetch(API);
@@ -433,7 +437,7 @@ async function loadData() {
   } catch(e) {
     document.getElementById("ldg").innerHTML = '<div style="color:#FAECE7;padding:20px;font-size:13px">Error: ' + esc(e.message) + '</div>';
   }
-  ico.classList.remove("spinning");
+  ico.style.animation = "none";
 }
 
 function applyView() {
@@ -443,9 +447,10 @@ function applyView() {
   document.querySelectorAll(".fin-tab").forEach(el => el.style.display = isSup ? "none" : "");
   // Booking.com tab only for admin
   document.querySelectorAll(".bcom-tab").forEach(el => el.style.display = isSup ? "none" : "");
-  if (isSup) {
-    switchTab("today");
-  }
+  // FAB only for admin
+  const fab = document.getElementById("fab");
+  if (fab) { fab.style.display = isSup ? "none" : "flex"; }
+  if (isSup) { switchTab("today"); }
 }
 
 // ─── RENDER ──────────────────────────────────────────────────
@@ -533,7 +538,7 @@ function render(d) {
 
 // ─── GUEST LIST RENDER ───────────────────────────────────────
 function renderGuests(list, type, isSup) {
-  if (!list || !list.length) return '<div class="empty"><i class="ti ti-mood-empty"></i>No ' + (type==="ci"?"check-ins":"checkouts") + " today</div>";
+  if (!list || !list.length) return '<div class="empty">😶No ' + (type==="ci"?"check-ins":"checkouts") + " today</div>";
   return list.map(g => {
     const out = g.outstanding > 0;
     const room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
@@ -572,7 +577,7 @@ function cmtBlock(g) {
 }
 
 function renderUpcoming(list, isSup) {
-  if (!list || !list.length) return '<div class="empty"><i class="ti ti-calendar-off"></i>No check-ins in the next 7 days</div>';
+  if (!list || !list.length) return '<div class="empty">📅No check-ins in the next 7 days</div>';
   return list.map(g => {
     const out = g.outstanding > 0;
     const dateLabel = (g.arrivalDay || "") + " " + g.arrivalDate;
@@ -604,7 +609,7 @@ function renderBcom() {
     return true;
   });
   if (!filtered.length) {
-    el.innerHTML = '<div class="empty"><i class="ti ti-building-store"></i>' + (bFilterVal==="pending"?"No pending reservations":bFilterVal==="approved"?"No approved reservations":"No Booking.com reservations yet") + '</div>';
+    el.innerHTML = '<div class="empty">🔵' + (bFilterVal==="pending"?"No pending reservations":bFilterVal==="approved"?"No approved reservations":"No Booking.com reservations yet") + '</div>';
     return;
   }
   el.innerHTML = filtered.map(b => {
