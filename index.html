@@ -663,11 +663,9 @@ function bcomUpCard(b) {
 
 async function bApprove(bookingNo, approve) {
   try {
-    const res = await fetch(BAPI, {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ action: approve ? "approve" : "unapprove", bookingNo })
-    });
+    const action = approve ? "approve" : "unapprove";
+    const url = BAPI + "?action=" + action + "&bookingNo=" + encodeURIComponent(bookingNo);
+    const res = await fetch(url);
     const d = await res.json();
     if (d.success) {
       const entry = bAll.find(b => b.bookingNo === bookingNo);
@@ -770,17 +768,15 @@ async function mSave() {
   btn.disabled = true; btn.textContent = "⏳ Saving...";
   const t = parseFloat(tot)||0, c = parseFloat(v("mCom"))||0;
   try {
-    const res = await fetch(BAPI, {
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        action:"save", bookingNo:bn, guestName:gn, email:"", phone:"",
-        adults:v("mAd"), kids:v("mKd"), checkIn:ci, checkOut:co,
-        nights:v("mNi"), roomType:rt, totalCost:t.toFixed(2),
-        commission:c.toFixed(2), netAmount:(t-c).toFixed(2),
-        payMethod:v("mPM"), bookingStatus:v("mBSt"),
-        notes:v("mNotes"), screenshotUrl:""
-      })
+    const params = new URLSearchParams({
+      action:"save", bookingNo:bn, guestName:gn, email:"", phone:"",
+      adults:v("mAd"), kids:v("mKd"), checkIn:ci, checkOut:co,
+      nights:v("mNi"), roomType:rt, totalCost:t.toFixed(2),
+      commission:c.toFixed(2), netAmount:(t-c).toFixed(2),
+      payMethod:v("mPM"), bookingStatus:v("mBSt"),
+      notes:v("mNotes"), screenshotUrl:""
     });
+    const res = await fetch(BAPI + "?" + params.toString());
     const d = await res.json();
     if (d.success) {
       mStatus("✅ Saved! Pending admin approval.", false);
