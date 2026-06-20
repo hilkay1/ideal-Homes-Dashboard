@@ -7,51 +7,37 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ideal Homes">
 <meta name="theme-color" content="#0C3C35">
-<title>Ideal Homes Nadi — Dashboard v4</title>
-<!-- build:20260620-2100 -->
+<title>Ideal Homes Nadi — Dashboard v5</title>
+<!-- build:20260621-0800 -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <link rel="icon" type="image/jpeg" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
 <link rel="apple-touch-icon" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overscroll-behavior:none;color:#1A2622;padding-bottom:40px;min-height:100vh}
-
-/* HEADER */
 .hdr{background:#0C3C35;padding:16px 16px 14px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .hdr-top{display:flex;justify-content:space-between;align-items:center}
 .brand{font-size:17px;font-weight:700;color:#fff}
 .brand-sub{font-size:9.5px;color:#C9921A;font-weight:600;margin-top:2px}
 .hdr-btns{display:flex;gap:6px;align-items:center}
 .ico-btn{background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer}
-.ico-btn:active{background:rgba(255,255,255,.2)}
 .upd{font-size:9px;color:#7ec8c0;margin-top:7px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.spinning{animation:spin .8s linear infinite}
-
-/* TABS */
 .tabs{display:flex;gap:5px;padding:10px 12px 0;overflow-x:auto;background:#0C3C35;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex-shrink:0;padding:6px 13px;border-radius:14px;font-size:11.5px;font-weight:600;color:#7ec8c0;background:rgba(255,255,255,.06);cursor:pointer;white-space:nowrap;border:none}
 .tab.active{background:#C9921A;color:#fff}
 .tab.bcom-tab{background:#003580;color:#fff}
-
-/* CONTENT */
+.tab.hk-tab{background:#1A7A6E;color:#fff}
 .content{padding:14px 13px}
 .sec{display:none}
 .sec.active{display:block}
-
-/* CARDS */
 .card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
 .card.ci{background:#EAF8F3;border-left:4px solid #1A7A6E}
 .card.co{background:#FFF3E8;border-left:4px solid #E07B20}
 .ctitle{font-size:10.5px;font-weight:700;color:#4A6160;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:5px}
 .card.ci .ctitle{color:#085041}
 .card.co .ctitle{color:#8B4000}
-
-/* KPI */
 .kgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
 .kgrid3{grid-template-columns:1fr 1fr 1fr}
 .kpi{background:#fff;border-radius:13px;padding:13px 11px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
@@ -61,8 +47,6 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 .kchg{font-size:9px;font-weight:700;padding:2px 6px;border-radius:7px;display:inline-block;margin-top:4px}
 .kchg.up{background:#E1F5EE;color:#085041}
 .kchg.down{background:#FAECE7;color:#712B13}
-
-/* GUEST CARDS */
 .gc{padding:12px 0;border-bottom:1px solid #F0F0F0}
 .gc:last-child{border-bottom:none}
 .gc-top{display:flex;justify-content:space-between;align-items:flex-start}
@@ -82,10 +66,10 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 .cbox{margin-top:8px}
 .clbl{font-size:9px;font-weight:700;color:#aaa;text-transform:uppercase;margin-bottom:3px}
 .cph{font-size:10.5px;color:#bbb;font-style:italic;padding:5px 8px;background:#FAFAFA;border-radius:6px}
-
-/* MISC */
+.action-btns{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.btn-call{background:#1A7A6E;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn-wa{background:#25D366;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
 .empty{text-align:center;padding:22px 10px;color:#aaa;font-size:12.5px}
-.empty i{font-size:26px;color:#ccc;display:block;margin-bottom:7px}
 .badge{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:9px;display:inline-block}
 .badge.gold{background:#FAEEDA;color:#633806}
 .badge.teal{background:#E1F5EE;color:#085041}
@@ -93,8 +77,6 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 .tmini{width:100%;font-size:11px}
 .tmini td{padding:7px 0;border-bottom:1px solid #F0F0F0}
 .tmini tr:last-child td{border-bottom:none}
-
-/* PASSWORD */
 .pscr{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:20px}
 .pbox{background:#fff;border-radius:16px;padding:30px 22px;max-width:310px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,.2)}
 .pico{width:52px;height:52px;border-radius:13px;background:#0C3C35;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;color:#C9921A}
@@ -106,18 +88,9 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 .perr{font-size:11px;color:#C0392B;text-align:center;margin-top:8px;min-height:14px}
 .pbrand{font-size:17px;font-weight:700;color:#fff;text-align:center;margin-bottom:4px}
 .pbsub{font-size:9.5px;color:#C9921A;text-align:center;margin-bottom:26px;font-weight:600}
-
-/* SUPERVISOR NOTE */
 .supnote{background:#F0EAF8;border-left:3px solid #6A3FA0;padding:9px 12px;border-radius:0 8px 8px 0;font-size:11px;color:#3B1F5E;margin-bottom:12px}
-
-/* LOADING */
 .ldg{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;color:#fff}
-.ldg i{font-size:30px;margin-bottom:10px;animation:spin 1s linear infinite}
-
-/* ALERT */
 .alertbox{background:#FAEEDA;border-left:3px solid #BA7517;padding:9px 11px;border-radius:0 8px 8px 0;font-size:11px;color:#633806;margin-bottom:10px}
-
-/* BOOKING.COM */
 .bfbtn{font-size:10px;font-weight:700;padding:4px 11px;border-radius:9px;border:1.5px solid #DDD;background:#fff;color:#555;cursor:pointer}
 .bfbtn.active{background:#003580;color:#fff;border-color:#003580}
 .bcard{padding:12px 0;border-bottom:1px solid #F0F0F0}
@@ -126,36 +99,59 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 .bpend{font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;background:#FFF8E7;color:#8B6310;display:inline-block}
 .bapprbtn{font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#003580;color:#fff;border:none;cursor:pointer;margin-top:5px}
 .bunapprbtn{font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#f0f2f5;color:#666;border:none;cursor:pointer;margin-top:5px;margin-left:5px}
-
+/* ENTRY BUTTONS */
+.entry-btn{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:18px 16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer;border:none;width:100%;text-align:left}
+.entry-btn:active{opacity:.85}
+.entry-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.entry-title{font-size:14px;font-weight:700;color:#0C3C35}
+.entry-sub{font-size:11px;color:#888;margin-top:2px}
+/* HOUSEKEEPING GRID */
+.hk-grid{width:100%;border-collapse:collapse;font-size:10px}
+.hk-grid th{background:#0C3C35;color:#fff;padding:6px 4px;text-align:center;font-size:9px}
+.hk-grid td{padding:5px 4px;text-align:center;border-bottom:1px solid #F0F0F0;border-right:1px solid #F0F0F0}
+.hk-grid tr:last-child td{border-bottom:none}
+.hk-grid td:first-child{font-weight:700;color:#0C3C35;text-align:left;padding-left:6px}
+.hk-clean{color:#1A7A6E;font-size:14px}
+.hk-attn{color:#C9921A;font-size:14px}
+.hk-dmg{color:#C0392B;font-size:14px}
+.hk-none{color:#DDD;font-size:12px}
+/* TASKS */
+.task-card{background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.06);border-left:3px solid #C9921A}
+.task-card.done{border-left-color:#1A7A6E;opacity:.7}
+.task-title{font-size:12px;font-weight:700;color:#0C3C35}
+.task-meta{font-size:10px;color:#888;margin-top:3px}
+.task-done-btn{font-size:10px;font-weight:700;padding:4px 10px;border-radius:7px;background:#1A7A6E;color:#fff;border:none;cursor:pointer;margin-top:6px}
+/* ASSIGN TASK */
+.mfg{margin-bottom:9px}
+.mfg label{font-size:10.5px;font-weight:600;color:#555;display:block;margin-bottom:3px}
+.mfg input,.mfg select,.mfg textarea{width:100%;padding:9px 10px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;color:#1A2622;outline:none;background:#fff}
+.mfrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* USER MANAGEMENT */
+.user-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0F0F0}
+.user-row:last-child{border-bottom:none}
+.user-name{font-size:13px;font-weight:700;color:#0C3C35}
+.user-role{font-size:10px;color:#888}
+.toggle{position:relative;width:44px;height:24px}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:24px;transition:.3s}
+.toggle-slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s}
+.toggle input:checked + .toggle-slider{background:#1A7A6E}
+.toggle input:checked + .toggle-slider:before{transform:translateX(20px)}
 /* MODAL */
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(0,0,0,.5)}
 .modal-box{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:18px 18px 0 0;max-height:92vh;overflow-y:auto;padding-bottom:32px}
 .modal-handle{text-align:center;padding:10px 0 0;cursor:pointer}
 .modal-handle-bar{width:36px;height:4px;background:#DDD;border-radius:4px;display:inline-block}
 .modal-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 12px;border-bottom:1px solid #F0F0F0}
-.modal-title{font-size:14px;font-weight:700;color:#003580}
+.modal-title{font-size:14px;font-weight:700;color:#0C3C35}
 .modal-sub{font-size:10px;color:#888;margin-top:2px}
 .modal-close{background:#f0f2f5;border:none;border-radius:8px;width:28px;height:28px;font-size:15px;cursor:pointer}
 .modal-body{padding:14px 16px}
-.mupload{border:2px dashed #003580;border-radius:12px;padding:22px 16px;text-align:center;cursor:pointer;margin-bottom:10px}
-.mupload.ok{border-color:#1A7A6E}
-.mprev{display:none;width:100%;border-radius:10px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.mexbtn{width:100%;padding:11px;background:#003580;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;margin-bottom:10px;cursor:pointer}
-.mexbtn:disabled{opacity:.45;cursor:not-allowed}
+.msavebtn{width:100%;padding:14px;background:#1A7A6E;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer}
+.msavebtn:disabled{opacity:.5;cursor:not-allowed}
 .mstatus{display:none;font-size:11px;padding:8px 11px;border-radius:8px;margin-bottom:10px}
 .mstatus.ok{background:#EEF3FB;color:#003580}
 .mstatus.err{background:#FAECE7;color:#712B13}
-.mfields{display:none}
-.mseclbl{font-size:10px;font-weight:700;color:#003580;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #EEF3FB}
-.mfg{margin-bottom:9px}
-.mfg label{font-size:10.5px;font-weight:600;color:#555;display:block;margin-bottom:3px}
-.mfg input,.mfg select,.mfg textarea{width:100%;padding:9px 10px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;color:#1A2622;outline:none;background:#fff}
-.mfg input:focus,.mfg select:focus{border-color:#003580}
-.mfg textarea{height:60px;resize:none}
-.mfrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mnet{background:#EEF3FB;padding:9px 11px;border-radius:8px;font-size:12.5px;font-weight:700;color:#003580;margin-bottom:9px}
-.msavebtn{width:100%;padding:14px;background:#1A7A6E;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer}
-.msavebtn:disabled{opacity:.5;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -163,7 +159,7 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 <!-- PASSWORD SCREEN -->
 <div id="pscr" class="pscr">
   <div class="pbrand">Ideal Homes Nadi</div>
-  <div class="pbsub">Enter your access code</div>
+  <div class="pbsub">Property Management System</div>
   <div class="pbox">
     <div class="pico">🔒</div>
     <div class="ptitle">Dashboard Access</div>
@@ -176,14 +172,12 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 
 <!-- LOADING -->
 <div id="ldg" class="ldg" style="display:none">
-  ⏳
-  <div style="font-size:12px;color:#7ec8c0">Loading dashboard...</div>
+  <div style="font-size:30px;animation:spin 1s linear infinite">↻</div>
+  <div style="font-size:12px;color:#7ec8c0;margin-top:10px">Loading dashboard...</div>
 </div>
 
 <!-- APP -->
 <div id="app" style="display:none">
-
-  <!-- HEADER -->
   <div class="hdr">
     <div class="hdr-top">
       <div style="display:flex;align-items:center;gap:9px">
@@ -194,6 +188,7 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
         </div>
       </div>
       <div class="hdr-btns">
+        <span id="userBadge" style="font-size:9px;font-weight:700;color:#C9921A;background:rgba(201,146,26,.15);padding:3px 8px;border-radius:7px"></span>
         <button class="ico-btn" onclick="logout()" title="Lock">🔒</button>
         <button class="ico-btn" id="refBtn" onclick="loadData()" title="Refresh"><span id="refIco">↻</span></button>
       </div>
@@ -201,27 +196,24 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
     <div class="upd" id="upd">—</div>
   </div>
 
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab active" data-tab="today">Today</button>
-    <button class="tab fin-tab" data-tab="week">Week</button>
-    <button class="tab fin-tab" data-tab="month">Month</button>
-    <button class="tab fin-tab" data-tab="quarter">Quarter VAT</button>
-    <button class="tab" data-tab="upcoming">Upcoming</button>
-    <button class="tab bcom-tab" data-tab="bookingcom">🔵 Booking.com</button>
-  </div>
+  <div class="tabs" id="tabBar"></div>
 
-  <!-- CONTENT -->
   <div class="content">
-
     <!-- TODAY -->
-    <div class="sec active" id="sec-today">
-      <div id="supnote" class="supnote" style="display:none">ℹ️ Check-in &amp; checkout details only</div>
+    <div class="sec" id="sec-today">
+      <div id="supnote" class="supnote" style="display:none">ℹ️ Showing check-in &amp; checkout details</div>
       <div id="todayAlert"></div>
       <div class="kgrid kgrid3" style="margin-bottom:12px">
         <div class="kpi"><div class="klbl">Check-ins</div><div class="kval" id="kCI">0</div></div>
         <div class="kpi"><div class="klbl">Checkouts</div><div class="kval" id="kCO">0</div></div>
         <div class="kpi fin-tab"><div class="klbl">Revenue</div><div class="kval" id="kRev">$0</div></div>
+      </div>
+      <!-- MY TASKS (supervisor) -->
+      <div id="myTasksSection" style="display:none">
+        <div class="card" style="border-left:4px solid #C9921A">
+          <div class="ctitle" style="color:#633806">📋 My Tasks Today</div>
+          <div id="myTasksList"></div>
+        </div>
       </div>
       <div class="card ci">
         <div class="ctitle">🏠 Check-ins today</div>
@@ -288,6 +280,28 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
       </div>
     </div>
 
+    <!-- HOUSEKEEPING -->
+    <div class="sec" id="sec-housekeeping">
+      <div class="card">
+        <div class="ctitle" style="color:#085041">🧹 Weekly Cleaning Status</div>
+        <div id="hkGrid"></div>
+      </div>
+      <div class="card" style="border-left:4px solid #E07B20">
+        <div class="ctitle" style="color:#8B4000">🔴 Urgent — Clean &amp; Prepare Today</div>
+        <div id="hkUrgent"></div>
+      </div>
+      <div class="card" style="border-left:4px solid #C9921A">
+        <div class="ctitle" style="color:#633806">🟡 Upcoming — Prepare Room</div>
+        <div id="hkUpcoming"></div>
+      </div>
+      <a href="https://form.jotform.com/261707324246051" target="_blank" style="display:block;width:100%;padding:14px;background:#1A7A6E;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;margin-top:8px">🧹 Submit Housekeeping Report</a>
+    </div>
+
+    <!-- ENTRY (supervisor) / FORMS (admin) -->
+    <div class="sec" id="sec-entry">
+      <div id="entryContent"></div>
+    </div>
+
     <!-- BOOKING.COM -->
     <div class="sec" id="sec-bookingcom">
       <div class="card">
@@ -306,68 +320,114 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
       </div>
     </div>
 
+    <!-- TASKS (admin) -->
+    <div class="sec" id="sec-tasks">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div class="ctitle" style="margin-bottom:0">📋 Staff Tasks</div>
+          <button onclick="openTaskModal()" style="background:#0C3C35;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer">+ Assign Task</button>
+        </div>
+        <div id="tasksList"></div>
+      </div>
+    </div>
+
+    <!-- USERS (admin) -->
+    <div class="sec" id="sec-users">
+      <div class="card">
+        <div class="ctitle">👥 User Access Management</div>
+        <div id="usersList"></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<!-- FLOATING + BUTTON for Booking.com (admin only, always visible) -->
-<button id="fab" onclick="openModal()" style="position:fixed;bottom:28px;right:20px;z-index:99;width:60px;height:60px;border-radius:50%;background:#003580;color:#fff;border:none;font-size:30px;box-shadow:0 4px 18px rgba(0,53,128,.55);cursor:pointer">+</button>
+<!-- FAB -->
+<button id="fab" onclick="openEntryChooser()" style="display:none;position:fixed;bottom:28px;right:20px;z-index:99;width:60px;height:60px;border-radius:50%;background:#1A7A6E;color:#fff;border:none;font-size:30px;box-shadow:0 4px 18px rgba(26,122,110,.55);cursor:pointer;align-items:center;justify-content:center">+</button>
 
-<!-- BOOKING.COM MODAL -->
-<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+<!-- ENTRY CHOOSER MODAL -->
+<div class="modal-overlay" id="entryModal" onclick="if(event.target===this)closeEntryModal()">
   <div class="modal-box">
-    <div class="modal-handle" onclick="closeModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-handle" onclick="closeEntryModal()"><div class="modal-handle-bar"></div></div>
     <div class="modal-hdr">
-      <div><div class="modal-title">🔵 Add Booking.com Reservation</div><div class="modal-sub">Fill in details from your Booking.com app</div></div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div><div class="modal-title">➕ New Guest Entry</div><div class="modal-sub">Select entry type</div></div>
+      <button class="modal-close" onclick="closeEntryModal()">✕</button>
     </div>
     <div class="modal-body">
-      <div class="mstatus" id="mSt"></div>
-
-      <div class="mseclbl">Booking Details</div>
-      <div class="mfrow">
-        <div class="mfg"><label>Booking No *</label><input id="mBNo" type="text" placeholder="5647264806"></div>
-        <div class="mfg"><label>Status</label>
-          <select id="mBSt"><option value="Confirmed">Confirmed</option><option value="Cancelled">Cancelled</option><option value="No Show">No Show</option></select>
+      <button class="entry-btn" onclick="openWalkin()">
+        <div class="entry-icon" style="background:#EAF8F3">🚶</div>
+        <div>
+          <div class="entry-title">Walk-in Guest</div>
+          <div class="entry-sub">Guest arriving now — fill details on form</div>
         </div>
+      </button>
+      <button class="entry-btn" onclick="openBookingCom()">
+        <div class="entry-icon" style="background:#EEF3FB">🔵</div>
+        <div>
+          <div class="entry-title">Booking.com Reservation</div>
+          <div class="entry-sub">Enter Booking.com reservation details</div>
+        </div>
+      </button>
+      <div id="regularBookingBtn" style="display:none">
+        <button class="entry-btn" onclick="openRegularBooking()">
+          <div class="entry-icon" style="background:#FFF8E7">📋</div>
+          <div>
+            <div class="entry-title">Regular Booking</div>
+            <div class="entry-sub">Full booking form with VAT</div>
+          </div>
+        </button>
       </div>
-      <div class="mfg"><label>Guest Name *</label><input id="mGN" type="text" placeholder="Full name as shown"></div>
-      <div class="mfrow">
-        <div class="mfg"><label>Adults</label><input id="mAd" type="number" placeholder="2" min="1" value=""></div>
-        <div class="mfg"><label>Kids</label><input id="mKd" type="number" placeholder="0" min="0" value=""></div>
-      </div>
+    </div>
+  </div>
+</div>
 
-      <div class="mseclbl" style="margin-top:12px">Stay Details</div>
+<!-- TASK MODAL -->
+<div class="modal-overlay" id="taskModal" onclick="if(event.target===this)closeTaskModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeTaskModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title">📋 Assign Task</div><div class="modal-sub">Assign a task to staff</div></div>
+      <button class="modal-close" onclick="closeTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mstatus" id="tSt"></div>
       <div class="mfrow">
-        <div class="mfg"><label>Check-In (DD-MM-YYYY) *</label><input id="mCI" type="text" placeholder="20-06-2026" oninput="mNights()"></div>
-        <div class="mfg"><label>Check-Out (DD-MM-YYYY) *</label><input id="mCO" type="text" placeholder="21-06-2026" oninput="mNights()"></div>
-      </div>
-      <div class="mfrow">
-        <div class="mfg"><label>Nights (auto)</label><input id="mNi" type="number" placeholder="1" min="1" readonly style="background:#f8f8f8"></div>
-        <div class="mfg"><label>Room Type *</label>
-          <select id="mRT">
+        <div class="mfg"><label>Flat</label>
+          <select id="tFlat">
             <option value="">Select...</option>
-            <option value="1-Bedroom Apartment">1-Bedroom Apartment</option>
-            <option value="2-Bedroom Deluxe Apartment">2-Bedroom Deluxe Apartment</option>
-            <option value="3-Bedroom Deluxe Apartment">3-Bedroom Deluxe Apartment</option>
+            <option>Flat 1</option><option>Flat 2</option><option>Flat 3</option>
+            <option>Flat 4</option><option>Flat 5</option><option>Flat 6</option>
+            <option>Flat 7</option><option>Flat 8</option><option>Flat 9</option>
+            <option>Common Area</option>
+          </select>
+        </div>
+        <div class="mfg"><label>Assign To</label>
+          <select id="tAssign">
+            <option value="">Select...</option>
+            <option>Olaide</option>
+            <option>Esther</option>
+            <option>Housekeeper</option>
           </select>
         </div>
       </div>
-
-      <div class="mseclbl" style="margin-top:12px">Financials</div>
+      <div class="mfg"><label>Task</label>
+        <select id="tTask">
+          <option value="">Select...</option>
+          <option>Clean Room</option>
+          <option>Prepare Room</option>
+          <option>Maintenance Check</option>
+          <option>Inspection</option>
+          <option>Restock Supplies</option>
+          <option>Other</option>
+        </select>
+      </div>
       <div class="mfrow">
-        <div class="mfg"><label>Total Price (FJD) *</label><input id="mTot" type="number" step="0.01" placeholder="283.50" oninput="mNet()"></div>
-        <div class="mfg"><label>Commission (FJD)</label><input id="mCom" type="number" step="0.01" placeholder="42.52" oninput="mNet()"></div>
+        <div class="mfg"><label>Due Date</label><input type="date" id="tDate"></div>
+        <div class="mfg"><label>Due Time</label><input type="time" id="tTime" value="10:00"></div>
       </div>
-      <div class="mnet">Net Amount: <span id="mNetVal">FJD 0.00</span></div>
-      <div class="mfg"><label>Payment Method</label>
-        <select id="mPM"><option value="Booking.com Collect">Booking.com Collect</option><option value="Property Collect">Property Collect</option></select>
-      </div>
-
-      <div class="mseclbl" style="margin-top:12px">Notes</div>
-      <div class="mfg"><textarea id="mNotes" placeholder="Special requests, notes..."></textarea></div>
-
-      <button class="msavebtn" id="mSaveBtn" onclick="mSave()">✅ Save Reservation</button>
-      <button onclick="closeModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Cancel</button>
+      <div class="mfg"><label>Notes</label><textarea id="tNotes" style="height:60px;resize:none;width:100%;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px" placeholder="Additional instructions..."></textarea></div>
+      <button class="msavebtn" id="tSaveBtn" onclick="saveTask()">✅ Assign Task</button>
+      <button onclick="closeTaskModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Cancel</button>
     </div>
   </div>
 </div>
@@ -375,37 +435,63 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 // ─── CONFIG ──────────────────────────────────────────────────
-const API = "https://script.google.com/macros/s/AKfycbznYlHuc-y9w7SrCddNUb0AgxzR7mlSQ7NMgciyKA6rrDQQ3o98zgi7sxQu1WTST0gCAA/exec";
+const API  = "https://script.google.com/macros/s/AKfycbznYlHuc-y9w7SrCddNUb0AgxzR7mlSQ7NMgciyKA6rrDQQ3o98zgi7sxQu1WTST0gCAA/exec";
 const BAPI = "https://script.google.com/macros/s/AKfycbyJHPd3lXSgxtnIsHr8iNBW3sk_csr6sww7vqG3jkqo8dPtCXNQEMJWc1_HiuosS9Q_Hw/exec";
-const PW = { ituomo:"admin", agpl12:"supervisor" };
+const WALKIN_FORM    = "https://form.jotform.com/261697021573056";
+const BOOKING_FORM   = "https://form.jotform.com/260517704181049";
+const HK_FORM        = "https://form.jotform.com/261707324246051";
 
-let view = "admin", cache = null, mCh1 = null, mCh2 = null;
+// Users: password → {name, role}
+const USERS = {
+  "ituomo": { name:"Imperial", role:"admin"       },
+  "agpl12": { name:"Olaide",   role:"supervisor"  },
+  "agpl15": { name:"Esther",   role:"supervisor"  },
+  "bula12": { name:"Housekeeper", role:"housekeeper" },
+};
+
+// Disabled users stored in sessionStorage (admin can toggle)
+let view = "admin", userName = "Imperial", cache = null;
+let mCh1 = null, mCh2 = null;
 let bAll = [], bFilterVal = "all";
-let mB64 = null, mMime = null;
+let disabledUsers = JSON.parse(localStorage.getItem("ih_disabled") || "[]");
 
 // ─── PASSWORD ────────────────────────────────────────────────
 function checkPw() {
-  const v = document.getElementById("pinp").value.trim().toLowerCase();
-  const matched = PW[v];
-  if (!matched) {
+  var pw = document.getElementById("pinp").value.trim().toLowerCase();
+  var user = USERS[pw];
+  if (!user) {
     document.getElementById("perr").textContent = "Incorrect password. Try again.";
     document.getElementById("pinp").value = "";
     return;
   }
-  view = matched;
-  sessionStorage.setItem("ihv", matched);
+  if (disabledUsers.includes(pw)) {
+    document.getElementById("perr").textContent = "Access suspended — contact admin.";
+    document.getElementById("pinp").value = "";
+    return;
+  }
+  view     = user.role;
+  userName = user.name;
+  sessionStorage.setItem("ihv", pw);
   document.getElementById("pscr").style.display = "none";
-  document.getElementById("ldg").style.display = "flex";
-  loadData();
-}
-document.getElementById("pinp").addEventListener("keydown", e => { if (e.key === "Enter") checkPw(); });
-window.addEventListener("DOMContentLoaded", () => {
-  const sv = sessionStorage.getItem("ihv");
-  if (sv === "admin" || sv === "supervisor") {
-    view = sv;
-    document.getElementById("pscr").style.display = "none";
-    document.getElementById("ldg").style.display = "flex";
+  document.getElementById("ldg").style.display  = "flex";
+  if (view === "housekeeper") {
+    showHousekeeperView();
+  } else {
     loadData();
+  }
+}
+
+document.getElementById("pinp").addEventListener("keydown", function(e) { if (e.key === "Enter") checkPw(); });
+
+window.addEventListener("DOMContentLoaded", function() {
+  var sv = sessionStorage.getItem("ihv");
+  if (sv && USERS[sv] && !disabledUsers.includes(sv)) {
+    view     = USERS[sv].role;
+    userName = USERS[sv].name;
+    document.getElementById("pscr").style.display = "none";
+    document.getElementById("ldg").style.display  = "flex";
+    if (view === "housekeeper") { showHousekeeperView(); }
+    else { loadData(); }
   }
 });
 
@@ -418,139 +504,204 @@ function logout() {
   document.getElementById("pscr").style.display = "flex";
 }
 
+// ─── HOUSEKEEPER VIEW ────────────────────────────────────────
+function showHousekeeperView() {
+  document.getElementById("ldg").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("brandSub").textContent = "Housekeeping";
+  document.getElementById("userBadge").textContent = userName;
+  // Build tabs — housekeeper only
+  buildTabs([{id:"housekeeping",label:"🧹 Housekeeping"}]);
+  switchTab("housekeeping");
+  // Hide FAB
+  document.getElementById("fab").style.display = "none";
+  // Show simple housekeeping page
+  document.getElementById("hkGrid").innerHTML = '<div style="text-align:center;padding:20px"><a href="' + HK_FORM + '" target="_blank" style="display:block;padding:16px;background:#1A7A6E;color:#fff;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none;margin-bottom:12px">🧹 Submit Housekeeping Report</a><div style="font-size:11px;color:#888">Tap the button to open the housekeeping form and submit your daily flat cleaning report.</div></div>';
+  document.getElementById("upd").textContent = "Housekeeper View — " + userName;
+}
+
 // ─── LOAD DATA ───────────────────────────────────────────────
-async function loadData() {
-  const ico = document.getElementById("refIco");
-  ico.style.display = "inline-block";
+function loadData() {
+  var ico = document.getElementById("refIco");
   ico.style.animation = "spin .8s linear infinite";
   document.getElementById("upd").textContent = "Loading...";
-  try {
-    const res = await fetch(API);
-    const txt = await res.text();
-    const d = JSON.parse(txt);
+  fetch(API).then(function(r){ return r.text(); }).then(function(txt) {
+    var d = JSON.parse(txt);
     if (d.error) throw new Error(d.error);
     cache = d;
     document.getElementById("ldg").style.display = "none";
     document.getElementById("app").style.display = "block";
+    document.getElementById("userBadge").textContent = userName;
     applyView();
     render(d);
-  } catch(e) {
+  }).catch(function(e) {
     document.getElementById("ldg").innerHTML = '<div style="color:#FAECE7;padding:20px;font-size:13px">Error: ' + esc(e.message) + '</div>';
-  }
-  ico.style.animation = "none";
+  }).finally(function() {
+    ico.style.animation = "none";
+  });
+}
+
+// ─── BUILD TABS ──────────────────────────────────────────────
+function buildTabs(tabs) {
+  var bar = document.getElementById("tabBar");
+  bar.innerHTML = tabs.map(function(t) {
+    return '<button class="tab ' + (t.cls||"") + '" data-tab="' + t.id + '" onclick="switchTab(\'' + t.id + '\')">' + t.label + '</button>';
+  }).join("");
 }
 
 function applyView() {
-  const isSup = view === "supervisor";
+  var isSup  = view === "supervisor";
+  var isAdmin = view === "admin";
   document.getElementById("supnote").style.display = isSup ? "block" : "none";
-  document.getElementById("brandSub").textContent = isSup ? "Supervisor View" : "Live Sales Dashboard";
-  document.querySelectorAll(".fin-tab").forEach(el => el.style.display = isSup ? "none" : "");
-  // Booking.com tab only for admin
-  document.querySelectorAll(".bcom-tab").forEach(el => el.style.display = isSup ? "none" : "");
-  // FAB only for admin
-  const fab = document.getElementById("fab");
-  if (fab) { fab.style.display = isSup ? "none" : "flex"; }
-  if (isSup) { switchTab("today"); }
+  document.getElementById("brandSub").textContent  = isSup ? "Supervisor — " + userName : "Live Sales Dashboard";
+
+  var tabs = [{id:"today", label:"Today"}];
+  if (isAdmin) {
+    tabs.push({id:"week",   label:"Week",        cls:"fin-tab"});
+    tabs.push({id:"month",  label:"Month",       cls:"fin-tab"});
+    tabs.push({id:"quarter",label:"Quarter VAT", cls:"fin-tab"});
+  }
+  tabs.push({id:"upcoming",     label:"Upcoming"});
+  tabs.push({id:"housekeeping", label:"🧹 Housekeeping", cls:"hk-tab"});
+  tabs.push({id:"entry",        label: isAdmin ? "📋 Forms" : "➕ Entry"});
+  if (isAdmin) {
+    tabs.push({id:"bookingcom", label:"🔵 Booking.com", cls:"bcom-tab"});
+    tabs.push({id:"tasks",      label:"📋 Tasks"});
+    tabs.push({id:"users",      label:"👥 Users"});
+  }
+  buildTabs(tabs);
+
+  // FAB — show for admin and supervisor
+  var fab = document.getElementById("fab");
+  fab.style.display = "flex";
+
+  // Show regular booking button only for admin
+  var rbb = document.getElementById("regularBookingBtn");
+  if (rbb) rbb.style.display = isAdmin ? "block" : "none";
+
+  // My tasks — show for supervisor
+  document.getElementById("myTasksSection").style.display = isSup ? "block" : "none";
+
+  switchTab("today");
 }
 
 // ─── RENDER ──────────────────────────────────────────────────
 function render(d) {
   document.getElementById("upd").textContent = "Updated " + d.generatedAt;
-  const isSup = view === "supervisor";
-  const ci  = isSup ? d.today.checkInsSupervisor  : d.today.checkIns;
-  const co  = isSup ? d.today.checkOutsSupervisor : d.today.checkOuts;
-  const up  = isSup ? d.upcomingSupervisor         : d.upcoming;
+  var isSup  = view === "supervisor";
+  var ci  = isSup ? d.today.checkInsSupervisor  : d.today.checkIns;
+  var co  = isSup ? d.today.checkOutsSupervisor : d.today.checkOuts;
+  var up  = isSup ? d.upcomingSupervisor         : d.upcoming;
 
-  set("kCI", ci.length);
-  set("kCO", co.length);
+  set("kCI",  ci.length);
+  set("kCO",  co.length);
   set("kRev", "$" + fmt(d.today.revenue));
   document.getElementById("listCI").innerHTML = renderGuests(ci, "ci", isSup);
   document.getElementById("listCO").innerHTML = renderGuests(co, "co", isSup);
 
-  // Alert
-  let al = "";
+  var al = "";
   if (!isSup && d.alerts && (d.alerts.refundedThisMonth > 0 || d.alerts.cancelledThisMonth > 0)) {
     al = '<div class="alertbox">⚠️ ' + d.alerts.refundedThisMonth + ' refunded (FJD ' + fmtD(d.alerts.refundedAmount) + ') + ' + d.alerts.cancelledThisMonth + ' cancelled this month</div>';
   }
   document.getElementById("todayAlert").innerHTML = al;
 
+  // My tasks for supervisor
+  if (isSup && d.tasks) {
+    var myTasks = (d.tasks||[]).filter(function(t){ return t.assignedTo === userName && t.status !== "Done"; });
+    document.getElementById("myTasksList").innerHTML = myTasks.length ? myTasks.map(function(t) {
+      return '<div class="task-card">' +
+        '<div class="task-title">' + esc(t.flat) + " — " + esc(t.task) + '</div>' +
+        '<div class="task-meta">Due: ' + esc(t.dueDate) + " " + esc(t.dueTime) + (t.notes ? " | " + esc(t.notes) : "") + '</div>' +
+        '<button class="task-done-btn" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>' +
+        '</div>';
+    }).join("") : '<div class="empty">✅ No tasks assigned to you today</div>';
+  }
+
   if (isSup) {
     document.getElementById("listUp").innerHTML = renderUpcoming(up, true);
+    if (d.housekeeping) renderHousekeeping(d.housekeeping);
+    renderEntrySection();
     return;
   }
 
-  // Week
   set("wRev", "$" + fmt(d.week.revenue));
   set("wLbl", d.week.label);
-  set("wBk", d.week.bookings);
-  set("wNi", d.week.nights + " nights");
-  set("wPd", "$" + fmt(d.week.paid));
+  set("wBk",  d.week.bookings);
+  set("wNi",  d.week.nights + " nights");
+  set("wPd",  "$" + fmt(d.week.paid));
   set("wOut", "$" + fmt(d.week.outstanding));
 
-  // Month
   set("mRev", "$" + fmt(d.month.revenue));
-  set("mBk", d.month.bookings);
-  set("mNi", d.month.nights + " nights");
+  set("mBk",  d.month.bookings);
+  set("mNi",  d.month.nights + " nights");
   set("mVat", "$" + fmt(d.month.vat));
   set("mOut", "$" + fmt(d.month.outstanding));
   set("mYear", d.ytd.year);
   if (d.month.momChange !== null) {
-    const up2 = d.month.momChange >= 0;
+    var up2 = d.month.momChange >= 0;
     document.getElementById("mChg").innerHTML = '<span class="kchg ' + (up2?"up":"down") + '">' + (up2?"▲":"▼") + " " + Math.abs(d.month.momChange) + "% vs last month</span>";
   }
 
-  // Quarter
-  set("qLbl", d.quarter.label);
-  set("qRev", "$" + fmt(d.quarter.revenue));
-  set("qVat", "$" + fmt(d.quarter.vat));
-  set("qExc", "$" + fmt(d.quarter.excVat));
-  set("qBk", d.quarter.bookings);
-  set("qNi", d.quarter.nights + " nights");
+  set("qLbl",  d.quarter.label);
+  set("qRev",  "$" + fmt(d.quarter.revenue));
+  set("qVat",  "$" + fmt(d.quarter.vat));
+  set("qExc",  "$" + fmt(d.quarter.excVat));
+  set("qBk",   d.quarter.bookings);
+  set("qNi",   d.quarter.nights + " nights");
   set("qYear", d.ytd.year);
   set("ytdRev", "$" + fmt(d.ytd.revenue));
   set("ytdVat", "$" + fmt(d.ytd.vat));
-  set("ytdBk", d.ytd.bookings);
+  set("ytdBk",  d.ytd.bookings);
 
-  // Upcoming
   document.getElementById("listUp").innerHTML = renderUpcoming(up, false);
-
-  // Charts
   drawMonth(d.monthlyChart);
   drawQuarter(d.quarterlyChart);
 
-  // Booking.com
   if (d.bookingCom) {
     bAll = d.bookingCom.all || [];
     renderBcom();
-    const pend = bAll.filter(b => b.approved !== "Yes").length;
-    const pb = document.getElementById("bPendBadge");
+    var pend = bAll.filter(function(b){ return b.approved !== "Yes"; }).length;
+    var pb = document.getElementById("bPendBadge");
     pb.textContent = "⏳ " + pend;
     pb.style.display = pend > 0 ? "inline-block" : "none";
-    // Inject approved bcom into today
-    const apCI = (d.bookingCom.todayCheckIns || []).filter(b => b.approved === "Yes");
-    const apCO = (d.bookingCom.todayCheckOuts || []).filter(b => b.approved === "Yes");
-    const apUp = (d.bookingCom.upcoming || []).filter(b => b.approved === "Yes");
-    if (apCI.length) { document.getElementById("listCI").insertAdjacentHTML("beforeend", apCI.map(b => bcomGuestCard(b)).join("")); set("kCI", ci.length + apCI.length); }
-    if (apCO.length) { document.getElementById("listCO").insertAdjacentHTML("beforeend", apCO.map(b => bcomGuestCard(b)).join("")); set("kCO", co.length + apCO.length); }
-    if (apUp.length) { document.getElementById("listUp").insertAdjacentHTML("beforeend", apUp.map(b => bcomUpCard(b)).join("")); }
+    var apCI = (d.bookingCom.todayCheckIns||[]).filter(function(b){ return b.approved === "Yes"; });
+    var apCO = (d.bookingCom.todayCheckOuts||[]).filter(function(b){ return b.approved === "Yes"; });
+    var apUp = (d.bookingCom.upcoming||[]).filter(function(b){ return b.approved === "Yes"; });
+    if (apCI.length) { document.getElementById("listCI").insertAdjacentHTML("beforeend", apCI.map(bcomGuestCard).join("")); set("kCI", ci.length + apCI.length); }
+    if (apCO.length) { document.getElementById("listCO").insertAdjacentHTML("beforeend", apCO.map(bcomGuestCard).join("")); set("kCO", co.length + apCO.length); }
+    if (apUp.length) { document.getElementById("listUp").insertAdjacentHTML("beforeend", apUp.map(bcomUpCard).join("")); }
   }
+
+  if (d.housekeeping) renderHousekeeping(d.housekeeping);
+  renderEntrySection();
+  renderUsers();
+  if (d.tasks) renderTasks(d.tasks);
 }
 
-// ─── GUEST LIST RENDER ───────────────────────────────────────
+// ─── GUEST CARDS ─────────────────────────────────────────────
 function renderGuests(list, type, isSup) {
-  if (!list || !list.length) return '<div class="empty">😶No ' + (type==="ci"?"check-ins":"checkouts") + " today</div>";
-  return list.map(g => {
-    const out = g.outstanding > 0;
-    const room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+  if (!list || !list.length) return '<div class="empty">No ' + (type==="ci"?"check-ins":"checkouts") + " today</div>";
+  return list.map(function(g) {
+    var out  = g.outstanding > 0;
+    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var phone = g.phone || "";
+    var actionBtns = phone ? (
+      '<div class="action-btns">' +
+      (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+      '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+      '</div>'
+    ) : "";
+
     if (isSup) {
       return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
         '<div class="gright"><div class="out ' + (out?"d":"z") + '">$' + fmtD(g.outstanding) + '</div><div class="outlbl">balance due</div></div></div>' +
-        '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+        '<div class="dgrid">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
         '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
         (g.adults !== undefined ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + "K</span></div>" : "") +
         '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
         (g.depositPaid !== undefined ? '<div class="di"><span class="dlbl">Deposit paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.depositPaid) + '</span></div>' : "") +
-        '</div>' + cmtBlock(g) + '</div>';
+        '</div>' + actionBtns + cmtBlock(g) + '</div>';
     }
     return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
       '<div class="gright"><div class="out ' + (out?"d":"z") + '">$' + fmtD(g.outstanding) + '</div><div class="outlbl">' + (out?"due":"paid") + '</div></div></div>' +
@@ -559,16 +710,16 @@ function renderGuests(list, type, isSup) {
       '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
       '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + "K</span></div>" +
       '<div class="di"><span class="dlbl">Status</span><span class="dval">' + esc(g.status) + '</span></div>' +
-      '<div class="di"><span class="dlbl">Phone</span><span class="dval">' + esc(g.phone) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Phone</span><span class="dval">' + esc(phone) + '</span></div>' +
       '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' +
       '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
       '<div class="di"><span class="dlbl">Paid</span><span class="dval">$' + fmtD(g.totalPaid) + '</span></div>' +
-      '</div>' + cmtBlock(g) + '</div>';
+      '</div>' + actionBtns + cmtBlock(g) + '</div>';
   }).join("");
 }
 
 function cmtBlock(g) {
-  let h = "";
+  var h = "";
   if (g.comment || g.staffComment) {
     h += '<div class="cbox"><div class="clbl">Guest comment</div>' + (g.comment ? '<div class="gcmt">' + esc(g.comment) + '</div>' : '<div class="cph">No comment</div>') + '</div>';
     h += '<div class="cbox"><div class="clbl">Staff comment</div>' + (g.staffComment ? '<div class="scmt">' + esc(g.staffComment) + '</div>' : '<div class="cph">No staff comment</div>') + '</div>';
@@ -577,11 +728,18 @@ function cmtBlock(g) {
 }
 
 function renderUpcoming(list, isSup) {
-  if (!list || !list.length) return '<div class="empty">📅No check-ins in the next 7 days</div>';
-  return list.map(g => {
-    const out = g.outstanding > 0;
-    const dateLabel = (g.arrivalDay || "") + " " + g.arrivalDate;
-    const room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+  if (!list || !list.length) return '<div class="empty">No check-ins in the next 7 days</div>';
+  return list.map(function(g) {
+    var out = g.outstanding > 0;
+    var dateLabel = (g.arrivalDay||"") + " " + g.arrivalDate;
+    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var phone = g.phone || "";
+    var actionBtns = phone ? (
+      '<div class="action-btns">' +
+      (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+      '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+      '</div>'
+    ) : "";
     return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
       '<div class="gright"><div class="badge gold">' + dateLabel + '</div><div class="out ' + (out?"d":"z") + '" style="margin-top:4px">$' + fmtD(g.outstanding) + '</div><div class="outlbl">balance</div></div></div>' +
       '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div><div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
@@ -589,31 +747,142 @@ function renderUpcoming(list, isSup) {
       '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
       (g.depositPaid ? '<div class="di"><span class="dlbl">Deposit</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.depositPaid) + '</span></div>' : "") +
       (!isSup && g.channel ? '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' : "") +
-      '</div>' + cmtBlock(g) + '</div>';
+      '</div>' + actionBtns + cmtBlock(g) + '</div>';
   }).join("");
 }
 
-// ─── BOOKING.COM RENDER ──────────────────────────────────────
+// ─── HOUSEKEEPING ────────────────────────────────────────────
+function renderHousekeeping(hk) {
+  // Weekly grid
+  var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var grid = '<div style="overflow-x:auto"><table class="hk-grid"><thead><tr><th>Flat</th>';
+  days.forEach(function(d){ grid += '<th>' + d + '</th>'; });
+  grid += '</tr></thead><tbody>';
+  for (var f = 1; f <= 9; f++) {
+    grid += '<tr><td>Flat ' + f + '</td>';
+    days.forEach(function(day) {
+      var entry = null;
+      if (hk.weeklyGrid) {
+        hk.weeklyGrid.forEach(function(r) {
+          if (r.flat === "Flat " + f && r.day === day) entry = r;
+        });
+      }
+      if (!entry) { grid += '<td class="hk-none">—</td>'; }
+      else if (entry.condition === "Damaged") { grid += '<td class="hk-dmg" title="' + esc(entry.comment||"") + '">❌</td>'; }
+      else if (entry.condition === "Needs Attention") { grid += '<td class="hk-attn" title="' + esc(entry.comment||"") + '">⚠️</td>'; }
+      else { grid += '<td class="hk-clean" title="' + esc(entry.comment||"") + '">✅</td>'; }
+    });
+    grid += '</tr>';
+  }
+  grid += '</tbody></table></div>';
+  document.getElementById("hkGrid").innerHTML = grid;
+
+  // Urgent
+  var urgent = (hk.toClean||[]).map(function(r){ return Object.assign({},r,{action:"🧹 Clean after checkout"}); })
+    .concat((hk.incoming||[]).map(function(r){ return Object.assign({},r,{action:"✅ Prepare for check-in 2PM"}); }));
+  document.getElementById("hkUrgent").innerHTML = urgent.length ? urgent.map(function(r) {
+    var room = r.roomNumber ? r.roomType + " · Rm " + r.roomNumber : r.roomType;
+    var isClean = r.action.indexOf("Clean") > -1;
+    var bg = isClean ? "#FFF3E8" : "#EAF8F3";
+    var bdr = isClean ? "#E07B20" : "#1A7A6E";
+    var checklist = isClean
+      ? "☐ Strip and change all bed linen<br>☐ Clean bathrooms<br>☐ Vacuum / mop all floors<br>☐ Wipe kitchen benches<br>☐ Empty all bins<br>☐ Check for damage<br>☐ Replenish toiletries and towels<br>☐ Report to admin when complete"
+      : "☐ Fresh linen on all beds<br>☐ Towels set out (" + (r.adults||"?") + "A / " + (r.kids||"0") + "K)<br>☐ Bathroom stocked with toiletries<br>☐ Kitchen clean and ready<br>☐ WiFi password card displayed<br>☐ AC / TV tested<br>☐ Welcome message sent<br>☐ Keys / access ready";
+    return '<div class="gc" style="background:' + bg + ';border-left:3px solid ' + bdr + ';border-radius:8px;padding:10px;margin-bottom:8px">' +
+      '<div style="font-size:13px;font-weight:700;color:#0C3C35">' + esc(r.guestName) + '</div>' +
+      '<div style="font-size:10px;color:#666;margin-top:2px">Res: ' + esc(r.bookingId) + '</div>' +
+      '<div style="font-size:11px;font-weight:700;color:#8B4000;margin-top:5px">' + r.action + '</div>' +
+      '<div class="dgrid" style="margin-top:6px">' +
+      '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + r.nights + '</span></div>' +
+      (r.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + r.adults + "A / " + r.kids + "K</span></div>" : "") +
+      '</div>' +
+      (r.staffComment ? '<div class="scmt" style="margin-top:6px">📋 ' + esc(r.staffComment) + '</div>' : "") +
+      (r.comment ? '<div class="gcmt" style="margin-top:4px">💬 ' + esc(r.comment) + '</div>' : "") +
+      '<div style="margin-top:8px"><div style="font-size:10px;font-weight:700;color:#555;margin-bottom:4px">CHECKLIST</div>' +
+      '<div style="font-size:11px;color:#444;line-height:1.8">' + checklist + '</div></div></div>';
+  }).join("") : '<div class="empty">✅ No urgent housekeeping tasks today</div>';
+
+  // Upcoming
+  document.getElementById("hkUpcoming").innerHTML = (hk.upcomingClean||[]).length ? (hk.upcomingClean||[]).map(function(r) {
+    var room = r.roomNumber ? r.roomType + " · Rm " + r.roomNumber : r.roomType;
+    return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(r.guestName) + '</div><div class="rbadge">Res: ' + esc(r.bookingId) + '</div></div>' +
+      '<div class="gright"><div class="badge gold">' + (r.arrivalDay||"") + " " + (r.arrivalDate||"") + '</div></div></div>' +
+      '<div class="dgrid" style="margin-top:6px">' +
+      '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + r.nights + '</span></div>' +
+      (r.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + r.adults + "A / " + r.kids + "K</span></div>" : "") +
+      '</div>' +
+      (r.staffComment ? '<div class="scmt" style="margin-top:6px">📋 ' + esc(r.staffComment) + '</div>' : "") +
+      '</div>';
+  }).join("") : '<div class="empty">📅 No upcoming rooms to prepare</div>';
+}
+
+// ─── ENTRY SECTION ───────────────────────────────────────────
+function renderEntrySection() {
+  var isAdmin = view === "admin";
+  var html = '<div style="margin-bottom:8px;font-size:11px;color:#888">Select entry type to open the form</div>';
+  html += '<button class="entry-btn" onclick="openWalkin()">' +
+    '<div class="entry-icon" style="background:#EAF8F3">🚶</div>' +
+    '<div><div class="entry-title">Walk-in Guest</div><div class="entry-sub">Guest arriving now — no pre-fill</div></div></button>';
+  html += '<button class="entry-btn" onclick="openBookingCom()">' +
+    '<div class="entry-icon" style="background:#EEF3FB">🔵</div>' +
+    '<div><div class="entry-title">Booking.com Reservation</div><div class="entry-sub">Enter Booking.com reservation details</div></div></button>';
+  if (isAdmin) {
+    html += '<button class="entry-btn" onclick="openRegularBooking()">' +
+      '<div class="entry-icon" style="background:#FFF8E7">📋</div>' +
+      '<div><div class="entry-title">Regular Booking</div><div class="entry-sub">Full booking form with VAT</div></div></button>';
+  }
+  document.getElementById("entryContent").innerHTML = html;
+}
+
+function openWalkin() {
+  closeEntryModal();
+  window.open(WALKIN_FORM, "_blank");
+}
+
+function openBookingCom() {
+  closeEntryModal();
+  var url = WALKIN_FORM + "?q23_textbox21=Booking.com&q19_dropdown17=Confirmed";
+  window.open(url, "_blank");
+}
+
+function openRegularBooking() {
+  closeEntryModal();
+  window.open(BOOKING_FORM, "_blank");
+}
+
+// ─── ENTRY MODAL (FAB) ───────────────────────────────────────
+function openEntryChooser() {
+  document.getElementById("entryModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeEntryModal() {
+  document.getElementById("entryModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+// ─── BOOKING.COM ─────────────────────────────────────────────
 function bFilter(f) {
   bFilterVal = f;
-  document.querySelectorAll(".bfbtn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".bfbtn").forEach(function(b){ b.classList.remove("active"); });
   document.getElementById("bf" + (f==="all"?"All":f==="pending"?"Pend":"Appr")).classList.add("active");
   renderBcom();
 }
 
 function renderBcom() {
-  const el = document.getElementById("bList");
-  const filtered = bAll.filter(b => {
+  var el = document.getElementById("bList");
+  var filtered = bAll.filter(function(b) {
     if (bFilterVal === "pending")  return b.approved !== "Yes";
     if (bFilterVal === "approved") return b.approved === "Yes";
     return true;
   });
   if (!filtered.length) {
-    el.innerHTML = '<div class="empty">🔵' + (bFilterVal==="pending"?"No pending reservations":bFilterVal==="approved"?"No approved reservations":"No Booking.com reservations yet") + '</div>';
+    el.innerHTML = '<div class="empty">No ' + (bFilterVal==="pending"?"pending":bFilterVal==="approved"?"approved":"") + ' Booking.com reservations</div>';
     return;
   }
-  el.innerHTML = filtered.map(b => {
-    const appr = b.approved === "Yes";
+  el.innerHTML = filtered.map(function(b) {
+    var appr = b.approved === "Yes";
     return '<div class="bcard">' +
       '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
         '<div><div style="font-size:13.5px;font-weight:700;color:#003580">' + esc(b.guestName) + '</div>' +
@@ -630,45 +899,41 @@ function renderBcom() {
         '<div class="di"><span class="dlbl">Check-Out</span><span class="dval">' + esc(b.checkOut) + '</span></div>' +
         '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + esc(b.adults) + "A / " + esc(b.kids) + 'K</span></div>' +
         '<div class="di"><span class="dlbl">Payment</span><span class="dval">' + esc(b.payMethod) + '</span></div>' +
-        (b.phone ? '<div class="di"><span class="dlbl">Phone</span><span class="dval">' + esc(b.phone) + '</span></div>' : "") +
       '</div>' +
       (b.notes ? '<div class="gcmt" style="margin-top:8px">💬 ' + esc(b.notes) + '</div>' : "") +
       (b.screenshot ? '<div style="margin-top:7px"><a href="' + b.screenshot + '" target="_blank" style="font-size:10.5px;color:#003580;font-weight:700">📷 View Screenshot</a></div>' : "") +
       '<div style="margin-top:7px">' +
         (!appr ? '<button class="bapprbtn" onclick="bApprove(\'' + esc(b.bookingNo) + '\',true)">✅ Approve → Supervisor</button>' : "") +
         (appr  ? '<button class="bunapprbtn" onclick="bApprove(\'' + esc(b.bookingNo) + '\',false)">↩ Unapprove</button>' : "") +
-      '</div>' +
-    '</div>';
+      '</div></div>';
   }).join("");
 }
 
 function bcomGuestCard(b) {
   return '<div class="gc" style="border-top:2px solid #003580;margin-top:8px">' +
     '<div class="gc-top"><div><div class="gname">' + esc(b.guestName) + '</div><div class="rbadge" style="background:#003580">BK.com: ' + esc(b.bookingNo) + '</div></div>' +
-    '<div class="gright"><div style="font-size:13px;font-weight:800;color:#003580">FJD ' + esc(b.totalCost) + '</div><div style="font-size:9px;color:#888">Net FJD ' + esc(b.netAmount) + '</div></div></div>' +
+    '<div class="gright"><div style="font-size:13px;font-weight:800;color:#003580">FJD ' + esc(b.totalCost) + '</div></div></div>' +
     '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(b.roomType) + '</span></div>' +
-    '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div>' +
-    '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + esc(b.adults) + "A / " + esc(b.kids) + 'K</span></div>' +
-    '<div class="di"><span class="dlbl">Payment</span><span class="dval">' + esc(b.payMethod) + '</span></div></div>' +
+    '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div></div>' +
     (b.notes ? '<div class="gcmt">💬 ' + esc(b.notes) + '</div>' : "") + '</div>';
 }
 
 function bcomUpCard(b) {
   return '<div class="gc" style="border-top:2px solid #003580;margin-top:8px">' +
     '<div class="gc-top"><div><div class="gname">' + esc(b.guestName) + '</div><div class="rbadge" style="background:#003580">BK.com: ' + esc(b.bookingNo) + '</div></div>' +
-    '<div class="gright"><div class="badge gold">' + esc(b.checkIn) + '</div><div style="font-size:13px;font-weight:800;color:#003580;margin-top:4px">FJD ' + esc(b.totalCost) + '</div></div></div>' +
+    '<div class="gright"><div class="badge gold">' + esc(b.checkIn) + '</div></div></div>' +
     '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(b.roomType) + '</span></div>' +
     '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div></div></div>';
 }
 
 async function bApprove(bookingNo, approve) {
   try {
-    const action = approve ? "approve" : "unapprove";
-    const url = BAPI + "?action=" + action + "&bookingNo=" + encodeURIComponent(bookingNo);
-    const res = await fetch(url);
-    const d = await res.json();
+    var action = approve ? "approve" : "unapprove";
+    var url = BAPI + "?action=" + action + "&bookingNo=" + encodeURIComponent(bookingNo);
+    var res = await fetch(url);
+    var d = await res.json();
     if (d.success) {
-      const entry = bAll.find(b => b.bookingNo === bookingNo);
+      var entry = bAll.find(function(b){ return b.bookingNo === bookingNo; });
       if (entry) entry.approved = approve ? "Yes" : "Pending";
       renderBcom();
       setTimeout(loadData, 1500);
@@ -680,125 +945,153 @@ async function bApprove(bookingNo, approve) {
   }
 }
 
+// ─── TASKS ───────────────────────────────────────────────────
+function renderTasks(tasks) {
+  var el = document.getElementById("tasksList");
+  if (!el) return;
+  if (!tasks || !tasks.length) { el.innerHTML = '<div class="empty">No tasks assigned yet</div>'; return; }
+  el.innerHTML = tasks.map(function(t) {
+    return '<div class="task-card ' + (t.status==="Done"?"done":"") + '">' +
+      '<div style="display:flex;justify-content:space-between">' +
+        '<div class="task-title">' + esc(t.flat) + " — " + esc(t.task) + '</div>' +
+        '<div style="font-size:9px;font-weight:700;color:' + (t.status==="Done"?"#1A7A6E":"#C9921A") + '">' + esc(t.status) + '</div>' +
+      '</div>' +
+      '<div class="task-meta">Assigned to: ' + esc(t.assignedTo) + ' | Due: ' + esc(t.dueDate) + ' ' + esc(t.dueTime) + '</div>' +
+      (t.notes ? '<div class="task-meta">📝 ' + esc(t.notes) + '</div>' : "") +
+      '</div>';
+  }).join("");
+}
+
+function openTaskModal() {
+  document.getElementById("taskModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+  // Set default date to today
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2,"0");
+  var mm = String(today.getMonth()+1).padStart(2,"0");
+  var yyyy = today.getFullYear();
+  document.getElementById("tDate").value = yyyy + "-" + mm + "-" + dd;
+}
+
+function closeTaskModal() {
+  document.getElementById("taskModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+async function saveTask() {
+  var flat     = document.getElementById("tFlat").value;
+  var assignTo = document.getElementById("tAssign").value;
+  var task     = document.getElementById("tTask").value;
+  var dueDate  = document.getElementById("tDate").value;
+  var dueTime  = document.getElementById("tTime").value;
+  var notes    = document.getElementById("tNotes").value;
+  if (!flat||!assignTo||!task||!dueDate) {
+    var st = document.getElementById("tSt");
+    st.textContent = "❌ Please fill in all required fields";
+    st.style.display = "block";
+    st.className = "mstatus err";
+    return;
+  }
+  var btn = document.getElementById("tSaveBtn");
+  btn.disabled = true; btn.textContent = "⏳ Saving...";
+  try {
+    var url = API + "?action=saveTask&flat=" + encodeURIComponent(flat) +
+      "&assignedTo=" + encodeURIComponent(assignTo) +
+      "&task=" + encodeURIComponent(task) +
+      "&dueDate=" + encodeURIComponent(dueDate) +
+      "&dueTime=" + encodeURIComponent(dueTime) +
+      "&notes=" + encodeURIComponent(notes) +
+      "&assignedBy=" + encodeURIComponent(userName);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) {
+      closeTaskModal();
+      loadData();
+    } else {
+      throw new Error(d.error || "Save failed");
+    }
+  } catch(e) {
+    var st = document.getElementById("tSt");
+    st.textContent = "❌ " + e.message;
+    st.style.display = "block";
+    st.className = "mstatus err";
+    btn.disabled = false;
+    btn.textContent = "✅ Assign Task";
+  }
+}
+
+async function markTaskDone(taskId) {
+  try {
+    var url = API + "?action=markTaskDone&taskId=" + encodeURIComponent(taskId) + "&doneBy=" + encodeURIComponent(userName);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) loadData();
+    else alert("Error: " + (d.error||"Failed"));
+  } catch(e) { alert("Error: " + e.message); }
+}
+
+// ─── USER MANAGEMENT ─────────────────────────────────────────
+function renderUsers() {
+  var el = document.getElementById("usersList");
+  if (!el) return;
+  var users = [
+    {pw:"agpl12", name:"Olaide",      role:"Supervisor"},
+    {pw:"agpl15", name:"Esther",      role:"Supervisor"},
+    {pw:"bula12", name:"Housekeeper", role:"Housekeeper"},
+  ];
+  el.innerHTML = users.map(function(u) {
+    var disabled = disabledUsers.includes(u.pw);
+    return '<div class="user-row">' +
+      '<div><div class="user-name">' + u.name + '</div><div class="user-role">' + u.role + '</div></div>' +
+      '<label class="toggle">' +
+        '<input type="checkbox" ' + (!disabled?"checked":"") + ' onchange="toggleUser(\'' + u.pw + '\',this.checked)">' +
+        '<span class="toggle-slider"></span>' +
+      '</label>' +
+      '</div>';
+  }).join("");
+}
+
+function toggleUser(pw, enabled) {
+  if (enabled) {
+    disabledUsers = disabledUsers.filter(function(p){ return p !== pw; });
+  } else {
+    if (!disabledUsers.includes(pw)) disabledUsers.push(pw);
+  }
+  localStorage.setItem("ih_disabled", JSON.stringify(disabledUsers));
+}
+
 // ─── CHARTS ──────────────────────────────────────────────────
 function drawMonth(data) {
-  const ctx = document.getElementById("mChart");
+  var ctx = document.getElementById("mChart");
   if (mCh1) mCh1.destroy();
-  mCh1 = new Chart(ctx, { type:"bar", data:{ labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], datasets:[{ data:data.map(m=>m.revenue), backgroundColor:"#6A3FA0", borderRadius:4 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:9}},grid:{display:false}}, y:{ticks:{font:{size:9},callback:v=>"$"+v},grid:{color:"#f0f0f0"}} } } });
+  mCh1 = new Chart(ctx, { type:"bar", data:{ labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], datasets:[{ data:data.map(function(m){return m.revenue;}), backgroundColor:"#6A3FA0", borderRadius:4 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:9}},grid:{display:false}}, y:{ticks:{font:{size:9},callback:function(v){return "$"+v;}},grid:{color:"#f0f0f0"}} } } });
 }
 
 function drawQuarter(data) {
-  const ctx = document.getElementById("qChart");
+  var ctx = document.getElementById("qChart");
   if (mCh2) mCh2.destroy();
-  mCh2 = new Chart(ctx, { type:"bar", data:{ labels:data.map(q=>"Q"+q.quarter), datasets:[{label:"Revenue",data:data.map(q=>q.revenue),backgroundColor:"#1A7A6E",borderRadius:4},{label:"VAT",data:data.map(q=>q.vat),backgroundColor:"#C9921A",borderRadius:4}] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:10}},grid:{display:false}}, y:{ticks:{font:{size:9},callback:v=>"$"+v},grid:{color:"#f0f0f0"}} } } });
+  mCh2 = new Chart(ctx, { type:"bar", data:{ labels:data.map(function(q){return "Q"+q.quarter;}), datasets:[{label:"Revenue",data:data.map(function(q){return q.revenue;}),backgroundColor:"#1A7A6E",borderRadius:4},{label:"VAT",data:data.map(function(q){return q.vat;}),backgroundColor:"#C9921A",borderRadius:4}] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:10}},grid:{display:false}}, y:{ticks:{font:{size:9},callback:function(v){return "$"+v;}},grid:{color:"#f0f0f0"}} } } });
   document.getElementById("qLeg").innerHTML = '<span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#1A7A6E;display:inline-block"></span>Revenue</span><span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#C9921A;display:inline-block"></span>VAT</span>';
 }
 
 // ─── TABS ────────────────────────────────────────────────────
 function switchTab(tabId) {
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  document.querySelectorAll(".sec").forEach(s => s.classList.remove("active"));
-  const tb = document.querySelector('.tab[data-tab="' + tabId + '"]');
-  const sc = document.getElementById("sec-" + tabId);
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
+  document.querySelectorAll(".sec").forEach(function(s){ s.classList.remove("active"); });
+  var tb = document.querySelector('.tab[data-tab="' + tabId + '"]');
+  var sc = document.getElementById("sec-" + tabId);
   if (tb) tb.classList.add("active");
   if (sc) sc.classList.add("active");
 }
 
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    const id = tab.dataset.tab;
-    if (view === "supervisor" && id !== "today" && id !== "upcoming") return;
-    switchTab(id);
-  });
-});
-
-// ─── MODAL ───────────────────────────────────────────────────
-function openModal() {
-  document.getElementById("modal").style.display = "block";
-  document.body.style.overflow = "hidden";
-}
-
-function closeModal() {
-  document.getElementById("modal").style.display = "none";
-  document.body.style.overflow = "";
-  mReset();
-}
-
-function mReset() {
-  ["mBNo","mGN","mAd","mKd","mCI","mCO","mNi","mTot","mCom","mNotes"].forEach(id => {
-    const el = document.getElementById(id); if(el) el.value = "";
-  });
-  document.getElementById("mNetVal").textContent = "FJD 0.00";
-  document.getElementById("mBSt").value = "Confirmed";
-  document.getElementById("mRT").value = "";
-  document.getElementById("mPM").value = "Booking.com Collect";
-  document.getElementById("mSt").style.display = "none";
-  const sb = document.getElementById("mSaveBtn");
-  sb.disabled = false; sb.textContent = "✅ Save Reservation";
-}
-
-function mNet() {
-  const t = parseFloat(document.getElementById("mTot").value)||0;
-  const c = parseFloat(document.getElementById("mCom").value)||0;
-  document.getElementById("mNetVal").textContent = "FJD " + (t-c).toFixed(2);
-}
-
-function mNights() {
-  const ci = document.getElementById("mCI").value;
-  const co = document.getElementById("mCO").value;
-  if (!ci || !co) return;
-  const m1 = ci.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
-  const m2 = co.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
-  if (m1 && m2) {
-    const n = Math.round((new Date(+m1[3],+m1[2]-1,+m1[1]) - new Date(+m2[3],+m2[2]-1,+m2[1])) / -86400000);
-    if (n > 0) document.getElementById("mNi").value = n;
-  }
-}
-
-function mStatus(msg, isErr) {
-  const el = document.getElementById("mSt");
-  el.textContent = msg; el.style.display = "block";
-  el.className = "mstatus " + (isErr ? "err" : "ok");
-}
-
-async function mSave() {
-  const bn = v("mBNo"), gn = v("mGN"), ci = v("mCI"), co = v("mCO"), tot = v("mTot"), rt = v("mRT");
-  if (!bn||!gn||!ci||!co||!tot||!rt) { mStatus("❌ Fill in all required fields (*)", true); return; }
-  const btn = document.getElementById("mSaveBtn");
-  btn.disabled = true; btn.textContent = "⏳ Saving...";
-  const t = parseFloat(tot)||0, c = parseFloat(v("mCom"))||0;
-  try {
-    const params = new URLSearchParams({
-      action:"save", bookingNo:bn, guestName:gn, email:"", phone:"",
-      adults:v("mAd"), kids:v("mKd"), checkIn:ci, checkOut:co,
-      nights:v("mNi"), roomType:rt, totalCost:t.toFixed(2),
-      commission:c.toFixed(2), netAmount:(t-c).toFixed(2),
-      payMethod:v("mPM"), bookingStatus:v("mBSt"),
-      notes:v("mNotes"), screenshotUrl:""
-    });
-    const res = await fetch(BAPI + "?" + params.toString());
-    const d = await res.json();
-    if (d.success) {
-      mStatus("✅ Saved! Pending admin approval.", false);
-      setTimeout(() => { closeModal(); loadData(); }, 1500);
-    } else {
-      mStatus("❌ " + (d.message||d.error||"Save failed"), true);
-      btn.disabled = false; btn.textContent = "✅ Save Reservation";
-    }
-  } catch(e) {
-    mStatus("❌ Network error: " + e.message, true);
-    btn.disabled = false; btn.textContent = "✅ Save Reservation";
-  }
-}
-
 // ─── HELPERS ─────────────────────────────────────────────────
-function set(id, val) { const el = document.getElementById(id); if(el) el.textContent = val; }
-function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ""; }
+function set(id, val) { var el = document.getElementById(id); if(el) el.textContent = val; }
+function v(id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; }
 function fmt(n) { return new Intl.NumberFormat("en-FJ",{maximumFractionDigits:0}).format(Math.round(n||0)); }
 function fmtD(n) { return (n||0).toFixed(2); }
-function esc(s) { const d = document.createElement("div"); d.textContent = s||""; return d.innerHTML; }
+function esc(s) { var d = document.createElement("div"); d.textContent = s||""; return d.innerHTML; }
 
-setInterval(() => { if (cache) loadData(); }, 5 * 60 * 1000);
+setInterval(function(){ if (cache) loadData(); }, 5 * 60 * 1000);
 </script>
 </body>
 </html>
