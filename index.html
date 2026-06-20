@@ -756,17 +756,18 @@ async function mExtract() {
   btn.disabled = true; btn.textContent = "⏳ Reading...";
   mStatus("🤖 AI is extracting details...", false);
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch(BAPI, {
       method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:1000, messages:[{ role:"user", content:[
-        { type:"image", source:{ type:"base64", media_type:mMime, data:mB64 } },
-        { type:"text", text:'Extract from this Booking.com screenshot. Return ONLY raw JSON:\n{"bookingNo":"","guestName":"","adults":"","kids":"","checkIn":"DD-MM-YYYY","checkOut":"DD-MM-YYYY","nights":"","roomType":"1-Bedroom Apartment or 2-Bedroom Deluxe Apartment or 3-Bedroom Deluxe Apartment","totalCost":"","commission":"","payMethod":"Booking.com Collect or Property Collect","bookingStatus":"Confirmed","notes":""}' }
-      ]}] })
+      body: JSON.stringify({
+        action: "extract",
+        imageBase64: mB64,
+        mimeType: mMime
+      })
     });
     const d = await res.json();
-    if (d.error) throw new Error(d.error.message || "API error");
-    const raw = d.content?.[0]?.text || "";
-    const x = JSON.parse(raw.replace(/```json|```/g,"").trim());
+    if (d.error) throw new Error(d.error);
+    const x = d.data;
+    if (!x) throw new Error("No data returned");
     mFill("mBNo",x.bookingNo); mFill("mGN",x.guestName); mFill("mAd",x.adults); mFill("mKd",x.kids);
     mFill("mCI",x.checkIn); mFill("mCO",x.checkOut); mFill("mNi",x.nights);
     mFill("mTot",x.totalCost); mFill("mCom",x.commission); mFill("mNotes",x.notes);
