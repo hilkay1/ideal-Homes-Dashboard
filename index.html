@@ -316,58 +316,57 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
   <div class="modal-box">
     <div class="modal-handle" onclick="closeModal()"><div class="modal-handle-bar"></div></div>
     <div class="modal-hdr">
-      <div><div class="modal-title">📷 Add Booking.com Reservation</div><div class="modal-sub">Upload screenshot · AI fills details</div></div>
+      <div><div class="modal-title">🔵 Add Booking.com Reservation</div><div class="modal-sub">Fill in details from your Booking.com app</div></div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
-      <div class="mupload" id="mUpArea" onclick="document.getElementById('mFile').click()" ondragover="event.preventDefault()" ondrop="mDrop(event)">
-        <div style="font-size:34px">📸</div>
-        <div style="font-size:13px;font-weight:600;color:#003580;margin-top:6px">Tap to upload screenshot</div>
-        <div style="font-size:10.5px;color:#888;margin-top:3px">JPG · PNG · PDF</div>
-      </div>
-      <img class="mprev" id="mPrev">
-      <input type="file" id="mFile" accept="image/*,.pdf" style="display:none" onchange="mPickFile(this.files[0])">
-      <button class="mexbtn" id="mExBtn" onclick="mExtract()" disabled>✨ Extract with AI</button>
       <div class="mstatus" id="mSt"></div>
-      <div class="mfields" id="mFields">
-        <div class="mseclbl">Review &amp; Confirm Details</div>
-        <div class="mfrow">
-          <div class="mfg"><label>Booking No *</label><input id="mBNo" type="text" placeholder="5647264806"></div>
-          <div class="mfg"><label>Status</label>
-            <select id="mBSt"><option value="Confirmed">Confirmed</option><option value="Cancelled">Cancelled</option><option value="No Show">No Show</option></select>
-          </div>
+
+      <div class="mseclbl">Booking Details</div>
+      <div class="mfrow">
+        <div class="mfg"><label>Booking No *</label><input id="mBNo" type="text" placeholder="5647264806"></div>
+        <div class="mfg"><label>Status</label>
+          <select id="mBSt"><option value="Confirmed">Confirmed</option><option value="Cancelled">Cancelled</option><option value="No Show">No Show</option></select>
         </div>
-        <div class="mfg"><label>Guest Name *</label><input id="mGN" type="text" placeholder="Full name"></div>
-        <div class="mfrow">
-          <div class="mfg"><label>Adults</label><input id="mAd" type="number" placeholder="2" min="1"></div>
-          <div class="mfg"><label>Kids</label><input id="mKd" type="number" placeholder="0" min="0"></div>
-        </div>
-        <div class="mfrow">
-          <div class="mfg"><label>Check-In (DD-MM-YYYY) *</label><input id="mCI" type="text" placeholder="20-06-2026" oninput="mNights()"></div>
-          <div class="mfg"><label>Check-Out (DD-MM-YYYY) *</label><input id="mCO" type="text" placeholder="21-06-2026" oninput="mNights()"></div>
-        </div>
-        <div class="mfrow">
-          <div class="mfg"><label>Nights</label><input id="mNi" type="number" placeholder="1" min="1"></div>
-          <div class="mfg"><label>Room Type *</label>
-            <select id="mRT">
-              <option value="">Select...</option>
-              <option value="1-Bedroom Apartment">1-Bedroom Apartment</option>
-              <option value="2-Bedroom Deluxe Apartment">2-Bedroom Deluxe Apartment</option>
-              <option value="3-Bedroom Deluxe Apartment">3-Bedroom Deluxe Apartment</option>
-            </select>
-          </div>
-        </div>
-        <div class="mfrow">
-          <div class="mfg"><label>Total Price (FJD) *</label><input id="mTot" type="number" step="0.01" placeholder="283.50" oninput="mNet()"></div>
-          <div class="mfg"><label>Commission (FJD)</label><input id="mCom" type="number" step="0.01" placeholder="42.52" oninput="mNet()"></div>
-        </div>
-        <div class="mnet">Net Amount: <span id="mNetVal">FJD 0.00</span></div>
-        <div class="mfg"><label>Payment Method</label>
-          <select id="mPM"><option value="Booking.com Collect">Booking.com Collect</option><option value="Property Collect">Property Collect</option></select>
-        </div>
-        <div class="mfg"><label>Notes</label><textarea id="mNotes" placeholder="Special requests..."></textarea></div>
-        <button class="msavebtn" id="mSaveBtn" onclick="mSave()">✅ Save Reservation</button>
       </div>
+      <div class="mfg"><label>Guest Name *</label><input id="mGN" type="text" placeholder="Full name as shown"></div>
+      <div class="mfrow">
+        <div class="mfg"><label>Adults</label><input id="mAd" type="number" placeholder="2" min="1" value=""></div>
+        <div class="mfg"><label>Kids</label><input id="mKd" type="number" placeholder="0" min="0" value=""></div>
+      </div>
+
+      <div class="mseclbl" style="margin-top:12px">Stay Details</div>
+      <div class="mfrow">
+        <div class="mfg"><label>Check-In (DD-MM-YYYY) *</label><input id="mCI" type="text" placeholder="20-06-2026" oninput="mNights()"></div>
+        <div class="mfg"><label>Check-Out (DD-MM-YYYY) *</label><input id="mCO" type="text" placeholder="21-06-2026" oninput="mNights()"></div>
+      </div>
+      <div class="mfrow">
+        <div class="mfg"><label>Nights (auto)</label><input id="mNi" type="number" placeholder="1" min="1" readonly style="background:#f8f8f8"></div>
+        <div class="mfg"><label>Room Type *</label>
+          <select id="mRT">
+            <option value="">Select...</option>
+            <option value="1-Bedroom Apartment">1-Bedroom Apartment</option>
+            <option value="2-Bedroom Deluxe Apartment">2-Bedroom Deluxe Apartment</option>
+            <option value="3-Bedroom Deluxe Apartment">3-Bedroom Deluxe Apartment</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mseclbl" style="margin-top:12px">Financials</div>
+      <div class="mfrow">
+        <div class="mfg"><label>Total Price (FJD) *</label><input id="mTot" type="number" step="0.01" placeholder="283.50" oninput="mNet()"></div>
+        <div class="mfg"><label>Commission (FJD)</label><input id="mCom" type="number" step="0.01" placeholder="42.52" oninput="mNet()"></div>
+      </div>
+      <div class="mnet">Net Amount: <span id="mNetVal">FJD 0.00</span></div>
+      <div class="mfg"><label>Payment Method</label>
+        <select id="mPM"><option value="Booking.com Collect">Booking.com Collect</option><option value="Property Collect">Property Collect</option></select>
+      </div>
+
+      <div class="mseclbl" style="margin-top:12px">Notes</div>
+      <div class="mfg"><textarea id="mNotes" placeholder="Special requests, notes..."></textarea></div>
+
+      <button class="msavebtn" id="mSaveBtn" onclick="mSave()">✅ Save Reservation</button>
+      <button onclick="closeModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Cancel</button>
     </div>
   </div>
 </div>
@@ -663,15 +662,23 @@ function bcomUpCard(b) {
 
 async function bApprove(bookingNo, approve) {
   try {
-    const res = await fetch(API, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({action:approve?"approve":"unapprove", bookingNo}) });
+    const res = await fetch(BAPI, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ action: approve ? "approve" : "unapprove", bookingNo })
+    });
     const d = await res.json();
     if (d.success) {
       const entry = bAll.find(b => b.bookingNo === bookingNo);
       if (entry) entry.approved = approve ? "Yes" : "Pending";
       renderBcom();
-      setTimeout(loadData, 1000);
-    } else alert("Error: " + (d.error || "Failed"));
-  } catch(e) { alert("Network error: " + e.message); }
+      setTimeout(loadData, 1500);
+    } else {
+      alert("Error: " + (d.error || d.message || "Failed"));
+    }
+  } catch(e) {
+    alert("Network error: " + e.message);
+  }
 }
 
 // ─── CHARTS ──────────────────────────────────────────────────
@@ -719,113 +726,72 @@ function closeModal() {
 }
 
 function mReset() {
-  mB64 = null; mMime = null;
-  const pv = document.getElementById("mPrev"); pv.style.display = "none"; pv.src = "";
-  document.getElementById("mUpArea").classList.remove("ok");
-  const eb = document.getElementById("mExBtn"); eb.disabled = true; eb.textContent = "✨ Extract with AI";
-  document.getElementById("mSt").style.display = "none";
-  document.getElementById("mFields").style.display = "none";
-  document.getElementById("mFile").value = "";
-  ["mBNo","mGN","mAd","mKd","mCI","mCO","mNi","mTot","mCom","mNotes"].forEach(id => { const el = document.getElementById(id); if(el) el.value = ""; });
+  ["mBNo","mGN","mAd","mKd","mCI","mCO","mNi","mTot","mCom","mNotes"].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value = "";
+  });
   document.getElementById("mNetVal").textContent = "FJD 0.00";
   document.getElementById("mBSt").value = "Confirmed";
   document.getElementById("mRT").value = "";
   document.getElementById("mPM").value = "Booking.com Collect";
-  const sb = document.getElementById("mSaveBtn"); sb.disabled = false; sb.textContent = "✅ Save Reservation";
+  document.getElementById("mSt").style.display = "none";
+  const sb = document.getElementById("mSaveBtn");
+  sb.disabled = false; sb.textContent = "✅ Save Reservation";
 }
 
-function mDrop(e) { e.preventDefault(); const f = e.dataTransfer.files[0]; if(f) mPickFile(f); }
-
-function mPickFile(file) {
-  if (!file) return;
-  mMime = file.type || "image/jpeg";
-  const r = new FileReader();
-  r.onload = e => {
-    const res = e.target.result;
-    mB64 = res.split(",")[1];
-    if (file.type.startsWith("image/")) { const p = document.getElementById("mPrev"); p.src = res; p.style.display = "block"; }
-    document.getElementById("mExBtn").disabled = false;
-    document.getElementById("mUpArea").classList.add("ok");
-  };
-  r.readAsDataURL(file);
-}
-
-async function mExtract() {
-  if (!mB64) return;
-  const btn = document.getElementById("mExBtn");
-  btn.disabled = true; btn.textContent = "⏳ Reading...";
-  mStatus("🤖 AI is extracting details...", false);
-  try {
-    const res = await fetch(BAPI, {
-      method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        action: "extract",
-        imageBase64: mB64,
-        mimeType: mMime
-      })
-    });
-    const d = await res.json();
-    if (d.error) throw new Error(d.error);
-    const x = d.data;
-    if (!x) throw new Error("No data returned");
-    mFill("mBNo",x.bookingNo); mFill("mGN",x.guestName); mFill("mAd",x.adults); mFill("mKd",x.kids);
-    mFill("mCI",x.checkIn); mFill("mCO",x.checkOut); mFill("mNi",x.nights);
-    mFill("mTot",x.totalCost); mFill("mCom",x.commission); mFill("mNotes",x.notes);
-    if (x.bookingStatus) document.getElementById("mBSt").value = x.bookingStatus;
-    if (x.payMethod && x.payMethod.toLowerCase().includes("property")) document.getElementById("mPM").value = "Property Collect";
-    mMatchRoom(x.roomType);
-    mNet(); mNights();
-    document.getElementById("mFields").style.display = "block";
-    mStatus("✅ Details extracted — review and correct if needed", false);
-  } catch(e) {
-    mStatus("❌ " + e.message + " — fill in manually", true);
-    document.getElementById("mFields").style.display = "block";
-  }
-  btn.disabled = false; btn.textContent = "🔄 Re-extract";
-}
-
-function mFill(id, v) { const el = document.getElementById(id); if(el && v) el.value = v; }
-function mMatchRoom(r) {
-  if (!r) return; r = r.toLowerCase();
-  const el = document.getElementById("mRT");
-  if (r.includes("3")||r.includes("three")) el.value = "3-Bedroom Deluxe Apartment";
-  else if (r.includes("2")||r.includes("two")) el.value = "2-Bedroom Deluxe Apartment";
-  else if (r.includes("1")||r.includes("one")) el.value = "1-Bedroom Apartment";
-}
 function mNet() {
   const t = parseFloat(document.getElementById("mTot").value)||0;
   const c = parseFloat(document.getElementById("mCom").value)||0;
   document.getElementById("mNetVal").textContent = "FJD " + (t-c).toFixed(2);
 }
+
 function mNights() {
-  const ci = document.getElementById("mCI").value, co = document.getElementById("mCO").value;
-  if (!ci||!co) return;
+  const ci = document.getElementById("mCI").value;
+  const co = document.getElementById("mCO").value;
+  if (!ci || !co) return;
   const m1 = ci.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
   const m2 = co.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
-  if (m1&&m2) { const n = Math.round((new Date(+m1[3],+m1[2]-1,+m1[1]) - new Date(+m2[3],+m2[2]-1,+m2[1])) / -86400000); if(n>0) document.getElementById("mNi").value = n; }
+  if (m1 && m2) {
+    const n = Math.round((new Date(+m1[3],+m1[2]-1,+m1[1]) - new Date(+m2[3],+m2[2]-1,+m2[1])) / -86400000);
+    if (n > 0) document.getElementById("mNi").value = n;
+  }
 }
+
 function mStatus(msg, isErr) {
   const el = document.getElementById("mSt");
   el.textContent = msg; el.style.display = "block";
-  el.className = "mstatus " + (isErr?"err":"ok");
+  el.className = "mstatus " + (isErr ? "err" : "ok");
 }
 
 async function mSave() {
   const bn = v("mBNo"), gn = v("mGN"), ci = v("mCI"), co = v("mCO"), tot = v("mTot"), rt = v("mRT");
   if (!bn||!gn||!ci||!co||!tot||!rt) { mStatus("❌ Fill in all required fields (*)", true); return; }
-  const btn = document.getElementById("mSaveBtn"); btn.disabled = true; btn.textContent = "⏳ Saving...";
+  const btn = document.getElementById("mSaveBtn");
+  btn.disabled = true; btn.textContent = "⏳ Saving...";
   const t = parseFloat(tot)||0, c = parseFloat(v("mCom"))||0;
   try {
-    const res = await fetch(BAPI, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({
-      action:"save", bookingNo:bn, guestName:gn, email:"", phone:"",
-      adults:v("mAd"), kids:v("mKd"), checkIn:ci, checkOut:co, nights:v("mNi"), roomType:rt,
-      totalCost:t.toFixed(2), commission:c.toFixed(2), netAmount:(t-c).toFixed(2),
-      payMethod:v("mPM"), bookingStatus:v("mBSt"), notes:v("mNotes"), screenshotUrl:""
-    }) });
+    const res = await fetch(BAPI, {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        action:"save", bookingNo:bn, guestName:gn, email:"", phone:"",
+        adults:v("mAd"), kids:v("mKd"), checkIn:ci, checkOut:co,
+        nights:v("mNi"), roomType:rt, totalCost:t.toFixed(2),
+        commission:c.toFixed(2), netAmount:(t-c).toFixed(2),
+        payMethod:v("mPM"), bookingStatus:v("mBSt"),
+        notes:v("mNotes"), screenshotUrl:""
+      })
+    });
     const d = await res.json();
-    if (d.success) { mStatus("✅ Saved! Pending admin approval.", false); setTimeout(() => { closeModal(); loadData(); }, 1500); }
-    else { mStatus("❌ " + (d.message||d.error||"Save failed"), true); btn.disabled = false; btn.textContent = "✅ Save Reservation"; }
-  } catch(e) { mStatus("❌ Network error: " + e.message, true); btn.disabled = false; btn.textContent = "✅ Save Reservation"; }
+    if (d.success) {
+      mStatus("✅ Saved! Pending admin approval.", false);
+      setTimeout(() => { closeModal(); loadData(); }, 1500);
+    } else {
+      mStatus("❌ " + (d.message||d.error||"Save failed"), true);
+      btn.disabled = false; btn.textContent = "✅ Save Reservation";
+    }
+  } catch(e) {
+    mStatus("❌ Network error: " + e.message, true);
+    btn.disabled = false; btn.textContent = "✅ Save Reservation";
+  }
 }
 
 // ─── HELPERS ─────────────────────────────────────────────────
