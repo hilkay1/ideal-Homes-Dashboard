@@ -441,7 +441,8 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
             <option>Flat 1</option><option>Flat 2</option><option>Flat 3</option>
             <option>Flat 4</option><option>Flat 5</option><option>Flat 6</option>
             <option>Flat 7</option><option>Flat 8</option><option>Flat 9</option>
-            <option>Common Area</option>
+            <option>Common Area</option><option>Salon</option><option>Kitchen</option>
+            <option>Garri</option><option>Others</option>
           </select>
         </div>
         <div class="mfg"><label>Assign To</label>
@@ -454,7 +455,9 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
         <select id="etTask">
           <option>Clean Room</option><option>Prepare Room</option>
           <option>Maintenance Check</option><option>Inspection</option>
-          <option>Restock Supplies</option><option>Other</option>
+          <option>Restock Supplies</option><option>Laundry</option>
+          <option>Shopping / Errands</option><option>Guest Assistance</option>
+          <option>Others</option>
         </select>
       </div>
       <div class="mfrow">
@@ -518,13 +521,14 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
       <div class="mstatus" id="tSt"></div>
       <div class="mfrow">
         <div class="mfg"><label>Flat</label>
-          <select id="tFlat">
-            <option value="">Select...</option>
+          <select id="tFlat" multiple size="6" style="width:100%;padding:6px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:12px">
             <option>Flat 1</option><option>Flat 2</option><option>Flat 3</option>
             <option>Flat 4</option><option>Flat 5</option><option>Flat 6</option>
             <option>Flat 7</option><option>Flat 8</option><option>Flat 9</option>
-            <option>Common Area</option>
+            <option>Common Area</option><option>Salon</option><option>Kitchen</option>
+            <option>Garri</option><option>Others</option>
           </select>
+          <div style="font-size:9px;color:#888;margin-top:3px">Hold Ctrl/Cmd to select multiple</div>
         </div>
         <div class="mfg"><label>Assign To</label>
           <select id="tAssign">
@@ -543,7 +547,10 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
           <option>Maintenance Check</option>
           <option>Inspection</option>
           <option>Restock Supplies</option>
-          <option>Other</option>
+          <option>Laundry</option>
+          <option>Shopping / Errands</option>
+          <option>Guest Assistance</option>
+          <option>Others</option>
         </select>
       </div>
       <div class="mfrow">
@@ -695,8 +702,8 @@ function applyView() {
     tabs.push({id:"tasks",      label:"📋 Tasks"});
     tabs.push({id:"users",      label:"👥 Users"});
   } else {
-    // Supervisor sees their task history
-    tabs.push({id:"tasks", label:"📋 My Tasks"});
+    tabs.push({id:"bookingcom", label:"🔵 Booking.com", cls:"bcom-tab"});
+    tabs.push({id:"tasks",      label:"📋 My Tasks"});
   }
   buildTabs(tabs);
 
@@ -752,6 +759,10 @@ function render(d) {
     document.getElementById("listUp").innerHTML = renderUpcoming(up, true);
     if (d.housekeeping) renderHousekeeping(d.housekeeping);
     renderEntrySection();
+    if (d.bookingCom) {
+      bAll = d.bookingCom.all || [];
+      renderBcom();
+    }
     if (d.tasks) {
       var supTasks = d.tasks.filter(function(t){ return t.assignedTo === userName; });
       window.lastTasks = supTasks;
@@ -798,11 +809,11 @@ function render(d) {
     renderBcom();
     var pend = bAll.filter(function(b){ return b.approved !== "Yes"; }).length;
     var pb = document.getElementById("bPendBadge");
-    pb.textContent = "⏳ " + pend;
-    pb.style.display = pend > 0 ? "inline-block" : "none";
-    var apCI = (d.bookingCom.todayCheckIns||[]).filter(function(b){ return b.approved === "Yes"; });
-    var apCO = (d.bookingCom.todayCheckOuts||[]).filter(function(b){ return b.approved === "Yes"; });
-    var apUp = (d.bookingCom.upcoming||[]).filter(function(b){ return b.approved === "Yes"; });
+    if (pb) { pb.textContent = "⏳ " + pend; pb.style.display = pend > 0 ? "inline-block" : "none"; }
+    // Show all Booking.com bookings to everyone
+    var apCI = d.bookingCom.todayCheckIns || [];
+    var apCO = d.bookingCom.todayCheckOuts || [];
+    var apUp = d.bookingCom.upcoming || [];
     if (apCI.length) { document.getElementById("listCI").insertAdjacentHTML("beforeend", apCI.map(bcomGuestCard).join("")); set("kCI", ci.length + apCI.length); }
     if (apCO.length) { document.getElementById("listCO").insertAdjacentHTML("beforeend", apCO.map(bcomGuestCard).join("")); set("kCO", co.length + apCO.length); }
     if (apUp.length) { document.getElementById("listUp").insertAdjacentHTML("beforeend", apUp.map(bcomUpCard).join("")); }
@@ -1459,7 +1470,9 @@ function closeTaskModal() {
 }
 
 async function saveTask() {
-  var flat     = document.getElementById("tFlat").value;
+  var flatEl   = document.getElementById("tFlat");
+  var selected = Array.from(flatEl.selectedOptions).map(function(o){ return o.value; });
+  var flat     = selected.join(", ");
   var assignTo = document.getElementById("tAssign").value;
   var task     = document.getElementById("tTask").value;
   var dueDate  = document.getElementById("tDate").value;
@@ -1467,9 +1480,8 @@ async function saveTask() {
   var notes    = document.getElementById("tNotes").value;
   if (!flat||!assignTo||!task||!dueDate) {
     var st = document.getElementById("tSt");
-    st.textContent = "❌ Please fill in all required fields";
-    st.style.display = "block";
-    st.className = "mstatus err";
+    st.textContent = "❌ Please select at least one flat, assign to, task and date";
+    st.style.display = "block"; st.className = "mstatus err";
     return;
   }
   var btn = document.getElementById("tSaveBtn");
@@ -1484,19 +1496,13 @@ async function saveTask() {
       "&assignedBy=" + encodeURIComponent(userName);
     var res = await fetch(url);
     var d = await res.json();
-    if (d.success) {
-      closeTaskModal();
-      loadData();
-    } else {
-      throw new Error(d.error || "Save failed");
-    }
+    if (d.success) { closeTaskModal(); loadData(); }
+    else throw new Error(d.error || "Save failed");
   } catch(e) {
     var st = document.getElementById("tSt");
     st.textContent = "❌ " + e.message;
-    st.style.display = "block";
-    st.className = "mstatus err";
-    btn.disabled = false;
-    btn.textContent = "✅ Assign Task";
+    st.style.display = "block"; st.className = "mstatus err";
+    btn.disabled = false; btn.textContent = "✅ Assign Task";
   }
 }
 
