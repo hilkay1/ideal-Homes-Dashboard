@@ -280,6 +280,18 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
       </div>
     </div>
 
+    <!-- SEARCH -->
+    <div class="sec" id="sec-search">
+      <div class="card">
+        <div class="ctitle">🔍 Search Reservations</div>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <input id="searchInput" type="text" placeholder="Guest name or booking number..." style="flex:1;padding:10px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;outline:none" oninput="runSearch()">
+          <button onclick="runSearch()" style="background:#0C3C35;color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer">🔍</button>
+        </div>
+        <div id="searchResults"></div>
+      </div>
+    </div>
+
     <!-- HOUSEKEEPING -->
     <div class="sec" id="sec-housekeeping">
       <div class="card">
@@ -377,6 +389,25 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
           </div>
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- TASK FEEDBACK MODAL -->
+<div class="modal-overlay" id="feedbackModal" onclick="if(event.target===this)closeFeedbackModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeFeedbackModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title">✅ Mark Task Done</div><div class="modal-sub">Add feedback before submitting</div></div>
+      <button class="modal-close" onclick="closeFeedbackModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mfg">
+        <label>Feedback / Comment (optional)</label>
+        <textarea id="feedbackText" style="width:100%;height:80px;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;resize:none" placeholder="e.g. Room cleaned, AC filter replaced..."></textarea>
+      </div>
+      <button id="feedbackSubmitBtn" class="msavebtn" onclick="submitTaskDone()">✅ Mark as Done</button>
+      <button onclick="closeFeedbackModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Cancel</button>
     </div>
   </div>
 </div>
@@ -563,6 +594,7 @@ function applyView() {
   }
   tabs.push({id:"upcoming",     label:"Upcoming"});
   tabs.push({id:"housekeeping", label:"🧹 Housekeeping", cls:"hk-tab"});
+  tabs.push({id:"search",       label:"🔍 Search"});
   tabs.push({id:"entry",        label: isAdmin ? "📋 Forms" : "➕ Entry"});
   if (isAdmin) {
     tabs.push({id:"bookingcom", label:"🔵 Booking.com", cls:"bcom-tab"});
@@ -712,8 +744,8 @@ function renderGuests(list, type, isSup) {
       '<div class="di"><span class="dlbl">Status</span><span class="dval">' + esc(g.status) + '</span></div>' +
       '<div class="di"><span class="dlbl">Phone</span><span class="dval">' + esc(phone) + '</span></div>' +
       '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' +
-      '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
-      '<div class="di"><span class="dlbl">Paid</span><span class="dval">$' + fmtD(g.totalPaid) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Total Charge</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Total Paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.totalPaid) + '</span></div>' +
       '</div>' + actionBtns + cmtBlock(g) + '</div>';
   }).join("");
 }
@@ -945,7 +977,103 @@ async function bApprove(bookingNo, approve) {
   }
 }
 
-// ─── TASKS ───────────────────────────────────────────────────
+// ─── SEARCH ──────────────────────────────────────────────────
+function runSearch() {
+  var q = document.getElementById("searchInput").value.trim().toLowerCase();
+  var el = document.getElementById("searchResults");
+  if (!q || !cache) { el.innerHTML = '<div class="empty">Type a guest name or booking number to search</div>'; return; }
+  var allBookings = [];
+  if (cache.today) {
+    allBookings = allBookings.concat(cache.today.checkIns||[]);
+    allBookings = allBookings.concat(cache.today.checkOuts||[]);
+  }
+  if (cache.upcoming) allBookings = allBookings.concat(cache.upcoming||[]);
+  // Also search Booking.com
+  if (cache.bookingCom && cache.bookingCom.all) {
+    cache.bookingCom.all.forEach(function(b) {
+      allBookings.push({
+        bookingId: b.bookingNo, guestName: b.guestName,
+        roomType: b.roomType, nights: b.nights,
+        adults: b.adults, kids: b.kids,
+        totalCost: parseFloat(b.totalCost)||0,
+        totalPaid: parseFloat(b.netAmount)||0,
+        outstanding: 0, phone: b.phone||"",
+        status: b.status, channel: "Booking.com",
+        comment: b.notes, staffComment: ""
+      });
+    });
+  }
+  // Deduplicate by bookingId
+  var seen = {};
+  var unique = allBookings.filter(function(b) {
+    if (seen[b.bookingId]) return false;
+    seen[b.bookingId] = true;
+    return true;
+  });
+  var results = unique.filter(function(b) {
+    return (b.guestName||"").toLowerCase().includes(q) ||
+           (b.bookingId||"").toLowerCase().includes(q);
+  });
+  if (!results.length) {
+    el.innerHTML = '<div class="empty">No results found for "' + esc(q) + '"</div>';
+    return;
+  }
+  el.innerHTML = '<div style="font-size:10px;color:#888;margin-bottom:8px">' + results.length + ' result(s) found</div>' +
+    results.map(function(g) {
+      var out = g.outstanding > 0;
+      var phone = g.phone || "";
+      var actionBtns = phone ? (
+        '<div class="action-btns">' +
+        (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+        '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+        '</div>'
+      ) : "";
+      return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+        '<div class="gright"><div class="out ' + (out?"d":"z") + '">$' + fmtD(g.outstanding) + '</div><div class="outlbl">outstanding</div></div></div>' +
+        '<div class="dgrid">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(g.roomType) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+        '<div class="di"><span class="dlbl">Status</span><span class="dval">' + esc(g.status) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Total Charge</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Total Paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.totalPaid) + '</span></div>' +
+        '</div>' + actionBtns + '</div>';
+    }).join("");
+}
+
+// ─── TASK FEEDBACK ───────────────────────────────────────────
+var pendingTaskId = null;
+
+function markTaskDone(taskId) {
+  pendingTaskId = taskId;
+  document.getElementById("feedbackModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+
+function closeFeedbackModal() {
+  document.getElementById("feedbackModal").style.display = "none";
+  document.body.style.overflow = "";
+  document.getElementById("feedbackText").value = "";
+  pendingTaskId = null;
+}
+
+async function submitTaskDone() {
+  if (!pendingTaskId) return;
+  var feedback = document.getElementById("feedbackText").value.trim();
+  var btn = document.getElementById("feedbackSubmitBtn");
+  btn.disabled = true; btn.textContent = "⏳ Saving...";
+  try {
+    var url = API + "?action=markTaskDone&taskId=" + encodeURIComponent(pendingTaskId) +
+      "&doneBy=" + encodeURIComponent(userName) +
+      "&feedback=" + encodeURIComponent(feedback);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeFeedbackModal(); loadData(); }
+    else alert("Error: " + (d.error||"Failed"));
+  } catch(e) { alert("Error: " + e.message); }
+  btn.disabled = false; btn.textContent = "✅ Submit";
+}
+
+
 function renderTasks(tasks) {
   var el = document.getElementById("tasksList");
   if (!el) return;
@@ -1082,6 +1210,11 @@ function switchTab(tabId) {
   var sc = document.getElementById("sec-" + tabId);
   if (tb) tb.classList.add("active");
   if (sc) sc.classList.add("active");
+  // Load search hint when switching to search
+  if (tabId === "search") {
+    var el = document.getElementById("searchResults");
+    if (el && !el.innerHTML) el.innerHTML = '<div class="empty">Type a guest name or booking number above</div>';
+  }
 }
 
 // ─── HELPERS ─────────────────────────────────────────────────
