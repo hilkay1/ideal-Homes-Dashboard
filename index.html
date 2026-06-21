@@ -736,20 +736,27 @@ function render(d) {
 
   // My tasks for supervisor
   if (isSup && d.tasks) {
-    var myTasks = (d.tasks||[]).filter(function(t){ return t.assignedTo === userName && t.status !== "Done"; });
+    var myTasks = (d.tasks||[]).filter(function(t){ return t.assignedTo === userName && t.status === "Pending"; });
     document.getElementById("myTasksList").innerHTML = myTasks.length ? myTasks.map(function(t) {
       return '<div class="task-card">' +
         '<div class="task-title">' + esc(t.flat) + " — " + esc(t.task) + '</div>' +
-        '<div class="task-meta">Due: ' + esc(t.dueDate) + " " + esc(t.dueTime) + (t.notes ? " | " + esc(t.notes) : "") + '</div>' +
-        '<button class="task-done-btn" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>' +
-        '</div>';
-    }).join("") : '<div class="empty">✅ No tasks assigned to you today</div>';
+        '<div class="task-meta">📅 ' + fmtTaskDate(t.dueDate) + ' ' + esc(t.dueTime) + (t.notes ? " | 📝 " + esc(t.notes) : "") + '</div>' +
+        '<div class="action-btns" style="margin-top:6px">' +
+        '<button class="task-done-btn" style="background:#C0392B" onclick="confirmRejectTask(\'' + esc(t.id) + '\')">🚫 Reject</button>' +
+        '<button class="task-done-btn" style="background:#1A7A6E;margin-left:4px" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>' +
+        '</div></div>';
+    }).join("") : '<div class="empty">✅ No pending tasks assigned to you</div>';
   }
 
   if (isSup) {
     document.getElementById("listUp").innerHTML = renderUpcoming(up, true);
     if (d.housekeeping) renderHousekeeping(d.housekeeping);
     renderEntrySection();
+    if (d.tasks) {
+      var supTasks = d.tasks.filter(function(t){ return t.assignedTo === userName; });
+      window.lastTasks = supTasks;
+      renderTasks(supTasks);
+    }
     return;
   }
 
@@ -809,12 +816,21 @@ function render(d) {
       if (bc) bc.style.display = "block";
     }
   }
+
+  // Always render entry section and tasks for all roles
+  renderEntrySection();
+
   if (d.tasks) {
-    // Admin sees all tasks, supervisor sees only their own
     var tasksToShow = view === "supervisor"
       ? d.tasks.filter(function(t){ return t.assignedTo === userName; })
       : d.tasks;
+    window.lastTasks = tasksToShow;
     renderTasks(tasksToShow);
+  }
+
+  // Admin only
+  if (view === "admin") {
+    renderUsers();
   }
 }
 
@@ -1354,52 +1370,72 @@ async function submitTaskDone() {
 
 
 function getStatusColor(s) {
-  if (s==="Done") return "#1A7A6E";
-  if (s==="Cancelled") return "#C0392B";
+  if (s==="Done")      return "#1A7A6E";
+  if (s==="Cancelled") return "#712B13";
+  if (s==="Rejected")  return "#C0392B";
   return "#C9921A";
+}
+
+function fmtTaskDate(raw) {
+  if (!raw) return "";
+  // Handle JS Date string like "Sun Jun 21 2026 12:00:00 GMT+1200"
+  var d = new Date(raw);
+  if (!isNaN(d.getTime())) {
+    var dd = String(d.getDate()).padStart(2,"0");
+    var mm = String(d.getMonth()+1).padStart(2,"0");
+    var yyyy = d.getFullYear();
+    return dd + "-" + mm + "-" + yyyy;
+  }
+  return raw;
 }
 
 function renderTasks(tasks) {
   var el = document.getElementById("tasksList");
   if (!el) return;
-  if (!tasks || !tasks.length) { el.innerHTML = '<div class="empty">No tasks assigned yet</div>'; return; }
+  var isAdmin = view === "admin";
+  if (!tasks || !tasks.length) {
+    el.innerHTML = '<div class="empty">No tasks ' + (isAdmin ? "assigned yet" : "assigned to you yet") + '</div>';
+    return;
+  }
 
-  // Filter tabs — All / Pending / Done / Cancelled
-  var filter = window.taskFilter || "pending";
+  var filter = window.taskFilter || "all";
   var filtered = tasks.filter(function(t) {
-    if (filter === "pending") return t.status === "Pending";
-    if (filter === "done")    return t.status === "Done";
+    if (filter === "pending")   return t.status === "Pending";
+    if (filter === "done")      return t.status === "Done";
     if (filter === "cancelled") return t.status === "Cancelled";
+    if (filter === "rejected")  return t.status === "Rejected";
     return true;
   });
 
-  var tabHtml = '<div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">' +
-    [["all","All"],["pending","Pending"],["done","Done"],["cancelled","Cancelled"]].map(function(tab) {
-      return '<button style="font-size:10px;font-weight:700;padding:4px 11px;border-radius:9px;border:1.5px solid ' +
-        (filter===tab[0]?"#0C3C35":"#DDD") + ';background:' + (filter===tab[0]?"#0C3C35":"#fff") +
-        ';color:' + (filter===tab[0]?"#fff":"#555") + ';cursor:pointer" onclick="window.taskFilter=\'' + tab[0] + '\';renderTasks(window.lastTasks)">' + tab[1] + '</button>';
+  var filterTabs = [["all","All"],["pending","⏳ Pending"],["done","✅ Done"],["rejected","🚫 Rejected"],["cancelled","❌ Cancelled"]];
+  var tabHtml = '<div style="display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap">' +
+    filterTabs.map(function(tab) {
+      var active = filter === tab[0];
+      return '<button style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:9px;border:1.5px solid ' +
+        (active?"#0C3C35":"#DDD") + ';background:' + (active?"#0C3C35":"#fff") +
+        ';color:' + (active?"#fff":"#555") + ';cursor:pointer" onclick="window.taskFilter=\'' + tab[0] + '\';renderTasks(window.lastTasks)">' + tab[1] + '</button>';
     }).join("") + '</div>';
 
-  window.lastTasks = tasks;
   el.innerHTML = tabHtml + (filtered.length ? filtered.map(function(t) {
-    var isAdmin = view === "admin";
     var feedback = t.feedback || "";
-    return '<div class="task-card ' + (t.status==="Done"?"done":t.status==="Cancelled"?"cancelled":"") + '">' +
+    var dueDate  = fmtTaskDate(t.dueDate);
+    var isPending = t.status === "Pending";
+    return '<div class="task-card" style="border-left-color:' + getStatusColor(t.status) + '">' +
       '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
         '<div class="task-title">' + esc(t.flat) + " — " + esc(t.task) + '</div>' +
         '<div style="font-size:9px;font-weight:700;color:' + getStatusColor(t.status) + '">' + esc(t.status) + '</div>' +
       '</div>' +
-      '<div class="task-meta">👤 ' + esc(t.assignedTo) + ' | 📅 ' + esc(t.dueDate) + ' ' + esc(t.dueTime) + ' | By: ' + esc(t.assignedBy) + '</div>' +
-      (t.notes ? '<div class="task-meta" style="color:#0C3C35">📝 ' + esc(t.notes) + '</div>' : "") +
+      '<div class="task-meta">👤 ' + esc(t.assignedTo) + ' | 📅 ' + esc(dueDate) + ' ' + esc(t.dueTime) + ' | By: ' + esc(t.assignedBy) + '</div>' +
+      (t.notes ? '<div class="task-meta" style="color:#333">📝 ' + esc(t.notes) + '</div>' : "") +
       (feedback ? '<div class="scmt" style="margin-top:4px">💬 ' + esc(feedback) + '</div>' : "") +
-      (t.status === "Pending" ? (
-        '<div class="action-btns" style="margin-top:6px">' +
-        (isAdmin ?
-          '<button class="task-done-btn" style="background:#C9921A" onclick="openEditTask(\'' + esc(t.id) + '\')">✏️ Edit</button>' +
-          '<button class="task-done-btn" style="background:#C0392B;margin-left:4px" onclick="confirmCancelTask(\'' + esc(t.id) + '\')">❌ Cancel</button>' :
-          '<button class="task-done-btn" style="background:#C0392B;margin-left:4px" onclick="confirmRejectTask(\'' + esc(t.id) + '\')">🚫 Reject</button>'
+      (isPending ? (
+        '<div class="action-btns" style="margin-top:8px">' +
+        (isAdmin
+          ? '<button class="task-done-btn" style="background:#C9921A" onclick="openEditTask(\'' + esc(t.id) + '\')">✏️ Edit</button>' +
+            '<button class="task-done-btn" style="background:#712B13;margin-left:4px" onclick="confirmCancelTask(\'' + esc(t.id) + '\')">❌ Cancel</button>'
+          : '<button class="task-done-btn" style="background:#C0392B" onclick="confirmRejectTask(\'' + esc(t.id) + '\')">🚫 Reject</button>' +
+            '<button class="task-done-btn" style="background:#1A7A6E;margin-left:4px" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>'
         ) +
-        '<button class="task-done-btn" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>' +
         '</div>'
       ) : "") +
       '</div>';
@@ -1481,18 +1517,24 @@ function renderUsers() {
   var users = [
     {pw:"agpl12", name:"Olaide",      role:"Supervisor"},
     {pw:"agpl15", name:"Esther",      role:"Supervisor"},
-    {pw:"bula12", name:"Housekeeper", role:"Housekeeper"},
+    {pw:"bula12", name:"Anisi",       role:"Housekeeper"},
   ];
   el.innerHTML = users.map(function(u) {
-    var disabled = disabledUsers.includes(u.pw);
+    var isDisabled = disabledUsers.includes(u.pw);
+    var statusColor = isDisabled ? "#C0392B" : "#1A7A6E";
+    var statusText  = isDisabled ? "Suspended" : "Active";
     return '<div class="user-row">' +
-      '<div><div class="user-name">' + u.name + '</div><div class="user-role">' + u.role + '</div></div>' +
+      '<div>' +
+        '<div class="user-name">' + u.name + '</div>' +
+        '<div class="user-role">' + u.role + ' · <span style="color:' + statusColor + ';font-weight:700">' + statusText + '</span></div>' +
+      '</div>' +
       '<label class="toggle">' +
-        '<input type="checkbox" ' + (!disabled?"checked":"") + ' onchange="toggleUser(\'' + u.pw + '\',this.checked)">' +
+        '<input type="checkbox" ' + (!isDisabled ? "checked" : "") + ' onchange="toggleUser(\'' + u.pw + '\',this.checked)">' +
         '<span class="toggle-slider"></span>' +
       '</label>' +
-      '</div>';
-  }).join("");
+    '</div>';
+  }).join("") +
+  '<div style="font-size:10px;color:#888;margin-top:12px;padding-top:10px;border-top:1px solid #F0F0F0">Toggle to enable or disable dashboard access. Changes take effect on next login.</div>';
 }
 
 function toggleUser(pw, enabled) {
