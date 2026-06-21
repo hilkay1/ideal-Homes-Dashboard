@@ -332,7 +332,7 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
       </div>
     </div>
 
-    <!-- TASKS (admin) -->
+    <!-- TASKS (admin + supervisor history) -->
     <div class="sec" id="sec-tasks">
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
@@ -389,6 +389,69 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
           </div>
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT TASK MODAL -->
+<div class="modal-overlay" id="editTaskModal" onclick="if(event.target===this)closeEditTaskModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeEditTaskModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title">✏️ Edit Task</div><div class="modal-sub">Update task details</div></div>
+      <button class="modal-close" onclick="closeEditTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editTaskId">
+      <div class="mstatus" id="etSt"></div>
+      <div class="mfrow">
+        <div class="mfg"><label>Flat</label>
+          <select id="etFlat">
+            <option>Flat 1</option><option>Flat 2</option><option>Flat 3</option>
+            <option>Flat 4</option><option>Flat 5</option><option>Flat 6</option>
+            <option>Flat 7</option><option>Flat 8</option><option>Flat 9</option>
+            <option>Common Area</option>
+          </select>
+        </div>
+        <div class="mfg"><label>Assign To</label>
+          <select id="etAssign">
+            <option>Olaide</option><option>Esther</option><option>Housekeeper</option>
+          </select>
+        </div>
+      </div>
+      <div class="mfg"><label>Task</label>
+        <select id="etTask">
+          <option>Clean Room</option><option>Prepare Room</option>
+          <option>Maintenance Check</option><option>Inspection</option>
+          <option>Restock Supplies</option><option>Other</option>
+        </select>
+      </div>
+      <div class="mfrow">
+        <div class="mfg"><label>Due Date</label><input type="date" id="etDate"></div>
+        <div class="mfg"><label>Due Time</label><input type="time" id="etTime"></div>
+      </div>
+      <div class="mfg"><label>Notes</label><textarea id="etNotes" style="width:100%;height:60px;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;resize:none"></textarea></div>
+      <button class="msavebtn" id="etSaveBtn" onclick="submitEditTask()">💾 Save Changes</button>
+      <button onclick="closeEditTaskModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- CANCEL TASK MODAL -->
+<div class="modal-overlay" id="cancelTaskModal" onclick="if(event.target===this)closeCancelTaskModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeCancelTaskModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title" style="color:#C0392B">❌ Cancel Task</div><div class="modal-sub">Provide a reason for cancellation</div></div>
+      <button class="modal-close" onclick="closeCancelTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="cancelTaskId">
+      <div class="mfg"><label>Reason for cancellation *</label>
+        <textarea id="cancelReason" style="width:100%;height:80px;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;resize:none" placeholder="e.g. Guest checked out early, task no longer needed..."></textarea>
+      </div>
+      <button class="msavebtn" style="background:#C0392B" id="cancelSubmitBtn" onclick="submitCancelTask()">❌ Confirm Cancel</button>
+      <button onclick="closeCancelTaskModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Go Back</button>
     </div>
   </div>
 </div>
@@ -600,6 +663,9 @@ function applyView() {
     tabs.push({id:"bookingcom", label:"🔵 Booking.com", cls:"bcom-tab"});
     tabs.push({id:"tasks",      label:"📋 Tasks"});
     tabs.push({id:"users",      label:"👥 Users"});
+  } else {
+    // Supervisor sees their task history
+    tabs.push({id:"tasks", label:"📋 My Tasks"});
   }
   buildTabs(tabs);
 
@@ -707,7 +773,13 @@ function render(d) {
   if (d.housekeeping) renderHousekeeping(d.housekeeping);
   renderEntrySection();
   renderUsers();
-  if (d.tasks) renderTasks(d.tasks);
+  if (d.tasks) {
+    // Admin sees all tasks, supervisor sees only their own
+    var tasksToShow = view === "supervisor"
+      ? d.tasks.filter(function(t){ return t.assignedTo === userName; })
+      : d.tasks;
+    renderTasks(tasksToShow);
+  }
 }
 
 // ─── GUEST CARDS ─────────────────────────────────────────────
@@ -977,6 +1049,78 @@ async function bApprove(bookingNo, approve) {
   }
 }
 
+// ─── EDIT TASK ───────────────────────────────────────────────
+function openEditTask(taskId) {
+  var task = (window.lastTasks||[]).find(function(t){ return t.id === taskId; });
+  if (!task) return;
+  document.getElementById("editTaskId").value  = taskId;
+  document.getElementById("etFlat").value      = task.flat;
+  document.getElementById("etAssign").value    = task.assignedTo;
+  document.getElementById("etTask").value      = task.task;
+  document.getElementById("etDate").value      = task.dueDate;
+  document.getElementById("etTime").value      = task.dueTime;
+  document.getElementById("etNotes").value     = task.notes;
+  document.getElementById("editTaskModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeEditTaskModal() {
+  document.getElementById("editTaskModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+async function submitEditTask() {
+  var taskId = document.getElementById("editTaskId").value;
+  var btn = document.getElementById("etSaveBtn");
+  btn.disabled = true; btn.textContent = "⏳ Saving...";
+  try {
+    var url = API + "?action=editTask&taskId=" + encodeURIComponent(taskId) +
+      "&flat=" + encodeURIComponent(document.getElementById("etFlat").value) +
+      "&task=" + encodeURIComponent(document.getElementById("etTask").value) +
+      "&assignedTo=" + encodeURIComponent(document.getElementById("etAssign").value) +
+      "&dueDate=" + encodeURIComponent(document.getElementById("etDate").value) +
+      "&dueTime=" + encodeURIComponent(document.getElementById("etTime").value) +
+      "&notes=" + encodeURIComponent(document.getElementById("etNotes").value);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeEditTaskModal(); loadData(); }
+    else throw new Error(d.error||"Failed");
+  } catch(e) {
+    var st = document.getElementById("etSt");
+    st.textContent = "❌ " + e.message; st.style.display="block"; st.className="mstatus err";
+    btn.disabled = false; btn.textContent = "💾 Save Changes";
+  }
+}
+
+// ─── CANCEL TASK ─────────────────────────────────────────────
+function confirmCancelTask(taskId) {
+  document.getElementById("cancelTaskId").value = taskId;
+  document.getElementById("cancelReason").value = "";
+  document.getElementById("cancelTaskModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeCancelTaskModal() {
+  document.getElementById("cancelTaskModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+async function submitCancelTask() {
+  var taskId = document.getElementById("cancelTaskId").value;
+  var reason = document.getElementById("cancelReason").value.trim();
+  if (!reason) { alert("Please provide a reason for cancellation."); return; }
+  var btn = document.getElementById("cancelSubmitBtn");
+  btn.disabled = true; btn.textContent = "⏳ Cancelling...";
+  try {
+    var url = API + "?action=cancelTask&taskId=" + encodeURIComponent(taskId) +
+      "&reason=" + encodeURIComponent(reason) +
+      "&cancelledBy=" + encodeURIComponent(userName);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeCancelTaskModal(); loadData(); }
+    else throw new Error(d.error||"Failed");
+  } catch(e) {
+    alert("Error: " + e.message);
+    btn.disabled = false; btn.textContent = "❌ Confirm Cancel";
+  }
+}
+
 // ─── SEARCH ──────────────────────────────────────────────────
 function runSearch() {
   var q = document.getElementById("searchInput").value.trim().toLowerCase();
@@ -1074,20 +1218,55 @@ async function submitTaskDone() {
 }
 
 
+function getStatusColor(s) {
+  if (s==="Done") return "#1A7A6E";
+  if (s==="Cancelled") return "#C0392B";
+  return "#C9921A";
+}
+
 function renderTasks(tasks) {
   var el = document.getElementById("tasksList");
   if (!el) return;
   if (!tasks || !tasks.length) { el.innerHTML = '<div class="empty">No tasks assigned yet</div>'; return; }
-  el.innerHTML = tasks.map(function(t) {
-    return '<div class="task-card ' + (t.status==="Done"?"done":"") + '">' +
-      '<div style="display:flex;justify-content:space-between">' +
+
+  // Filter tabs — All / Pending / Done / Cancelled
+  var filter = window.taskFilter || "pending";
+  var filtered = tasks.filter(function(t) {
+    if (filter === "pending") return t.status === "Pending";
+    if (filter === "done")    return t.status === "Done";
+    if (filter === "cancelled") return t.status === "Cancelled";
+    return true;
+  });
+
+  var tabHtml = '<div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">' +
+    [["all","All"],["pending","Pending"],["done","Done"],["cancelled","Cancelled"]].map(function(tab) {
+      return '<button style="font-size:10px;font-weight:700;padding:4px 11px;border-radius:9px;border:1.5px solid ' +
+        (filter===tab[0]?"#0C3C35":"#DDD") + ';background:' + (filter===tab[0]?"#0C3C35":"#fff") +
+        ';color:' + (filter===tab[0]?"#fff":"#555") + ';cursor:pointer" onclick="window.taskFilter=\'' + tab[0] + '\';renderTasks(window.lastTasks)">' + tab[1] + '</button>';
+    }).join("") + '</div>';
+
+  window.lastTasks = tasks;
+  el.innerHTML = tabHtml + (filtered.length ? filtered.map(function(t) {
+    var isAdmin = view === "admin";
+    var feedback = t.feedback || "";
+    return '<div class="task-card ' + (t.status==="Done"?"done":t.status==="Cancelled"?"cancelled":"") + '">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
         '<div class="task-title">' + esc(t.flat) + " — " + esc(t.task) + '</div>' +
-        '<div style="font-size:9px;font-weight:700;color:' + (t.status==="Done"?"#1A7A6E":"#C9921A") + '">' + esc(t.status) + '</div>' +
+        '<div style="font-size:9px;font-weight:700;color:' + getStatusColor(t.status) + '">' + esc(t.status) + '</div>' +
       '</div>' +
-      '<div class="task-meta">Assigned to: ' + esc(t.assignedTo) + ' | Due: ' + esc(t.dueDate) + ' ' + esc(t.dueTime) + '</div>' +
-      (t.notes ? '<div class="task-meta">📝 ' + esc(t.notes) + '</div>' : "") +
+      '<div class="task-meta">👤 ' + esc(t.assignedTo) + ' | 📅 ' + esc(t.dueDate) + ' ' + esc(t.dueTime) + ' | By: ' + esc(t.assignedBy) + '</div>' +
+      (t.notes ? '<div class="task-meta" style="color:#0C3C35">📝 ' + esc(t.notes) + '</div>' : "") +
+      (feedback ? '<div class="scmt" style="margin-top:4px">💬 ' + esc(feedback) + '</div>' : "") +
+      (t.status === "Pending" ? (
+        '<div class="action-btns" style="margin-top:6px">' +
+        (isAdmin ?
+          '<button class="task-done-btn" style="background:#C9921A" onclick="openEditTask(\'' + esc(t.id) + '\')">✏️ Edit</button>' +
+          '<button class="task-done-btn" style="background:#C0392B;margin-left:4px" onclick="confirmCancelTask(\'' + esc(t.id) + '\')">❌ Cancel</button>' : "") +
+        '<button class="task-done-btn" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>' +
+        '</div>'
+      ) : "") +
       '</div>';
-  }).join("");
+  }).join("") : '<div class="empty">No ' + filter + ' tasks</div>');
 }
 
 function openTaskModal() {
