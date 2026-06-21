@@ -7,8 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ideal Homes">
 <meta name="theme-color" content="#0C3C35">
-<title>Ideal Homes Nadi — Dashboard v5</title>
-<!-- build:20260621-0800 -->
+<title>Ideal Homes Nadi — Dashboard v6</title>
+<!-- build:20260621-1500 -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <link rel="icon" type="image/jpeg" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
 <link rel="apple-touch-icon" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
@@ -152,6 +152,12 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 .mstatus{display:none;font-size:11px;padding:8px 11px;border-radius:8px;margin-bottom:10px}
 .mstatus.ok{background:#EEF3FB;color:#003580}
 .mstatus.err{background:#FAECE7;color:#712B13}
+
+/* FOOTER */
+.footer{background:#0C3C35;padding:18px 16px;text-align:center;margin-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.footer img{height:36px;width:auto;border-radius:6px;margin-bottom:8px;display:block;margin-left:auto;margin-right:auto}
+.footer-text{font-size:9px;color:#7ec8c0;font-weight:500}
+.footer-link{font-size:9px;color:#C9921A;font-weight:700;text-decoration:none}
 </style>
 </head>
 <body>
@@ -295,8 +301,14 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
     <!-- HOUSEKEEPING -->
     <div class="sec" id="sec-housekeeping">
       <div class="card">
-        <div class="ctitle" style="color:#085041">🧹 Weekly Cleaning Status</div>
+        <div class="ctitle" style="color:#085041">🧹 Weekly Cleaning Status — Flat Grid</div>
         <div id="hkGrid"></div>
+      </div>
+      <div id="hkBreakdownCard" style="display:none">
+        <div class="card" style="border-left:4px solid #003580">
+          <div class="ctitle" style="color:#003580">📊 Admin — Weekly Breakdown by Cleaner</div>
+          <div id="hkBreakdown"></div>
+        </div>
       </div>
       <div class="card" style="border-left:4px solid #E07B20">
         <div class="ctitle" style="color:#8B4000">🔴 Urgent — Clean &amp; Prepare Today</div>
@@ -306,7 +318,6 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
         <div class="ctitle" style="color:#633806">🟡 Upcoming — Prepare Room</div>
         <div id="hkUpcoming"></div>
       </div>
-      <a href="https://form.jotform.com/261707324246051" target="_blank" style="display:block;width:100%;padding:14px;background:#1A7A6E;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;margin-top:8px">🧹 Submit Housekeeping Report</a>
     </div>
 
     <!-- ENTRY (supervisor) / FORMS (admin) -->
@@ -389,6 +400,26 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
           </div>
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- REJECT TASK MODAL -->
+<div class="modal-overlay" id="rejectTaskModal" onclick="if(event.target===this)closeRejectTaskModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeRejectTaskModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title" style="color:#C0392B">🚫 Reject Task</div><div class="modal-sub">Provide a reason for rejection</div></div>
+      <button class="modal-close" onclick="closeRejectTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="rejectTaskId">
+      <div class="mfg">
+        <label>Reason for rejection *</label>
+        <textarea id="rejectReason" style="width:100%;height:80px;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;resize:none" placeholder="e.g. Flat already clean, wrong flat assigned..."></textarea>
+      </div>
+      <button class="msavebtn" style="background:#C0392B" id="rejectSubmitBtn" onclick="submitRejectTask()">🚫 Confirm Reject</button>
+      <button onclick="closeRejectTaskModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Go Back</button>
     </div>
   </div>
 </div>
@@ -770,9 +801,14 @@ function render(d) {
     if (apUp.length) { document.getElementById("listUp").insertAdjacentHTML("beforeend", apUp.map(bcomUpCard).join("")); }
   }
 
-  if (d.housekeeping) renderHousekeeping(d.housekeeping);
-  renderEntrySection();
-  renderUsers();
+  if (d.housekeeping) {
+    renderHousekeeping(d.housekeeping);
+    if (view === "admin" && d.housekeeping.weeklyGrid && d.housekeeping.weeklyGrid.length) {
+      renderHkBreakdown(d.housekeeping.weeklyGrid);
+      var bc = document.getElementById("hkBreakdownCard");
+      if (bc) bc.style.display = "block";
+    }
+  }
   if (d.tasks) {
     // Admin sees all tasks, supervisor sees only their own
     var tasksToShow = view === "supervisor"
@@ -928,16 +964,24 @@ function renderEntrySection() {
   var html = '<div style="margin-bottom:8px;font-size:11px;color:#888">Select entry type to open the form</div>';
   html += '<button class="entry-btn" onclick="openWalkin()">' +
     '<div class="entry-icon" style="background:#EAF8F3">🚶</div>' +
-    '<div><div class="entry-title">Walk-in Guest</div><div class="entry-sub">Guest arriving now — no pre-fill</div></div></button>';
+    '<div><div class="entry-title">Walk-in Guest</div><div class="entry-sub">Guest arriving now — fill all details on form</div></div></button>';
   html += '<button class="entry-btn" onclick="openBookingCom()">' +
     '<div class="entry-icon" style="background:#EEF3FB">🔵</div>' +
     '<div><div class="entry-title">Booking.com Reservation</div><div class="entry-sub">Enter Booking.com reservation details</div></div></button>';
+  html += '<button class="entry-btn" onclick="openHousekeepingForm()">' +
+    '<div class="entry-icon" style="background:#E1F5EE">🧹</div>' +
+    '<div><div class="entry-title">Housekeeping Report</div><div class="entry-sub">Submit daily flat cleaning status</div></div></button>';
   if (isAdmin) {
     html += '<button class="entry-btn" onclick="openRegularBooking()">' +
       '<div class="entry-icon" style="background:#FFF8E7">📋</div>' +
-      '<div><div class="entry-title">Regular Booking</div><div class="entry-sub">Full booking form with VAT</div></div></button>';
+      '<div><div class="entry-title">Regular Booking</div><div class="entry-sub">Full booking form with VAT calculation</div></div></button>';
   }
   document.getElementById("entryContent").innerHTML = html;
+}
+
+function openHousekeepingForm() {
+  closeEntryModal();
+  window.open("https://form.jotform.com/261707324246051", "_blank");
 }
 
 function openWalkin() {
@@ -1047,6 +1091,97 @@ async function bApprove(bookingNo, approve) {
   } catch(e) {
     alert("Network error: " + e.message);
   }
+}
+
+// ─── REJECT TASK ─────────────────────────────────────────────
+function confirmRejectTask(taskId) {
+  document.getElementById("rejectTaskId").value = taskId;
+  document.getElementById("rejectReason").value = "";
+  document.getElementById("rejectTaskModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeRejectTaskModal() {
+  document.getElementById("rejectTaskModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+async function submitRejectTask() {
+  var taskId = document.getElementById("rejectTaskId").value;
+  var reason = document.getElementById("rejectReason").value.trim();
+  if (!reason) { alert("Please provide a reason for rejection."); return; }
+  var btn = document.getElementById("rejectSubmitBtn");
+  btn.disabled = true; btn.textContent = "⏳ Rejecting...";
+  try {
+    var url = API + "?action=rejectTask&taskId=" + encodeURIComponent(taskId) +
+      "&reason=" + encodeURIComponent(reason) +
+      "&rejectedBy=" + encodeURIComponent(userName);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeRejectTaskModal(); loadData(); }
+    else throw new Error(d.error||"Failed");
+  } catch(e) {
+    alert("Error: " + e.message);
+    btn.disabled = false; btn.textContent = "🚫 Confirm Reject";
+  }
+}
+
+// ─── ADMIN HOUSEKEEPING BREAKDOWN ────────────────────────────
+function renderHkBreakdown(hkData) {
+  var el = document.getElementById("hkBreakdown");
+  if (!el || !hkData || !hkData.length) {
+    if (el) el.innerHTML = '<div class="empty">No housekeeping data this week</div>';
+    return;
+  }
+  var days  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var people = {};
+  hkData.forEach(function(r) {
+    var name = r.staffName || r.submittedBy || "Unknown";
+    var day  = r.day ? r.day.substring(0,3) : "";
+    var flats = r.flat ? r.flat.split(",").map(function(f){ return f.trim(); }) : [];
+    if (!people[name]) people[name] = {};
+    if (!people[name][day]) people[name][day] = [];
+    flats.forEach(function(f) { if (f && !people[name][day].includes(f)) people[name][day].push(f); });
+  });
+
+  var names = Object.keys(people);
+  if (!names.length) { el.innerHTML = '<div class="empty">No housekeeping submissions this week</div>'; return; }
+
+  // Summary table
+  var html = '<div style="overflow-x:auto"><table class="hk-grid" style="font-size:10px">' +
+    '<thead><tr><th style="text-align:left;padding-left:6px">Cleaner</th>';
+  days.forEach(function(d){ html += '<th>' + d + '</th>'; });
+  html += '<th>Total</th></tr></thead><tbody>';
+
+  names.forEach(function(name) {
+    var total = 0;
+    html += '<tr><td style="font-weight:700;color:#0C3C35;text-align:left;padding-left:6px">' + esc(name) + '</td>';
+    days.forEach(function(day) {
+      var flats = people[name][day] || [];
+      total += flats.length;
+      html += '<td style="text-align:center">' +
+        (flats.length ? '<span style="color:#1A7A6E;font-weight:700" title="' + flats.join(", ") + '">' + flats.length + '</span>' : '<span style="color:#DDD">—</span>') +
+        '</td>';
+    });
+    html += '<td style="font-weight:800;color:#003580">' + total + '</td></tr>';
+  });
+  html += '</tbody></table></div>';
+
+  // Detail view per cleaner
+  html += '<div style="margin-top:16px">';
+  names.forEach(function(name) {
+    html += '<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#0C3C35;margin-bottom:6px">👤 ' + esc(name) + '</div>';
+    days.forEach(function(day) {
+      var flats = people[name][day] || [];
+      if (flats.length) {
+        html += '<div style="font-size:10px;padding:4px 0;border-bottom:1px dashed #F0F0F0">' +
+          '<span style="color:#888;width:32px;display:inline-block">' + day + '</span>' +
+          '<span style="color:#1A7A6E;font-weight:600">' + flats.join(", ") + '</span></div>';
+      }
+    });
+    html += '</div>';
+  });
+  html += '</div>';
+
+  el.innerHTML = html;
 }
 
 // ─── EDIT TASK ───────────────────────────────────────────────
@@ -1261,7 +1396,9 @@ function renderTasks(tasks) {
         '<div class="action-btns" style="margin-top:6px">' +
         (isAdmin ?
           '<button class="task-done-btn" style="background:#C9921A" onclick="openEditTask(\'' + esc(t.id) + '\')">✏️ Edit</button>' +
-          '<button class="task-done-btn" style="background:#C0392B;margin-left:4px" onclick="confirmCancelTask(\'' + esc(t.id) + '\')">❌ Cancel</button>' : "") +
+          '<button class="task-done-btn" style="background:#C0392B;margin-left:4px" onclick="confirmCancelTask(\'' + esc(t.id) + '\')">❌ Cancel</button>' :
+          '<button class="task-done-btn" style="background:#C0392B;margin-left:4px" onclick="confirmRejectTask(\'' + esc(t.id) + '\')">🚫 Reject</button>'
+        ) +
         '<button class="task-done-btn" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>' +
         '</div>'
       ) : "") +
@@ -1405,5 +1542,13 @@ function esc(s) { var d = document.createElement("div"); d.textContent = s||""; 
 
 setInterval(function(){ if (cache) loadData(); }, 5 * 60 * 1000);
 </script>
+
+<!-- FOOTER -->
+<div class="footer">
+  <img src="https://adesanmiglobal.com/wp-content/uploads/2025/08/Logo-Jpeg.jpg" alt="Adesanmi Global" onerror="this.style.display='none'">
+  <div class="footer-text">Powered by</div>
+  <a href="https://adesanmiglobal.com" target="_blank" class="footer-link">Adesanmi Global Pte Limited</a>
+  <div class="footer-text" style="margin-top:4px">© 2026 Ideal Homes Nadi — All rights reserved</div>
+</div>
 </body>
 </html>
