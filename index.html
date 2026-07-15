@@ -278,10 +278,26 @@ html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe
       </div>
     </div>
 
+    <!-- ONGOING -->
+    <div class="sec" id="sec-ongoing">
+      <div class="card" style="border-left:4px solid #003580">
+        <div class="ctitle" style="color:#003580">🏨 Currently Checked In — Awaiting Checkout</div>
+        <div id="listOngoing"></div>
+      </div>
+    </div>
+
+    <!-- TOMORROW -->
+    <div class="sec" id="sec-tomorrow">
+      <div class="card ci">
+        <div class="ctitle">🌅 Check-ins Tomorrow</div>
+        <div id="listTomorrow"></div>
+      </div>
+    </div>
+
     <!-- UPCOMING -->
     <div class="sec" id="sec-upcoming">
       <div class="card">
-        <div class="ctitle">📅 Next 7 days check-ins</div>
+        <div class="ctitle">📅 Next 4 Days — Upcoming Check-ins</div>
         <div id="listUp"></div>
       </div>
     </div>
@@ -693,7 +709,9 @@ function applyView() {
     tabs.push({id:"month",  label:"Month",       cls:"fin-tab"});
     tabs.push({id:"quarter",label:"Quarter VAT", cls:"fin-tab"});
   }
-  tabs.push({id:"upcoming",     label:"Upcoming"});
+  tabs.push({id:"ongoing",      label:"🏨 Ongoing"});
+  tabs.push({id:"tomorrow",     label:"🌅 Tomorrow"});
+  tabs.push({id:"upcoming",     label:"📅 Upcoming"});
   tabs.push({id:"housekeeping", label:"🧹 Housekeeping", cls:"hk-tab"});
   tabs.push({id:"search",       label:"🔍 Search"});
   tabs.push({id:"entry",        label: isAdmin ? "📋 Forms" : "➕ Entry"});
@@ -735,6 +753,12 @@ function render(d) {
   document.getElementById("listCI").innerHTML = renderGuests(ci, "ci", isSup);
   document.getElementById("listCO").innerHTML = renderGuests(co, "co", isSup);
 
+  // Ongoing
+  if (d.ongoing) renderOngoing(d.ongoing, isSup);
+
+  // Tomorrow
+  if (d.tomorrowCheckIns) renderTomorrow(d.tomorrowCheckIns, isSup);
+
   var al = "";
   if (!isSup && d.alerts && (d.alerts.refundedThisMonth > 0 || d.alerts.cancelledThisMonth > 0)) {
     al = '<div class="alertbox">⚠️ ' + d.alerts.refundedThisMonth + ' refunded (FJD ' + fmtD(d.alerts.refundedAmount) + ') + ' + d.alerts.cancelledThisMonth + ' cancelled this month</div>';
@@ -757,6 +781,8 @@ function render(d) {
 
   if (isSup) {
     document.getElementById("listUp").innerHTML = renderUpcoming(up, true);
+    if (d.ongoing) renderOngoing(d.ongoing, true);
+    if (d.tomorrowCheckIns) renderTomorrow(d.tomorrowCheckIns, true);
     if (d.housekeeping) renderHousekeeping(d.housekeeping);
     renderEntrySection();
     if (d.bookingCom) {
@@ -843,6 +869,91 @@ function render(d) {
   if (view === "admin") {
     renderUsers();
   }
+}
+
+// ─── ONGOING RENDER ──────────────────────────────────────────
+function renderOngoing(list, isSup) {
+  var el = document.getElementById("listOngoing");
+  if (!el) return;
+  if (!list || !list.length) {
+    el.innerHTML = '<div class="empty">🏨 No guests currently checked in</div>';
+    return;
+  }
+  el.innerHTML = list.map(function(g) {
+    var out  = g.outstanding > 0;
+    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var daysColor = daysLeft <= 1 ? "#C0392B" : daysLeft <= 2 ? "#C9921A" : "#1A7A6E";
+    var actionBtns = phone ? (
+      '<div class="action-btns">' +
+      (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+      '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+      '</div>'
+    ) : "";
+    return '<div class="gc">' +
+      '<div class="gc-top">' +
+        '<div><div class="gname">' + esc(g.guestName) + '</div>' +
+        '<div class="rbadge" style="background:#003580">Res: ' + esc(g.bookingId) + '</div></div>' +
+        '<div class="gright">' +
+          '<div style="font-size:11px;font-weight:800;color:' + daysColor + '">' + daysLeft + ' day' + (daysLeft!==1?'s':'') + ' left</div>' +
+          '<div class="outlbl">checkout ' + esc(g.checkOutDate) + '</div>' +
+          '<div class="out ' + (out?"d":"z") + '" style="margin-top:4px">$' + fmtD(g.outstanding) + '</div>' +
+          '<div class="outlbl">outstanding</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="dgrid">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Checked In</span><span class="dval">' + esc(g.checkInDate) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Checkout</span><span class="dval">' + esc(g.checkOutDate) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+        (g.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + 'K</span></div>' : "") +
+        (!isSup ? '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' : "") +
+        (!isSup ? '<div class="di"><span class="dlbl">Paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.totalPaid) + '</span></div>' : "") +
+        (!isSup && g.channel ? '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' : "") +
+      '</div>' +
+      actionBtns + cmtBlock(g) +
+    '</div>';
+  }).join("");
+}
+
+// ─── TOMORROW RENDER ─────────────────────────────────────────
+function renderTomorrow(list, isSup) {
+  var el = document.getElementById("listTomorrow");
+  if (!el) return;
+  if (!list || !list.length) {
+    el.innerHTML = '<div class="empty">🌅 No check-ins tomorrow</div>';
+    return;
+  }
+  el.innerHTML = list.map(function(g) {
+    var out  = g.outstanding > 0;
+    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var phone = g.phone || "";
+    var actionBtns = phone ? (
+      '<div class="action-btns">' +
+      (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+      '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+      '</div>'
+    ) : "";
+    return '<div class="gc">' +
+      '<div class="gc-top">' +
+        '<div><div class="gname">' + esc(g.guestName) + '</div>' +
+        '<div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+        '<div class="gright">' +
+          '<div class="badge gold">Tomorrow ' + esc(g.arrivalDate) + '</div>' +
+          '<div class="out ' + (out?"d":"z") + '" style="margin-top:4px">$' + fmtD(g.outstanding) + '</div>' +
+          '<div class="outlbl">outstanding</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="dgrid">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+        (g.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + 'K</span></div>' : "") +
+        '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+        (g.depositPaid ? '<div class="di"><span class="dlbl">Deposit</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.depositPaid) + '</span></div>' : "") +
+        (!isSup && g.channel ? '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' : "") +
+      '</div>' +
+      actionBtns + cmtBlock(g) +
+    '</div>';
+  }).join("");
 }
 
 // ─── GUEST CARDS ─────────────────────────────────────────────
