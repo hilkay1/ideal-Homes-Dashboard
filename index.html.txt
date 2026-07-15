@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ideal Homes">
+<meta name="theme-color" content="#0C3C35">
+<title>Ideal Homes Nadi — Dashboard v6</title>
+<!-- build:20260621-1500 -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="icon" type="image/jpeg" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
+<link rel="apple-touch-icon" href="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:#0C3C35;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overscroll-behavior:none;color:#1A2622;padding-bottom:40px;min-height:100vh}
+.hdr{background:#0C3C35;padding:16px 16px 14px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.hdr-top{display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:17px;font-weight:700;color:#fff}
+.brand-sub{font-size:9.5px;color:#C9921A;font-weight:600;margin-top:2px}
+.hdr-btns{display:flex;gap:6px;align-items:center}
+.ico-btn{background:rgba(255,255,255,.1);border:none;color:#fff;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer}
+.upd{font-size:9px;color:#7ec8c0;margin-top:7px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tabs{display:flex;gap:5px;padding:10px 12px 0;overflow-x:auto;background:#0C3C35;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:6px 13px;border-radius:14px;font-size:11.5px;font-weight:600;color:#7ec8c0;background:rgba(255,255,255,.06);cursor:pointer;white-space:nowrap;border:none}
+.tab.active{background:#C9921A;color:#fff}
+.tab.bcom-tab{background:#003580;color:#fff}
+.tab.hk-tab{background:#1A7A6E;color:#fff}
+.content{padding:14px 13px}
+.sec{display:none}
+.sec.active{display:block}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.card.ci{background:#EAF8F3;border-left:4px solid #1A7A6E}
+.card.co{background:#FFF3E8;border-left:4px solid #E07B20}
+.ctitle{font-size:10.5px;font-weight:700;color:#4A6160;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.card.ci .ctitle{color:#085041}
+.card.co .ctitle{color:#8B4000}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.kgrid3{grid-template-columns:1fr 1fr 1fr}
+.kpi{background:#fff;border-radius:13px;padding:13px 11px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.klbl{font-size:9px;color:#888;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.kval{font-size:20px;font-weight:800;color:#0C3C35;margin-top:4px;line-height:1.1}
+.ksub{font-size:9.5px;color:#999;margin-top:3px}
+.kchg{font-size:9px;font-weight:700;padding:2px 6px;border-radius:7px;display:inline-block;margin-top:4px}
+.kchg.up{background:#E1F5EE;color:#085041}
+.kchg.down{background:#FAECE7;color:#712B13}
+.gc{padding:12px 0;border-bottom:1px solid #F0F0F0}
+.gc:last-child{border-bottom:none}
+.gc-top{display:flex;justify-content:space-between;align-items:flex-start}
+.gname{font-size:14px;font-weight:700;color:#0C3C35}
+.rbadge{font-size:9px;font-weight:700;color:#fff;background:#1A7A6E;padding:2px 7px;border-radius:7px;margin-top:3px;display:inline-block}
+.gright{text-align:right;flex-shrink:0;padding-left:8px}
+.out{font-size:13px;font-weight:800}
+.out.z{color:#1A7A6E}
+.out.d{color:#C0392B}
+.outlbl{font-size:9px;color:#999;margin-top:1px}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px;margin-top:8px;font-size:11px}
+.di{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed #F0F0F0}
+.dlbl{color:#999}
+.dval{color:#1A2622;font-weight:600;text-align:right}
+.gcmt{font-size:10.5px;color:#8B6310;margin-top:6px;background:#FFF8E7;padding:5px 8px;border-radius:6px;border-left:2px solid #C9921A}
+.scmt{font-size:10.5px;color:#1A4D8A;margin-top:4px;background:#EAF2FC;padding:5px 8px;border-radius:6px;border-left:2px solid #378ADD}
+.cbox{margin-top:8px}
+.clbl{font-size:9px;font-weight:700;color:#aaa;text-transform:uppercase;margin-bottom:3px}
+.cph{font-size:10.5px;color:#bbb;font-style:italic;padding:5px 8px;background:#FAFAFA;border-radius:6px}
+.action-btns{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.btn-call{background:#1A7A6E;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn-wa{background:#25D366;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.empty{text-align:center;padding:22px 10px;color:#aaa;font-size:12.5px}
+.badge{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:9px;display:inline-block}
+.badge.gold{background:#FAEEDA;color:#633806}
+.badge.teal{background:#E1F5EE;color:#085041}
+.chwrap{position:relative;height:175px;margin-top:8px}
+.tmini{width:100%;font-size:11px}
+.tmini td{padding:7px 0;border-bottom:1px solid #F0F0F0}
+.tmini tr:last-child td{border-bottom:none}
+.pscr{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:20px}
+.pbox{background:#fff;border-radius:16px;padding:30px 22px;max-width:310px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.pico{width:52px;height:52px;border-radius:13px;background:#0C3C35;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;color:#C9921A}
+.ptitle{font-size:16px;font-weight:700;color:#0C3C35;text-align:center}
+.psub{font-size:11px;color:#888;text-align:center;margin-top:4px;margin-bottom:18px}
+.pinp{width:100%;padding:12px;border-radius:10px;border:1.5px solid #E0E0E0;font-size:18px;text-align:center;letter-spacing:3px;outline:none}
+.pinp:focus{border-color:#C9921A}
+.pbtn{width:100%;padding:12px;border-radius:10px;background:#0C3C35;color:#fff;border:none;font-size:14px;font-weight:700;margin-top:10px;cursor:pointer}
+.perr{font-size:11px;color:#C0392B;text-align:center;margin-top:8px;min-height:14px}
+.pbrand{font-size:17px;font-weight:700;color:#fff;text-align:center;margin-bottom:4px}
+.pbsub{font-size:9.5px;color:#C9921A;text-align:center;margin-bottom:26px;font-weight:600}
+.supnote{background:#F0EAF8;border-left:3px solid #6A3FA0;padding:9px 12px;border-radius:0 8px 8px 0;font-size:11px;color:#3B1F5E;margin-bottom:12px}
+.ldg{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;color:#fff}
+.alertbox{background:#FAEEDA;border-left:3px solid #BA7517;padding:9px 11px;border-radius:0 8px 8px 0;font-size:11px;color:#633806;margin-bottom:10px}
+.bfbtn{font-size:10px;font-weight:700;padding:4px 11px;border-radius:9px;border:1.5px solid #DDD;background:#fff;color:#555;cursor:pointer}
+.bfbtn.active{background:#003580;color:#fff;border-color:#003580}
+.bcard{padding:12px 0;border-bottom:1px solid #F0F0F0}
+.bcard:last-child{border-bottom:none}
+.bappr{font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;background:#E1F5EE;color:#085041;display:inline-block}
+.bpend{font-size:9px;font-weight:700;padding:2px 8px;border-radius:8px;background:#FFF8E7;color:#8B6310;display:inline-block}
+.bapprbtn{font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#003580;color:#fff;border:none;cursor:pointer;margin-top:5px}
+.bunapprbtn{font-size:10px;font-weight:700;padding:5px 12px;border-radius:8px;background:#f0f2f5;color:#666;border:none;cursor:pointer;margin-top:5px;margin-left:5px}
+/* ENTRY BUTTONS */
+.entry-btn{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:18px 16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer;border:none;width:100%;text-align:left}
+.entry-btn:active{opacity:.85}
+.entry-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.entry-title{font-size:14px;font-weight:700;color:#0C3C35}
+.entry-sub{font-size:11px;color:#888;margin-top:2px}
+/* HOUSEKEEPING GRID */
+.hk-grid{width:100%;border-collapse:collapse;font-size:10px}
+.hk-grid th{background:#0C3C35;color:#fff;padding:6px 4px;text-align:center;font-size:9px}
+.hk-grid td{padding:5px 4px;text-align:center;border-bottom:1px solid #F0F0F0;border-right:1px solid #F0F0F0}
+.hk-grid tr:last-child td{border-bottom:none}
+.hk-grid td:first-child{font-weight:700;color:#0C3C35;text-align:left;padding-left:6px}
+.hk-clean{color:#1A7A6E;font-size:14px}
+.hk-attn{color:#C9921A;font-size:14px}
+.hk-dmg{color:#C0392B;font-size:14px}
+.hk-none{color:#DDD;font-size:12px}
+/* TASKS */
+.task-card{background:#fff;border-radius:12px;padding:12px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.06);border-left:3px solid #C9921A}
+.task-card.done{border-left-color:#1A7A6E;opacity:.7}
+.task-title{font-size:12px;font-weight:700;color:#0C3C35}
+.task-meta{font-size:10px;color:#888;margin-top:3px}
+.task-done-btn{font-size:10px;font-weight:700;padding:4px 10px;border-radius:7px;background:#1A7A6E;color:#fff;border:none;cursor:pointer;margin-top:6px}
+/* ASSIGN TASK */
+.mfg{margin-bottom:9px}
+.mfg label{font-size:10.5px;font-weight:600;color:#555;display:block;margin-bottom:3px}
+.mfg input,.mfg select,.mfg textarea{width:100%;padding:9px 10px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;color:#1A2622;outline:none;background:#fff}
+.mfrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* USER MANAGEMENT */
+.user-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0F0F0}
+.user-row:last-child{border-bottom:none}
+.user-name{font-size:13px;font-weight:700;color:#0C3C35}
+.user-role{font-size:10px;color:#888}
+.toggle{position:relative;width:44px;height:24px}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:24px;transition:.3s}
+.toggle-slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s}
+.toggle input:checked + .toggle-slider{background:#1A7A6E}
+.toggle input:checked + .toggle-slider:before{transform:translateX(20px)}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(0,0,0,.5)}
+.modal-box{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:18px 18px 0 0;max-height:92vh;overflow-y:auto;padding-bottom:32px}
+.modal-handle{text-align:center;padding:10px 0 0;cursor:pointer}
+.modal-handle-bar{width:36px;height:4px;background:#DDD;border-radius:4px;display:inline-block}
+.modal-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 12px;border-bottom:1px solid #F0F0F0}
+.modal-title{font-size:14px;font-weight:700;color:#0C3C35}
+.modal-sub{font-size:10px;color:#888;margin-top:2px}
+.modal-close{background:#f0f2f5;border:none;border-radius:8px;width:28px;height:28px;font-size:15px;cursor:pointer}
+.modal-body{padding:14px 16px}
+.msavebtn{width:100%;padding:14px;background:#1A7A6E;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer}
+.msavebtn:disabled{opacity:.5;cursor:not-allowed}
+.mstatus{display:none;font-size:11px;padding:8px 11px;border-radius:8px;margin-bottom:10px}
+.mstatus.ok{background:#EEF3FB;color:#003580}
+.mstatus.err{background:#FAECE7;color:#712B13}
+
+/* FOOTER */
+.footer{background:#0C3C35;padding:18px 16px;text-align:center;margin-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.footer img{height:36px;width:auto;border-radius:6px;margin-bottom:8px;display:block;margin-left:auto;margin-right:auto}
+.footer-text{font-size:9px;color:#7ec8c0;font-weight:500}
+.footer-link{font-size:9px;color:#C9921A;font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="pscr" class="pscr">
+  <div class="pbrand">Ideal Homes Nadi</div>
+  <div class="pbsub">Property Management System</div>
+  <div class="pbox">
+    <div class="pico">🔒</div>
+    <div class="ptitle">Dashboard Access</div>
+    <div class="psub">Enter your password to continue</div>
+    <input type="password" id="pinp" class="pinp" placeholder="••••••" autocomplete="off" maxlength="20">
+    <button class="pbtn" onclick="checkPw()">Unlock</button>
+    <div class="perr" id="perr"></div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="ldg" class="ldg" style="display:none">
+  <div style="font-size:30px;animation:spin 1s linear infinite">↻</div>
+  <div style="font-size:12px;color:#7ec8c0;margin-top:10px">Loading dashboard...</div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
+  <div class="hdr">
+    <div class="hdr-top">
+      <div style="display:flex;align-items:center;gap:9px">
+        <img src="https://adesanmiglobal.com/wp-content/uploads/2025/05/cropped-Blue-and-Yellow-Gradient-Modern-Desktop-Wallpaper-Phone-Wallpaper-Banner-Landscape-scaled-1-189x63.jpg" alt="Logo" style="height:30px;width:auto;border-radius:6px">
+        <div>
+          <div class="brand">Ideal Homes Nadi</div>
+          <div class="brand-sub" id="brandSub">Live Sales Dashboard</div>
+        </div>
+      </div>
+      <div class="hdr-btns">
+        <span id="userBadge" style="font-size:9px;font-weight:700;color:#C9921A;background:rgba(201,146,26,.15);padding:3px 8px;border-radius:7px"></span>
+        <button class="ico-btn" onclick="logout()" title="Lock">🔒</button>
+        <button class="ico-btn" id="refBtn" onclick="loadData()" title="Refresh"><span id="refIco">↻</span></button>
+      </div>
+    </div>
+    <div class="upd" id="upd">—</div>
+  </div>
+
+  <div class="tabs" id="tabBar"></div>
+
+  <div class="content">
+    <!-- TODAY -->
+    <div class="sec" id="sec-today">
+      <div id="supnote" class="supnote" style="display:none">ℹ️ Showing check-in &amp; checkout details</div>
+      <div id="todayAlert"></div>
+      <div class="kgrid kgrid3" style="margin-bottom:12px">
+        <div class="kpi"><div class="klbl">Check-ins</div><div class="kval" id="kCI">0</div></div>
+        <div class="kpi"><div class="klbl">Checkouts</div><div class="kval" id="kCO">0</div></div>
+        <div class="kpi fin-tab"><div class="klbl">Revenue</div><div class="kval" id="kRev">$0</div></div>
+      </div>
+      <!-- MY TASKS (supervisor) -->
+      <div id="myTasksSection" style="display:none">
+        <div class="card" style="border-left:4px solid #C9921A">
+          <div class="ctitle" style="color:#633806">📋 My Tasks Today</div>
+          <div id="myTasksList"></div>
+        </div>
+      </div>
+      <div class="card ci">
+        <div class="ctitle">🏠 Check-ins today</div>
+        <div id="listCI"></div>
+      </div>
+      <div class="card co">
+        <div class="ctitle">🚪 Checkouts today</div>
+        <div id="listCO"></div>
+      </div>
+    </div>
+
+    <!-- WEEK -->
+    <div class="sec" id="sec-week">
+      <div class="kgrid">
+        <div class="kpi"><div class="klbl">Revenue</div><div class="kval" id="wRev">$0</div><div class="ksub" id="wLbl"></div></div>
+        <div class="kpi"><div class="klbl">Bookings</div><div class="kval" id="wBk">0</div><div class="ksub" id="wNi"></div></div>
+        <div class="kpi"><div class="klbl">Collected</div><div class="kval" id="wPd" style="color:#085041">$0</div></div>
+        <div class="kpi"><div class="klbl">Outstanding</div><div class="kval" id="wOut" style="color:#C0392B">$0</div></div>
+      </div>
+    </div>
+
+    <!-- MONTH -->
+    <div class="sec" id="sec-month">
+      <div class="kgrid">
+        <div class="kpi"><div class="klbl">Revenue</div><div class="kval" id="mRev">$0</div><div id="mChg"></div></div>
+        <div class="kpi"><div class="klbl">Bookings</div><div class="kval" id="mBk">0</div><div class="ksub" id="mNi"></div></div>
+        <div class="kpi"><div class="klbl">VAT 12.5%</div><div class="kval" id="mVat" style="color:#085041">$0</div></div>
+        <div class="kpi"><div class="klbl">Outstanding</div><div class="kval" id="mOut" style="color:#C0392B">$0</div></div>
+      </div>
+      <div class="card">
+        <div class="ctitle">📊 Revenue by month — <span id="mYear"></span></div>
+        <div class="chwrap"><canvas id="mChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- QUARTER -->
+    <div class="sec" id="sec-quarter">
+      <div class="kgrid">
+        <div class="kpi"><div class="klbl" id="qLbl">Quarter</div><div class="kval" id="qRev">$0</div><div class="ksub">inc. VAT</div></div>
+        <div class="kpi"><div class="klbl">VAT payable</div><div class="kval" id="qVat" style="color:#085041">$0</div><div class="ksub">FRCS</div></div>
+        <div class="kpi"><div class="klbl">Excl. VAT</div><div class="kval" id="qExc">$0</div></div>
+        <div class="kpi"><div class="klbl">Bookings</div><div class="kval" id="qBk">0</div><div class="ksub" id="qNi"></div></div>
+      </div>
+      <div class="card">
+        <div class="ctitle">🧾 VAT by quarter — <span id="qYear"></span></div>
+        <div class="chwrap"><canvas id="qChart"></canvas></div>
+        <div id="qLeg" style="display:flex;gap:12px;margin-top:7px;font-size:10.5px;color:#666"></div>
+      </div>
+      <div class="card">
+        <div class="ctitle">📅 Year to date</div>
+        <table class="tmini">
+          <tr><td>Total revenue (inc. VAT)</td><td style="text-align:right;font-weight:700" id="ytdRev">$0</td></tr>
+          <tr><td>Total VAT collected</td><td style="text-align:right;font-weight:700;color:#085041" id="ytdVat">$0</td></tr>
+          <tr><td>Total bookings</td><td style="text-align:right;font-weight:700" id="ytdBk">0</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ONGOING -->
+    <div class="sec" id="sec-ongoing">
+      <div class="card" style="border-left:4px solid #003580">
+        <div class="ctitle" style="color:#003580">🏨 Currently Checked In — Awaiting Checkout</div>
+        <div id="listOngoing"></div>
+      </div>
+    </div>
+
+    <!-- TOMORROW -->
+    <div class="sec" id="sec-tomorrow">
+      <div class="card ci">
+        <div class="ctitle">🌅 Check-ins Tomorrow</div>
+        <div id="listTomorrow"></div>
+      </div>
+    </div>
+
+    <!-- UPCOMING -->
+    <div class="sec" id="sec-upcoming">
+      <div class="card">
+        <div class="ctitle">📅 Upcoming Check-ins — Next 5 Days</div>
+        <div id="listUp"></div>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="sec" id="sec-search">
+      <div class="card">
+        <div class="ctitle">🔍 Search Reservations</div>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <input id="searchInput" type="text" placeholder="Guest name or booking number..." style="flex:1;padding:10px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;outline:none" oninput="runSearch()">
+          <button onclick="runSearch()" style="background:#0C3C35;color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer">🔍</button>
+        </div>
+        <div id="searchResults"></div>
+      </div>
+    </div>
+
+    <!-- HOUSEKEEPING -->
+    <div class="sec" id="sec-housekeeping">
+      <div class="card">
+        <div class="ctitle" style="color:#085041">🧹 Weekly Cleaning Status — Flat Grid</div>
+        <div id="hkGrid"></div>
+      </div>
+      <div id="hkBreakdownCard" style="display:none">
+        <div class="card" style="border-left:4px solid #003580">
+          <div class="ctitle" style="color:#003580">📊 Admin — Weekly Breakdown by Cleaner</div>
+          <div id="hkBreakdown"></div>
+        </div>
+      </div>
+      <div class="card" style="border-left:4px solid #E07B20">
+        <div class="ctitle" style="color:#8B4000">🔴 Urgent — Clean &amp; Prepare Today</div>
+        <div id="hkUrgent"></div>
+      </div>
+      <div class="card" style="border-left:4px solid #C9921A">
+        <div class="ctitle" style="color:#633806">🟡 Upcoming — Prepare Room</div>
+        <div id="hkUpcoming"></div>
+      </div>
+    </div>
+
+    <!-- ENTRY (supervisor) / FORMS (admin) -->
+    <div class="sec" id="sec-entry">
+      <div id="entryContent"></div>
+    </div>
+
+    <!-- BOOKING.COM -->
+    <div class="sec" id="sec-bookingcom">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-size:10.5px;font-weight:700;color:#4A6160;text-transform:uppercase;letter-spacing:.5px">
+            🔵 Booking.com Reservations
+            <span id="bPendBadge" style="font-size:9px;background:#FFF8E7;color:#8B6310;padding:2px 7px;border-radius:7px;font-weight:700;display:none;margin-left:4px">⏳</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+          <button class="bfbtn active" id="bfAll" onclick="bFilter('all')">All</button>
+          <button class="bfbtn" id="bfPend" onclick="bFilter('pending')">⏳ Pending</button>
+          <button class="bfbtn" id="bfAppr" onclick="bFilter('approved')">✅ Approved</button>
+        </div>
+        <div id="bList"></div>
+      </div>
+    </div>
+
+    <!-- TASKS (admin + supervisor history) -->
+    <div class="sec" id="sec-tasks">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div class="ctitle" style="margin-bottom:0">📋 Staff Tasks</div>
+          <button onclick="openTaskModal()" style="background:#0C3C35;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer">+ Assign Task</button>
+        </div>
+        <div id="tasksList"></div>
+      </div>
+    </div>
+
+    <!-- USERS (admin) -->
+    <div class="sec" id="sec-users">
+      <div class="card">
+        <div class="ctitle">👥 User Access Management</div>
+        <div id="usersList"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FAB -->
+<button id="fab" onclick="openEntryChooser()" style="display:none;position:fixed;bottom:28px;right:20px;z-index:99;width:60px;height:60px;border-radius:50%;background:#1A7A6E;color:#fff;border:none;font-size:30px;box-shadow:0 4px 18px rgba(26,122,110,.55);cursor:pointer;align-items:center;justify-content:center">+</button>
+
+<!-- ENTRY CHOOSER MODAL -->
+<div class="modal-overlay" id="entryModal" onclick="if(event.target===this)closeEntryModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeEntryModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title">➕ New Guest Entry</div><div class="modal-sub">Select entry type</div></div>
+      <button class="modal-close" onclick="closeEntryModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <button class="entry-btn" onclick="openWalkin()">
+        <div class="entry-icon" style="background:#EAF8F3">🚶</div>
+        <div>
+          <div class="entry-title">Walk-in Guest</div>
+          <div class="entry-sub">Guest arriving now — fill details on form</div>
+        </div>
+      </button>
+      <button class="entry-btn" onclick="openBookingCom()">
+        <div class="entry-icon" style="background:#EEF3FB">🔵</div>
+        <div>
+          <div class="entry-title">Booking.com Reservation</div>
+          <div class="entry-sub">Enter Booking.com reservation details</div>
+        </div>
+      </button>
+      <div id="regularBookingBtn" style="display:none">
+        <button class="entry-btn" onclick="openRegularBooking()">
+          <div class="entry-icon" style="background:#FFF8E7">📋</div>
+          <div>
+            <div class="entry-title">Regular Booking</div>
+            <div class="entry-sub">Full booking form with VAT</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REJECT TASK MODAL -->
+<div class="modal-overlay" id="rejectTaskModal" onclick="if(event.target===this)closeRejectTaskModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeRejectTaskModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title" style="color:#C0392B">🚫 Reject Task</div><div class="modal-sub">Provide a reason for rejection</div></div>
+      <button class="modal-close" onclick="closeRejectTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="rejectTaskId">
+      <div class="mfg">
+        <label>Reason for rejection *</label>
+        <textarea id="rejectReason" style="width:100%;height:80px;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;resize:none" placeholder="e.g. Flat already clean, wrong flat assigned..."></textarea>
+      </div>
+      <button class="msavebtn" style="background:#C0392B" id="rejectSubmitBtn" onclick="submitRejectTask()">🚫 Confirm Reject</button>
+      <button onclick="closeRejectTaskModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Go Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT TASK MODAL -->
+<div class="modal-overlay" id="editTaskModal" onclick="if(event.target===this)closeEditTaskModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeEditTaskModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title">✏️ Edit Task</div><div class="modal-sub">Update task details</div></div>
+      <button class="modal-close" onclick="closeEditTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editTaskId">
+      <div class="mstatus" id="etSt"></div>
+      <div class="mfrow">
+        <div class="mfg"><label>Flat</label>
+          <select id="etFlat">
+            <option>Flat 1</option><option>Flat 2</option><option>Flat 3</option>
+            <option>Flat 4</option><option>Flat 5</option><option>Flat 6</option>
+            <option>Flat 7</option><option>Flat 8</option><option>Flat 9</option>
+            <option>Common Area</option><option>Salon</option><option>Kitchen</option>
+            <option>Garri</option><option>Others</option>
+          </select>
+        </div>
+        <div class="mfg"><label>Assign To</label>
+          <select id="etAssign">
+            <option>Olaide</option><option>Esther</option><option>Housekeeper</option>
+          </select>
+        </div>
+      </div>
+      <div class="mfg"><label>Task</label>
+        <select id="etTask">
+          <option>Clean Room</option><option>Prepare Room</option>
+          <option>Maintenance Check</option><option>Inspection</option>
+          <option>Restock Supplies</option><option>Laundry</option>
+          <option>Shopping / Errands</option><option>Guest Assistance</option>
+          <option>Others</option>
+        </select>
+      </div>
+      <div class="mfrow">
+        <div class="mfg"><label>Due Date</label><input type="date" id="etDate"></div>
+        <div class="mfg"><label>Due Time</label><input type="time" id="etTime"></div>
+      </div>
+      <div class="mfg"><label>Notes</label><textarea id="etNotes" style="width:100%;height:60px;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;resize:none"></textarea></div>
+      <button class="msavebtn" id="etSaveBtn" onclick="submitEditTask()">💾 Save Changes</button>
+      <button onclick="closeEditTaskModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- CANCEL TASK MODAL -->
+<div class="modal-overlay" id="cancelTaskModal" onclick="if(event.target===this)closeCancelTaskModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeCancelTaskModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title" style="color:#C0392B">❌ Cancel Task</div><div class="modal-sub">Provide a reason for cancellation</div></div>
+      <button class="modal-close" onclick="closeCancelTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="cancelTaskId">
+      <div class="mfg"><label>Reason for cancellation *</label>
+        <textarea id="cancelReason" style="width:100%;height:80px;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;resize:none" placeholder="e.g. Guest checked out early, task no longer needed..."></textarea>
+      </div>
+      <button class="msavebtn" style="background:#C0392B" id="cancelSubmitBtn" onclick="submitCancelTask()">❌ Confirm Cancel</button>
+      <button onclick="closeCancelTaskModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Go Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- TASK FEEDBACK MODAL -->
+<div class="modal-overlay" id="feedbackModal" onclick="if(event.target===this)closeFeedbackModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeFeedbackModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title">✅ Mark Task Done</div><div class="modal-sub">Add feedback before submitting</div></div>
+      <button class="modal-close" onclick="closeFeedbackModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mfg">
+        <label>Feedback / Comment (optional)</label>
+        <textarea id="feedbackText" style="width:100%;height:80px;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px;resize:none" placeholder="e.g. Room cleaned, AC filter replaced..."></textarea>
+      </div>
+      <button id="feedbackSubmitBtn" class="msavebtn" onclick="submitTaskDone()">✅ Mark as Done</button>
+      <button onclick="closeFeedbackModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TASK MODAL -->
+<div class="modal-overlay" id="taskModal" onclick="if(event.target===this)closeTaskModal()">
+  <div class="modal-box">
+    <div class="modal-handle" onclick="closeTaskModal()"><div class="modal-handle-bar"></div></div>
+    <div class="modal-hdr">
+      <div><div class="modal-title">📋 Assign Task</div><div class="modal-sub">Assign a task to staff</div></div>
+      <button class="modal-close" onclick="closeTaskModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mstatus" id="tSt"></div>
+      <div class="mfrow">
+        <div class="mfg"><label>Flat</label>
+          <select id="tFlat" multiple size="6" style="width:100%;padding:6px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:12px">
+            <option>Flat 1</option><option>Flat 2</option><option>Flat 3</option>
+            <option>Flat 4</option><option>Flat 5</option><option>Flat 6</option>
+            <option>Flat 7</option><option>Flat 8</option><option>Flat 9</option>
+            <option>Common Area</option><option>Salon</option><option>Kitchen</option>
+            <option>Garri</option><option>Others</option>
+          </select>
+          <div style="font-size:9px;color:#888;margin-top:3px">Hold Ctrl/Cmd to select multiple</div>
+        </div>
+        <div class="mfg"><label>Assign To</label>
+          <select id="tAssign">
+            <option value="">Select...</option>
+            <option>Olaide</option>
+            <option>Esther</option>
+            <option>Housekeeper</option>
+          </select>
+        </div>
+      </div>
+      <div class="mfg"><label>Task</label>
+        <select id="tTask">
+          <option value="">Select...</option>
+          <option>Clean Room</option>
+          <option>Prepare Room</option>
+          <option>Maintenance Check</option>
+          <option>Inspection</option>
+          <option>Restock Supplies</option>
+          <option>Laundry</option>
+          <option>Shopping / Errands</option>
+          <option>Guest Assistance</option>
+          <option>Others</option>
+        </select>
+      </div>
+      <div class="mfrow">
+        <div class="mfg"><label>Due Date</label><input type="date" id="tDate"></div>
+        <div class="mfg"><label>Due Time</label><input type="time" id="tTime" value="10:00"></div>
+      </div>
+      <div class="mfg"><label>Notes</label><textarea id="tNotes" style="height:60px;resize:none;width:100%;padding:9px;border:1.5px solid #E0E0E0;border-radius:8px;font-size:13px" placeholder="Additional instructions..."></textarea></div>
+      <button class="msavebtn" id="tSaveBtn" onclick="saveTask()">✅ Assign Task</button>
+      <button onclick="closeTaskModal()" style="width:100%;padding:11px;background:#f0f2f5;color:#666;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ─── CONFIG ──────────────────────────────────────────────────
+const API  = "https://script.google.com/macros/s/AKfycbznYlHuc-y9w7SrCddNUb0AgxzR7mlSQ7NMgciyKA6rrDQQ3o98zgi7sxQu1WTST0gCAA/exec";
+const BAPI = "https://script.google.com/macros/s/AKfycbyJHPd3lXSgxtnIsHr8iNBW3sk_csr6sww7vqG3jkqo8dPtCXNQEMJWc1_HiuosS9Q_Hw/exec";
+const WALKIN_FORM    = "https://form.jotform.com/261697021573056";
+const BOOKING_FORM   = "https://form.jotform.com/260517704181049";
+const HK_FORM        = "https://form.jotform.com/261707324246051";
+
+// Users: password → {name, role}
+const USERS = {
+  "ituomo": { name:"Imperial", role:"admin"       },
+  "agpl12": { name:"Olaide",   role:"supervisor"  },
+  "agpl15": { name:"Esther",   role:"supervisor"  },
+  "bula12": { name:"Housekeeper", role:"housekeeper" },
+};
+
+// Disabled users stored in sessionStorage (admin can toggle)
+let view = "admin", userName = "Imperial", cache = null;
+let mCh1 = null, mCh2 = null;
+let bAll = [], bFilterVal = "all";
+let disabledUsers = JSON.parse(localStorage.getItem("ih_disabled") || "[]");
+
+// ─── PASSWORD ────────────────────────────────────────────────
+function checkPw() {
+  var pw = document.getElementById("pinp").value.trim().toLowerCase();
+  var user = USERS[pw];
+  if (!user) {
+    document.getElementById("perr").textContent = "Incorrect password. Try again.";
+    document.getElementById("pinp").value = "";
+    return;
+  }
+  if (disabledUsers.includes(pw)) {
+    document.getElementById("perr").textContent = "Access suspended — contact admin.";
+    document.getElementById("pinp").value = "";
+    return;
+  }
+  view     = user.role;
+  userName = user.name;
+  sessionStorage.setItem("ihv", pw);
+  document.getElementById("pscr").style.display = "none";
+  document.getElementById("ldg").style.display  = "flex";
+  if (view === "housekeeper") {
+    showHousekeeperView();
+  } else {
+    loadData();
+  }
+}
+
+document.getElementById("pinp").addEventListener("keydown", function(e) { if (e.key === "Enter") checkPw(); });
+
+window.addEventListener("DOMContentLoaded", function() {
+  var sv = sessionStorage.getItem("ihv");
+  if (sv && USERS[sv] && !disabledUsers.includes(sv)) {
+    view     = USERS[sv].role;
+    userName = USERS[sv].name;
+    document.getElementById("pscr").style.display = "none";
+    document.getElementById("ldg").style.display  = "flex";
+    if (view === "housekeeper") { showHousekeeperView(); }
+    else { loadData(); }
+  }
+});
+
+function logout() {
+  sessionStorage.removeItem("ihv");
+  document.getElementById("app").style.display = "none";
+  document.getElementById("ldg").style.display = "none";
+  document.getElementById("pinp").value = "";
+  document.getElementById("perr").textContent = "";
+  document.getElementById("pscr").style.display = "flex";
+}
+
+// ─── HOUSEKEEPER VIEW ────────────────────────────────────────
+function showHousekeeperView() {
+  document.getElementById("ldg").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("brandSub").textContent = "Housekeeping";
+  document.getElementById("userBadge").textContent = userName;
+  // Build tabs — housekeeper only
+  buildTabs([{id:"housekeeping",label:"🧹 Housekeeping"}]);
+  switchTab("housekeeping");
+  // Hide FAB
+  document.getElementById("fab").style.display = "none";
+  // Show simple housekeeping page
+  document.getElementById("hkGrid").innerHTML = '<div style="text-align:center;padding:20px"><a href="' + HK_FORM + '" target="_blank" style="display:block;padding:16px;background:#1A7A6E;color:#fff;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none;margin-bottom:12px">🧹 Submit Housekeeping Report</a><div style="font-size:11px;color:#888">Tap the button to open the housekeeping form and submit your daily flat cleaning report.</div></div>';
+  document.getElementById("upd").textContent = "Housekeeper View — " + userName;
+}
+
+// ─── LOAD DATA ───────────────────────────────────────────────
+function loadData() {
+  var ico = document.getElementById("refIco");
+  ico.style.animation = "spin .8s linear infinite";
+  document.getElementById("upd").textContent = "Loading...";
+  fetch(API).then(function(r){ return r.text(); }).then(function(txt) {
+    var d = JSON.parse(txt);
+    if (d.error) throw new Error(d.error);
+    cache = d;
+    document.getElementById("ldg").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    document.getElementById("userBadge").textContent = userName;
+    applyView();
+    render(d);
+  }).catch(function(e) {
+    document.getElementById("ldg").innerHTML = '<div style="color:#FAECE7;padding:20px;font-size:13px">Error: ' + esc(e.message) + '</div>';
+  }).finally(function() {
+    ico.style.animation = "none";
+  });
+}
+
+// ─── BUILD TABS ──────────────────────────────────────────────
+function buildTabs(tabs) {
+  var bar = document.getElementById("tabBar");
+  bar.innerHTML = tabs.map(function(t) {
+    return '<button class="tab ' + (t.cls||"") + '" data-tab="' + t.id + '" onclick="switchTab(\'' + t.id + '\')">' + t.label + '</button>';
+  }).join("");
+}
+
+function applyView() {
+  var isSup  = view === "supervisor";
+  var isAdmin = view === "admin";
+  document.getElementById("supnote").style.display = isSup ? "block" : "none";
+  document.getElementById("brandSub").textContent  = isSup ? "Supervisor — " + userName : "Live Sales Dashboard";
+
+  var tabs = [{id:"today", label:"Today"}];
+  if (isAdmin) {
+    tabs.push({id:"week",   label:"Week",        cls:"fin-tab"});
+    tabs.push({id:"month",  label:"Month",       cls:"fin-tab"});
+    tabs.push({id:"quarter",label:"Quarter VAT", cls:"fin-tab"});
+  }
+  tabs.push({id:"tomorrow",     label:"🌅 Tomorrow"});
+  tabs.push({id:"ongoing",      label:"🏨 Ongoing"});
+  tabs.push({id:"upcoming",     label:"📅 Upcoming"});
+  tabs.push({id:"housekeeping", label:"🧹 Housekeeping", cls:"hk-tab"});
+  tabs.push({id:"search",       label:"🔍 Search"});
+  tabs.push({id:"entry",        label: isAdmin ? "📋 Forms" : "➕ Entry"});
+  if (isAdmin) {
+    tabs.push({id:"bookingcom", label:"🔵 Booking.com", cls:"bcom-tab"});
+    tabs.push({id:"tasks",      label:"📋 Tasks"});
+    tabs.push({id:"users",      label:"👥 Users"});
+  } else {
+    tabs.push({id:"bookingcom", label:"🔵 Booking.com", cls:"bcom-tab"});
+    tabs.push({id:"tasks",      label:"📋 My Tasks"});
+  }
+  buildTabs(tabs);
+
+  // FAB — show for admin and supervisor
+  var fab = document.getElementById("fab");
+  fab.style.display = "flex";
+
+  // Show regular booking button only for admin
+  var rbb = document.getElementById("regularBookingBtn");
+  if (rbb) rbb.style.display = isAdmin ? "block" : "none";
+
+  // My tasks — show for supervisor
+  document.getElementById("myTasksSection").style.display = isSup ? "block" : "none";
+
+  switchTab("today");
+}
+
+// ─── RENDER ──────────────────────────────────────────────────
+function render(d) {
+  document.getElementById("upd").textContent = "Updated " + d.generatedAt;
+  var isSup  = view === "supervisor";
+  var ci  = isSup ? d.today.checkInsSupervisor  : d.today.checkIns;
+  var co  = isSup ? d.today.checkOutsSupervisor : d.today.checkOuts;
+  var up  = isSup ? d.upcomingSupervisor         : d.upcoming;
+
+  set("kCI",  ci.length);
+  set("kCO",  co.length);
+  set("kRev", "$" + fmt(d.today.revenue));
+  document.getElementById("listCI").innerHTML = renderGuests(ci, "ci", isSup);
+  document.getElementById("listCO").innerHTML = renderGuests(co, "co", isSup);
+
+  // Ongoing
+  if (d.ongoing) renderOngoing(d.ongoing, isSup);
+
+  // Tomorrow
+  if (d.tomorrowCheckIns) renderTomorrow(d.tomorrowCheckIns, isSup);
+
+  var al = "";
+  if (!isSup && d.alerts && (d.alerts.refundedThisMonth > 0 || d.alerts.cancelledThisMonth > 0)) {
+    al = '<div class="alertbox">⚠️ ' + d.alerts.refundedThisMonth + ' refunded (FJD ' + fmtD(d.alerts.refundedAmount) + ') + ' + d.alerts.cancelledThisMonth + ' cancelled this month</div>';
+  }
+  document.getElementById("todayAlert").innerHTML = al;
+
+  // My tasks for supervisor
+  if (isSup && d.tasks) {
+    var myTasks = (d.tasks||[]).filter(function(t){ return t.assignedTo === userName && t.status === "Pending"; });
+    document.getElementById("myTasksList").innerHTML = myTasks.length ? myTasks.map(function(t) {
+      return '<div class="task-card">' +
+        '<div class="task-title">' + esc(t.flat) + " — " + esc(t.task) + '</div>' +
+        '<div class="task-meta">📅 ' + fmtTaskDate(t.dueDate) + ' ' + esc(t.dueTime) + (t.notes ? " | 📝 " + esc(t.notes) : "") + '</div>' +
+        '<div class="action-btns" style="margin-top:6px">' +
+        '<button class="task-done-btn" style="background:#C0392B" onclick="confirmRejectTask(\'' + esc(t.id) + '\')">🚫 Reject</button>' +
+        '<button class="task-done-btn" style="background:#1A7A6E;margin-left:4px" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>' +
+        '</div></div>';
+    }).join("") : '<div class="empty">✅ No pending tasks assigned to you</div>';
+  }
+
+  if (isSup) {
+    document.getElementById("listUp").innerHTML = renderUpcoming(up, true);
+    if (d.ongoing) renderOngoing(d.ongoing, true);
+    if (d.tomorrowCheckIns) renderTomorrow(d.tomorrowCheckIns, true);
+    if (d.housekeeping) renderHousekeeping(d.housekeeping);
+    renderEntrySection();
+    if (d.bookingCom) {
+      bAll = d.bookingCom.all || [];
+      renderBcom();
+    }
+    if (d.tasks) {
+      var supTasks = d.tasks.filter(function(t){ return t.assignedTo === userName; });
+      window.lastTasks = supTasks;
+      renderTasks(supTasks);
+    }
+    return;
+  }
+
+  set("wRev", "$" + fmt(d.week.revenue));
+  set("wLbl", d.week.label);
+  set("wBk",  d.week.bookings);
+  set("wNi",  d.week.nights + " nights");
+  set("wPd",  "$" + fmt(d.week.paid));
+  set("wOut", "$" + fmt(d.week.outstanding));
+
+  set("mRev", "$" + fmt(d.month.revenue));
+  set("mBk",  d.month.bookings);
+  set("mNi",  d.month.nights + " nights");
+  set("mVat", "$" + fmt(d.month.vat));
+  set("mOut", "$" + fmt(d.month.outstanding));
+  set("mYear", d.ytd.year);
+  if (d.month.momChange !== null) {
+    var up2 = d.month.momChange >= 0;
+    document.getElementById("mChg").innerHTML = '<span class="kchg ' + (up2?"up":"down") + '">' + (up2?"▲":"▼") + " " + Math.abs(d.month.momChange) + "% vs last month</span>";
+  }
+
+  set("qLbl",  d.quarter.label);
+  set("qRev",  "$" + fmt(d.quarter.revenue));
+  set("qVat",  "$" + fmt(d.quarter.vat));
+  set("qExc",  "$" + fmt(d.quarter.excVat));
+  set("qBk",   d.quarter.bookings);
+  set("qNi",   d.quarter.nights + " nights");
+  set("qYear", d.ytd.year);
+  set("ytdRev", "$" + fmt(d.ytd.revenue));
+  set("ytdVat", "$" + fmt(d.ytd.vat));
+  set("ytdBk",  d.ytd.bookings);
+
+  document.getElementById("listUp").innerHTML = renderUpcoming(up, false);
+  drawMonth(d.monthlyChart);
+  drawQuarter(d.quarterlyChart);
+
+  if (d.bookingCom) {
+    bAll = d.bookingCom.all || [];
+    renderBcom();
+    var pend = bAll.filter(function(b){ return b.approved !== "Yes"; }).length;
+    var pb = document.getElementById("bPendBadge");
+    if (pb) { pb.textContent = "⏳ " + pend; pb.style.display = pend > 0 ? "inline-block" : "none"; }
+    // Show all Booking.com bookings to everyone
+    var apCI = d.bookingCom.todayCheckIns || [];
+    var apCO = d.bookingCom.todayCheckOuts || [];
+    var apUp = d.bookingCom.upcoming || [];
+    if (apCI.length) { document.getElementById("listCI").insertAdjacentHTML("beforeend", apCI.map(bcomGuestCard).join("")); set("kCI", ci.length + apCI.length); }
+    if (apCO.length) { document.getElementById("listCO").insertAdjacentHTML("beforeend", apCO.map(bcomGuestCard).join("")); set("kCO", co.length + apCO.length); }
+    if (apUp.length) { document.getElementById("listUp").insertAdjacentHTML("beforeend", apUp.map(bcomUpCard).join("")); }
+  }
+
+  if (d.housekeeping) {
+    renderHousekeeping(d.housekeeping);
+    if (view === "admin" && d.housekeeping.weeklyGrid && d.housekeeping.weeklyGrid.length) {
+      renderHkBreakdown(d.housekeeping.weeklyGrid);
+      var bc = document.getElementById("hkBreakdownCard");
+      if (bc) bc.style.display = "block";
+    }
+  }
+
+  // Always render entry section and tasks for all roles
+  renderEntrySection();
+
+  if (d.tasks) {
+    var tasksToShow = view === "supervisor"
+      ? d.tasks.filter(function(t){ return t.assignedTo === userName; })
+      : d.tasks;
+    window.lastTasks = tasksToShow;
+    renderTasks(tasksToShow);
+  }
+
+  // Admin only
+  if (view === "admin") {
+    renderUsers();
+  }
+}
+
+// ─── ONGOING RENDER ──────────────────────────────────────────
+function renderOngoing(list, isSup) {
+  var el = document.getElementById("listOngoing");
+  if (!el) return;
+  if (!list || !list.length) {
+    el.innerHTML = '<div class="empty">🏨 No guests currently checked in</div>';
+    return;
+  }
+  el.innerHTML = list.map(function(g) {
+    var out  = g.outstanding > 0;
+    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var daysColor = daysLeft <= 1 ? "#C0392B" : daysLeft <= 2 ? "#C9921A" : "#1A7A6E";
+    var actionBtns = phone ? (
+      '<div class="action-btns">' +
+      (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+      '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+      '</div>'
+    ) : "";
+    return '<div class="gc">' +
+      '<div class="gc-top">' +
+        '<div><div class="gname">' + esc(g.guestName) + '</div>' +
+        '<div class="rbadge" style="background:#003580">Res: ' + esc(g.bookingId) + '</div></div>' +
+        '<div class="gright">' +
+          '<div style="font-size:11px;font-weight:800;color:' + daysColor + '">' + daysLeft + ' day' + (daysLeft!==1?'s':'') + ' left</div>' +
+          '<div class="outlbl">checkout ' + esc(g.checkOutDate) + '</div>' +
+          '<div class="out ' + (out?"d":"z") + '" style="margin-top:4px">$' + fmtD(g.outstanding) + '</div>' +
+          '<div class="outlbl">outstanding</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="dgrid">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Checked In</span><span class="dval">' + esc(g.checkInDate) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Checkout</span><span class="dval">' + esc(g.checkOutDate) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+        (g.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + 'K</span></div>' : "") +
+        (!isSup ? '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' : "") +
+        (!isSup ? '<div class="di"><span class="dlbl">Paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.totalPaid) + '</span></div>' : "") +
+        (!isSup && g.channel ? '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' : "") +
+      '</div>' +
+      actionBtns + cmtBlock(g) +
+    '</div>';
+  }).join("");
+}
+
+// ─── TOMORROW RENDER ─────────────────────────────────────────
+function renderTomorrow(list, isSup) {
+  var el = document.getElementById("listTomorrow");
+  if (!el) return;
+  if (!list || !list.length) {
+    el.innerHTML = '<div class="empty">🌅 No check-ins tomorrow</div>';
+    return;
+  }
+  el.innerHTML = list.map(function(g) {
+    var out  = g.outstanding > 0;
+    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var phone = g.phone || "";
+    var actionBtns = phone ? (
+      '<div class="action-btns">' +
+      (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+      '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+      '</div>'
+    ) : "";
+    return '<div class="gc">' +
+      '<div class="gc-top">' +
+        '<div><div class="gname">' + esc(g.guestName) + '</div>' +
+        '<div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+        '<div class="gright">' +
+          '<div class="badge gold">Tomorrow ' + esc(g.arrivalDate) + '</div>' +
+          '<div class="out ' + (out?"d":"z") + '" style="margin-top:4px">$' + fmtD(g.outstanding) + '</div>' +
+          '<div class="outlbl">outstanding</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="dgrid">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+        (g.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + 'K</span></div>' : "") +
+        '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+        (g.depositPaid ? '<div class="di"><span class="dlbl">Deposit</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.depositPaid) + '</span></div>' : "") +
+        (!isSup && g.channel ? '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' : "") +
+      '</div>' +
+      actionBtns + cmtBlock(g) +
+    '</div>';
+  }).join("");
+}
+
+// ─── GUEST CARDS ─────────────────────────────────────────────
+function renderGuests(list, type, isSup) {
+  if (!list || !list.length) return '<div class="empty">No ' + (type==="ci"?"check-ins":"checkouts") + " today</div>";
+  return list.map(function(g) {
+    var out  = g.outstanding > 0;
+    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var phone = g.phone || "";
+    var actionBtns = phone ? (
+      '<div class="action-btns">' +
+      (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+      '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+      '</div>'
+    ) : "";
+
+    if (isSup) {
+      return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+        '<div class="gright"><div class="out ' + (out?"d":"z") + '">$' + fmtD(g.outstanding) + '</div><div class="outlbl">balance due</div></div></div>' +
+        '<div class="dgrid">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+        (g.adults !== undefined ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + "K</span></div>" : "") +
+        '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+        (g.depositPaid !== undefined ? '<div class="di"><span class="dlbl">Deposit paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.depositPaid) + '</span></div>' : "") +
+        '</div>' + actionBtns + cmtBlock(g) + '</div>';
+    }
+    return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+      '<div class="gright"><div class="out ' + (out?"d":"z") + '">$' + fmtD(g.outstanding) + '</div><div class="outlbl">' + (out?"due":"paid") + '</div></div></div>' +
+      '<div class="dgrid">' +
+      '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+      '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + "K</span></div>" +
+      '<div class="di"><span class="dlbl">Status</span><span class="dval">' + esc(g.status) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Phone</span><span class="dval">' + esc(phone) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Total Charge</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Total Paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.totalPaid) + '</span></div>' +
+      '</div>' + actionBtns + cmtBlock(g) + '</div>';
+  }).join("");
+}
+
+function cmtBlock(g) {
+  var h = "";
+  if (g.comment || g.staffComment) {
+    h += '<div class="cbox"><div class="clbl">Guest comment</div>' + (g.comment ? '<div class="gcmt">' + esc(g.comment) + '</div>' : '<div class="cph">No comment</div>') + '</div>';
+    h += '<div class="cbox"><div class="clbl">Staff comment</div>' + (g.staffComment ? '<div class="scmt">' + esc(g.staffComment) + '</div>' : '<div class="cph">No staff comment</div>') + '</div>';
+  }
+  return h;
+}
+
+function renderUpcoming(list, isSup) {
+  if (!list || !list.length) return '<div class="empty">No check-ins in the next 7 days</div>';
+  return list.map(function(g) {
+    var out = g.outstanding > 0;
+    var dateLabel = (g.arrivalDay||"") + " " + g.arrivalDate;
+    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var phone = g.phone || "";
+    var actionBtns = phone ? (
+      '<div class="action-btns">' +
+      (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+      '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+      '</div>'
+    ) : "";
+    return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+      '<div class="gright"><div class="badge gold">' + dateLabel + '</div><div class="out ' + (out?"d":"z") + '" style="margin-top:4px">$' + fmtD(g.outstanding) + '</div><div class="outlbl">balance</div></div></div>' +
+      '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div><div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+      (g.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + g.adults + "A / " + g.kids + "K</span></div>" : "") +
+      '<div class="di"><span class="dlbl">Total</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+      (g.depositPaid ? '<div class="di"><span class="dlbl">Deposit</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.depositPaid) + '</span></div>' : "") +
+      (!isSup && g.channel ? '<div class="di"><span class="dlbl">Channel</span><span class="dval">' + esc(g.channel) + '</span></div>' : "") +
+      '</div>' + actionBtns + cmtBlock(g) + '</div>';
+  }).join("");
+}
+
+// ─── HOUSEKEEPING ────────────────────────────────────────────
+function renderHousekeeping(hk) {
+  // Weekly grid
+  var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var grid = '<div style="overflow-x:auto"><table class="hk-grid"><thead><tr><th>Flat</th>';
+  days.forEach(function(d){ grid += '<th>' + d + '</th>'; });
+  grid += '</tr></thead><tbody>';
+  for (var f = 1; f <= 9; f++) {
+    grid += '<tr><td>Flat ' + f + '</td>';
+    days.forEach(function(day) {
+      var entry = null;
+      if (hk.weeklyGrid) {
+        hk.weeklyGrid.forEach(function(r) {
+          if (r.flat === "Flat " + f && r.day === day) entry = r;
+        });
+      }
+      if (!entry) { grid += '<td class="hk-none">—</td>'; }
+      else if (entry.condition === "Damaged") { grid += '<td class="hk-dmg" title="' + esc(entry.comment||"") + '">❌</td>'; }
+      else if (entry.condition === "Needs Attention") { grid += '<td class="hk-attn" title="' + esc(entry.comment||"") + '">⚠️</td>'; }
+      else { grid += '<td class="hk-clean" title="' + esc(entry.comment||"") + '">✅</td>'; }
+    });
+    grid += '</tr>';
+  }
+  grid += '</tbody></table></div>';
+  document.getElementById("hkGrid").innerHTML = grid;
+
+  // Urgent
+  var urgent = (hk.toClean||[]).map(function(r){ return Object.assign({},r,{action:"🧹 Clean after checkout"}); })
+    .concat((hk.incoming||[]).map(function(r){ return Object.assign({},r,{action:"✅ Prepare for check-in 2PM"}); }));
+  document.getElementById("hkUrgent").innerHTML = urgent.length ? urgent.map(function(r) {
+    var room = r.roomNumber ? r.roomType + " · Rm " + r.roomNumber : r.roomType;
+    var isClean = r.action.indexOf("Clean") > -1;
+    var bg = isClean ? "#FFF3E8" : "#EAF8F3";
+    var bdr = isClean ? "#E07B20" : "#1A7A6E";
+    var checklist = isClean
+      ? "☐ Strip and change all bed linen<br>☐ Clean bathrooms<br>☐ Vacuum / mop all floors<br>☐ Wipe kitchen benches<br>☐ Empty all bins<br>☐ Check for damage<br>☐ Replenish toiletries and towels<br>☐ Report to admin when complete"
+      : "☐ Fresh linen on all beds<br>☐ Towels set out (" + (r.adults||"?") + "A / " + (r.kids||"0") + "K)<br>☐ Bathroom stocked with toiletries<br>☐ Kitchen clean and ready<br>☐ WiFi password card displayed<br>☐ AC / TV tested<br>☐ Welcome message sent<br>☐ Keys / access ready";
+    return '<div class="gc" style="background:' + bg + ';border-left:3px solid ' + bdr + ';border-radius:8px;padding:10px;margin-bottom:8px">' +
+      '<div style="font-size:13px;font-weight:700;color:#0C3C35">' + esc(r.guestName) + '</div>' +
+      '<div style="font-size:10px;color:#666;margin-top:2px">Res: ' + esc(r.bookingId) + '</div>' +
+      '<div style="font-size:11px;font-weight:700;color:#8B4000;margin-top:5px">' + r.action + '</div>' +
+      '<div class="dgrid" style="margin-top:6px">' +
+      '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + r.nights + '</span></div>' +
+      (r.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + r.adults + "A / " + r.kids + "K</span></div>" : "") +
+      '</div>' +
+      (r.staffComment ? '<div class="scmt" style="margin-top:6px">📋 ' + esc(r.staffComment) + '</div>' : "") +
+      (r.comment ? '<div class="gcmt" style="margin-top:4px">💬 ' + esc(r.comment) + '</div>' : "") +
+      '<div style="margin-top:8px"><div style="font-size:10px;font-weight:700;color:#555;margin-bottom:4px">CHECKLIST</div>' +
+      '<div style="font-size:11px;color:#444;line-height:1.8">' + checklist + '</div></div></div>';
+  }).join("") : '<div class="empty">✅ No urgent housekeeping tasks today</div>';
+
+  // Upcoming
+  document.getElementById("hkUpcoming").innerHTML = (hk.upcomingClean||[]).length ? (hk.upcomingClean||[]).map(function(r) {
+    var room = r.roomNumber ? r.roomType + " · Rm " + r.roomNumber : r.roomType;
+    return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(r.guestName) + '</div><div class="rbadge">Res: ' + esc(r.bookingId) + '</div></div>' +
+      '<div class="gright"><div class="badge gold">' + (r.arrivalDay||"") + " " + (r.arrivalDate||"") + '</div></div></div>' +
+      '<div class="dgrid" style="margin-top:6px">' +
+      '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(room) + '</span></div>' +
+      '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + r.nights + '</span></div>' +
+      (r.adults ? '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + r.adults + "A / " + r.kids + "K</span></div>" : "") +
+      '</div>' +
+      (r.staffComment ? '<div class="scmt" style="margin-top:6px">📋 ' + esc(r.staffComment) + '</div>' : "") +
+      '</div>';
+  }).join("") : '<div class="empty">📅 No upcoming rooms to prepare</div>';
+}
+
+// ─── ENTRY SECTION ───────────────────────────────────────────
+function renderEntrySection() {
+  var isAdmin = view === "admin";
+  var html = '<div style="margin-bottom:8px;font-size:11px;color:#888">Select entry type to open the form</div>';
+  html += '<button class="entry-btn" onclick="openWalkin()">' +
+    '<div class="entry-icon" style="background:#EAF8F3">🚶</div>' +
+    '<div><div class="entry-title">Walk-in Guest</div><div class="entry-sub">Guest arriving now — fill all details on form</div></div></button>';
+  html += '<button class="entry-btn" onclick="openBookingCom()">' +
+    '<div class="entry-icon" style="background:#EEF3FB">🔵</div>' +
+    '<div><div class="entry-title">Booking.com Reservation</div><div class="entry-sub">Enter Booking.com reservation details</div></div></button>';
+  html += '<button class="entry-btn" onclick="openHousekeepingForm()">' +
+    '<div class="entry-icon" style="background:#E1F5EE">🧹</div>' +
+    '<div><div class="entry-title">Housekeeping Report</div><div class="entry-sub">Submit daily flat cleaning status</div></div></button>';
+  if (isAdmin) {
+    html += '<button class="entry-btn" onclick="openRegularBooking()">' +
+      '<div class="entry-icon" style="background:#FFF8E7">📋</div>' +
+      '<div><div class="entry-title">Regular Booking</div><div class="entry-sub">Full booking form with VAT calculation</div></div></button>';
+  }
+  document.getElementById("entryContent").innerHTML = html;
+}
+
+function openHousekeepingForm() {
+  closeEntryModal();
+  window.open("https://form.jotform.com/261707324246051", "_blank");
+}
+
+function openWalkin() {
+  closeEntryModal();
+  window.open(WALKIN_FORM, "_blank");
+}
+
+function openBookingCom() {
+  closeEntryModal();
+  var url = WALKIN_FORM + "?q23_textbox21=Booking.com&q19_dropdown17=Confirmed";
+  window.open(url, "_blank");
+}
+
+function openRegularBooking() {
+  closeEntryModal();
+  window.open(BOOKING_FORM, "_blank");
+}
+
+// ─── ENTRY MODAL (FAB) ───────────────────────────────────────
+function openEntryChooser() {
+  document.getElementById("entryModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeEntryModal() {
+  document.getElementById("entryModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+// ─── BOOKING.COM ─────────────────────────────────────────────
+function bFilter(f) {
+  bFilterVal = f;
+  document.querySelectorAll(".bfbtn").forEach(function(b){ b.classList.remove("active"); });
+  document.getElementById("bf" + (f==="all"?"All":f==="pending"?"Pend":"Appr")).classList.add("active");
+  renderBcom();
+}
+
+function renderBcom() {
+  var el = document.getElementById("bList");
+  var filtered = bAll.filter(function(b) {
+    if (bFilterVal === "pending")  return b.approved !== "Yes";
+    if (bFilterVal === "approved") return b.approved === "Yes";
+    return true;
+  });
+  if (!filtered.length) {
+    el.innerHTML = '<div class="empty">No ' + (bFilterVal==="pending"?"pending":bFilterVal==="approved"?"approved":"") + ' Booking.com reservations</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(function(b) {
+    var appr = b.approved === "Yes";
+    return '<div class="bcard">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+        '<div><div style="font-size:13.5px;font-weight:700;color:#003580">' + esc(b.guestName) + '</div>' +
+        '<div style="font-size:9.5px;color:#888;margin-top:2px">BK: ' + esc(b.bookingNo) + '</div>' +
+        '<div style="margin-top:4px">' + (appr ? '<span class="bappr">✅ Approved</span>' : '<span class="bpend">⏳ Pending</span>') + '</div></div>' +
+        '<div style="text-align:right"><div style="font-size:14px;font-weight:800;color:#003580">FJD ' + esc(b.totalCost) + '</div>' +
+        '<div style="font-size:9px;color:#888">Net: FJD ' + esc(b.netAmount) + '</div>' +
+        '<div style="font-size:9px;color:#888">Comm: FJD ' + esc(b.commission) + '</div></div>' +
+      '</div>' +
+      '<div class="dgrid" style="margin-top:8px">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(b.roomType) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Check-In</span><span class="dval">' + esc(b.checkIn) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Check-Out</span><span class="dval">' + esc(b.checkOut) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Guests</span><span class="dval">' + esc(b.adults) + "A / " + esc(b.kids) + 'K</span></div>' +
+        '<div class="di"><span class="dlbl">Payment</span><span class="dval">' + esc(b.payMethod) + '</span></div>' +
+      '</div>' +
+      (b.notes ? '<div class="gcmt" style="margin-top:8px">💬 ' + esc(b.notes) + '</div>' : "") +
+      (b.screenshot ? '<div style="margin-top:7px"><a href="' + b.screenshot + '" target="_blank" style="font-size:10.5px;color:#003580;font-weight:700">📷 View Screenshot</a></div>' : "") +
+      '<div style="margin-top:7px">' +
+        (!appr ? '<button class="bapprbtn" onclick="bApprove(\'' + esc(b.bookingNo) + '\',true)">✅ Approve → Supervisor</button>' : "") +
+        (appr  ? '<button class="bunapprbtn" onclick="bApprove(\'' + esc(b.bookingNo) + '\',false)">↩ Unapprove</button>' : "") +
+      '</div></div>';
+  }).join("");
+}
+
+function bcomGuestCard(b) {
+  return '<div class="gc" style="border-top:2px solid #003580;margin-top:8px">' +
+    '<div class="gc-top"><div><div class="gname">' + esc(b.guestName) + '</div><div class="rbadge" style="background:#003580">BK.com: ' + esc(b.bookingNo) + '</div></div>' +
+    '<div class="gright"><div style="font-size:13px;font-weight:800;color:#003580">FJD ' + esc(b.totalCost) + '</div></div></div>' +
+    '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(b.roomType) + '</span></div>' +
+    '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div></div>' +
+    (b.notes ? '<div class="gcmt">💬 ' + esc(b.notes) + '</div>' : "") + '</div>';
+}
+
+function bcomUpCard(b) {
+  return '<div class="gc" style="border-top:2px solid #003580;margin-top:8px">' +
+    '<div class="gc-top"><div><div class="gname">' + esc(b.guestName) + '</div><div class="rbadge" style="background:#003580">BK.com: ' + esc(b.bookingNo) + '</div></div>' +
+    '<div class="gright"><div class="badge gold">' + esc(b.checkIn) + '</div></div></div>' +
+    '<div class="dgrid"><div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(b.roomType) + '</span></div>' +
+    '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + esc(b.nights) + '</span></div></div></div>';
+}
+
+async function bApprove(bookingNo, approve) {
+  try {
+    var action = approve ? "approve" : "unapprove";
+    var url = BAPI + "?action=" + action + "&bookingNo=" + encodeURIComponent(bookingNo);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) {
+      var entry = bAll.find(function(b){ return b.bookingNo === bookingNo; });
+      if (entry) entry.approved = approve ? "Yes" : "Pending";
+      renderBcom();
+      setTimeout(loadData, 1500);
+    } else {
+      alert("Error: " + (d.error || d.message || "Failed"));
+    }
+  } catch(e) {
+    alert("Network error: " + e.message);
+  }
+}
+
+// ─── REJECT TASK ─────────────────────────────────────────────
+function confirmRejectTask(taskId) {
+  document.getElementById("rejectTaskId").value = taskId;
+  document.getElementById("rejectReason").value = "";
+  document.getElementById("rejectTaskModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeRejectTaskModal() {
+  document.getElementById("rejectTaskModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+async function submitRejectTask() {
+  var taskId = document.getElementById("rejectTaskId").value;
+  var reason = document.getElementById("rejectReason").value.trim();
+  if (!reason) { alert("Please provide a reason for rejection."); return; }
+  var btn = document.getElementById("rejectSubmitBtn");
+  btn.disabled = true; btn.textContent = "⏳ Rejecting...";
+  try {
+    var url = API + "?action=rejectTask&taskId=" + encodeURIComponent(taskId) +
+      "&reason=" + encodeURIComponent(reason) +
+      "&rejectedBy=" + encodeURIComponent(userName);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeRejectTaskModal(); loadData(); }
+    else throw new Error(d.error||"Failed");
+  } catch(e) {
+    alert("Error: " + e.message);
+    btn.disabled = false; btn.textContent = "🚫 Confirm Reject";
+  }
+}
+
+// ─── ADMIN HOUSEKEEPING BREAKDOWN ────────────────────────────
+function renderHkBreakdown(hkData) {
+  var el = document.getElementById("hkBreakdown");
+  if (!el || !hkData || !hkData.length) {
+    if (el) el.innerHTML = '<div class="empty">No housekeeping data this week</div>';
+    return;
+  }
+  var days  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var people = {};
+  hkData.forEach(function(r) {
+    var name = r.staffName || r.submittedBy || "Unknown";
+    var day  = r.day ? r.day.substring(0,3) : "";
+    var flats = r.flat ? r.flat.split(",").map(function(f){ return f.trim(); }) : [];
+    if (!people[name]) people[name] = {};
+    if (!people[name][day]) people[name][day] = [];
+    flats.forEach(function(f) { if (f && !people[name][day].includes(f)) people[name][day].push(f); });
+  });
+
+  var names = Object.keys(people);
+  if (!names.length) { el.innerHTML = '<div class="empty">No housekeeping submissions this week</div>'; return; }
+
+  // Summary table
+  var html = '<div style="overflow-x:auto"><table class="hk-grid" style="font-size:10px">' +
+    '<thead><tr><th style="text-align:left;padding-left:6px">Cleaner</th>';
+  days.forEach(function(d){ html += '<th>' + d + '</th>'; });
+  html += '<th>Total</th></tr></thead><tbody>';
+
+  names.forEach(function(name) {
+    var total = 0;
+    html += '<tr><td style="font-weight:700;color:#0C3C35;text-align:left;padding-left:6px">' + esc(name) + '</td>';
+    days.forEach(function(day) {
+      var flats = people[name][day] || [];
+      total += flats.length;
+      html += '<td style="text-align:center">' +
+        (flats.length ? '<span style="color:#1A7A6E;font-weight:700" title="' + flats.join(", ") + '">' + flats.length + '</span>' : '<span style="color:#DDD">—</span>') +
+        '</td>';
+    });
+    html += '<td style="font-weight:800;color:#003580">' + total + '</td></tr>';
+  });
+  html += '</tbody></table></div>';
+
+  // Detail view per cleaner
+  html += '<div style="margin-top:16px">';
+  names.forEach(function(name) {
+    html += '<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:#0C3C35;margin-bottom:6px">👤 ' + esc(name) + '</div>';
+    days.forEach(function(day) {
+      var flats = people[name][day] || [];
+      if (flats.length) {
+        html += '<div style="font-size:10px;padding:4px 0;border-bottom:1px dashed #F0F0F0">' +
+          '<span style="color:#888;width:32px;display:inline-block">' + day + '</span>' +
+          '<span style="color:#1A7A6E;font-weight:600">' + flats.join(", ") + '</span></div>';
+      }
+    });
+    html += '</div>';
+  });
+  html += '</div>';
+
+  el.innerHTML = html;
+}
+
+// ─── EDIT TASK ───────────────────────────────────────────────
+function openEditTask(taskId) {
+  var task = (window.lastTasks||[]).find(function(t){ return t.id === taskId; });
+  if (!task) return;
+  document.getElementById("editTaskId").value  = taskId;
+  document.getElementById("etFlat").value      = task.flat;
+  document.getElementById("etAssign").value    = task.assignedTo;
+  document.getElementById("etTask").value      = task.task;
+  document.getElementById("etDate").value      = task.dueDate;
+  document.getElementById("etTime").value      = task.dueTime;
+  document.getElementById("etNotes").value     = task.notes;
+  document.getElementById("editTaskModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeEditTaskModal() {
+  document.getElementById("editTaskModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+async function submitEditTask() {
+  var taskId = document.getElementById("editTaskId").value;
+  var btn = document.getElementById("etSaveBtn");
+  btn.disabled = true; btn.textContent = "⏳ Saving...";
+  try {
+    var url = API + "?action=editTask&taskId=" + encodeURIComponent(taskId) +
+      "&flat=" + encodeURIComponent(document.getElementById("etFlat").value) +
+      "&task=" + encodeURIComponent(document.getElementById("etTask").value) +
+      "&assignedTo=" + encodeURIComponent(document.getElementById("etAssign").value) +
+      "&dueDate=" + encodeURIComponent(document.getElementById("etDate").value) +
+      "&dueTime=" + encodeURIComponent(document.getElementById("etTime").value) +
+      "&notes=" + encodeURIComponent(document.getElementById("etNotes").value);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeEditTaskModal(); loadData(); }
+    else throw new Error(d.error||"Failed");
+  } catch(e) {
+    var st = document.getElementById("etSt");
+    st.textContent = "❌ " + e.message; st.style.display="block"; st.className="mstatus err";
+    btn.disabled = false; btn.textContent = "💾 Save Changes";
+  }
+}
+
+// ─── CANCEL TASK ─────────────────────────────────────────────
+function confirmCancelTask(taskId) {
+  document.getElementById("cancelTaskId").value = taskId;
+  document.getElementById("cancelReason").value = "";
+  document.getElementById("cancelTaskModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeCancelTaskModal() {
+  document.getElementById("cancelTaskModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+async function submitCancelTask() {
+  var taskId = document.getElementById("cancelTaskId").value;
+  var reason = document.getElementById("cancelReason").value.trim();
+  if (!reason) { alert("Please provide a reason for cancellation."); return; }
+  var btn = document.getElementById("cancelSubmitBtn");
+  btn.disabled = true; btn.textContent = "⏳ Cancelling...";
+  try {
+    var url = API + "?action=cancelTask&taskId=" + encodeURIComponent(taskId) +
+      "&reason=" + encodeURIComponent(reason) +
+      "&cancelledBy=" + encodeURIComponent(userName);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeCancelTaskModal(); loadData(); }
+    else throw new Error(d.error||"Failed");
+  } catch(e) {
+    alert("Error: " + e.message);
+    btn.disabled = false; btn.textContent = "❌ Confirm Cancel";
+  }
+}
+
+// ─── SEARCH ──────────────────────────────────────────────────
+function runSearch() {
+  var q = document.getElementById("searchInput").value.trim().toLowerCase();
+  var el = document.getElementById("searchResults");
+  if (!q || !cache) { el.innerHTML = '<div class="empty">Type a guest name or booking number to search</div>'; return; }
+  var allBookings = [];
+  if (cache.today) {
+    allBookings = allBookings.concat(cache.today.checkIns||[]);
+    allBookings = allBookings.concat(cache.today.checkOuts||[]);
+  }
+  if (cache.upcoming) allBookings = allBookings.concat(cache.upcoming||[]);
+  // Also search Booking.com
+  if (cache.bookingCom && cache.bookingCom.all) {
+    cache.bookingCom.all.forEach(function(b) {
+      allBookings.push({
+        bookingId: b.bookingNo, guestName: b.guestName,
+        roomType: b.roomType, nights: b.nights,
+        adults: b.adults, kids: b.kids,
+        totalCost: parseFloat(b.totalCost)||0,
+        totalPaid: parseFloat(b.netAmount)||0,
+        outstanding: 0, phone: b.phone||"",
+        status: b.status, channel: "Booking.com",
+        comment: b.notes, staffComment: ""
+      });
+    });
+  }
+  // Deduplicate by bookingId
+  var seen = {};
+  var unique = allBookings.filter(function(b) {
+    if (seen[b.bookingId]) return false;
+    seen[b.bookingId] = true;
+    return true;
+  });
+  var results = unique.filter(function(b) {
+    return (b.guestName||"").toLowerCase().includes(q) ||
+           (b.bookingId||"").toLowerCase().includes(q);
+  });
+  if (!results.length) {
+    el.innerHTML = '<div class="empty">No results found for "' + esc(q) + '"</div>';
+    return;
+  }
+  el.innerHTML = '<div style="font-size:10px;color:#888;margin-bottom:8px">' + results.length + ' result(s) found</div>' +
+    results.map(function(g) {
+      var out = g.outstanding > 0;
+      var phone = g.phone || "";
+      var actionBtns = phone ? (
+        '<div class="action-btns">' +
+        (view === "admin" ? '<a class="btn-call" href="tel:' + phone + '">📞 Call</a>' : "") +
+        '<a class="btn-wa" href="https://wa.me/' + phone.replace(/[^0-9]/g,"") + '" target="_blank">💬 WhatsApp</a>' +
+        '</div>'
+      ) : "";
+      return '<div class="gc"><div class="gc-top"><div><div class="gname">' + esc(g.guestName) + '</div><div class="rbadge">Res: ' + esc(g.bookingId) + '</div></div>' +
+        '<div class="gright"><div class="out ' + (out?"d":"z") + '">$' + fmtD(g.outstanding) + '</div><div class="outlbl">outstanding</div></div></div>' +
+        '<div class="dgrid">' +
+        '<div class="di"><span class="dlbl">Room</span><span class="dval">' + esc(g.roomType) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Nights</span><span class="dval">' + g.nights + '</span></div>' +
+        '<div class="di"><span class="dlbl">Status</span><span class="dval">' + esc(g.status) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Total Charge</span><span class="dval">$' + fmtD(g.totalCost) + '</span></div>' +
+        '<div class="di"><span class="dlbl">Total Paid</span><span class="dval" style="color:#1A7A6E">$' + fmtD(g.totalPaid) + '</span></div>' +
+        '</div>' + actionBtns + '</div>';
+    }).join("");
+}
+
+// ─── TASK FEEDBACK ───────────────────────────────────────────
+var pendingTaskId = null;
+
+function markTaskDone(taskId) {
+  pendingTaskId = taskId;
+  document.getElementById("feedbackModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+
+function closeFeedbackModal() {
+  document.getElementById("feedbackModal").style.display = "none";
+  document.body.style.overflow = "";
+  document.getElementById("feedbackText").value = "";
+  pendingTaskId = null;
+}
+
+async function submitTaskDone() {
+  if (!pendingTaskId) return;
+  var feedback = document.getElementById("feedbackText").value.trim();
+  var btn = document.getElementById("feedbackSubmitBtn");
+  btn.disabled = true; btn.textContent = "⏳ Saving...";
+  try {
+    var url = API + "?action=markTaskDone&taskId=" + encodeURIComponent(pendingTaskId) +
+      "&doneBy=" + encodeURIComponent(userName) +
+      "&feedback=" + encodeURIComponent(feedback);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeFeedbackModal(); loadData(); }
+    else alert("Error: " + (d.error||"Failed"));
+  } catch(e) { alert("Error: " + e.message); }
+  btn.disabled = false; btn.textContent = "✅ Submit";
+}
+
+
+function getStatusColor(s) {
+  if (s==="Done")      return "#1A7A6E";
+  if (s==="Cancelled") return "#712B13";
+  if (s==="Rejected")  return "#C0392B";
+  return "#C9921A";
+}
+
+function fmtTaskDate(raw) {
+  if (!raw) return "";
+  // Handle JS Date string like "Sun Jun 21 2026 12:00:00 GMT+1200"
+  var d = new Date(raw);
+  if (!isNaN(d.getTime())) {
+    var dd = String(d.getDate()).padStart(2,"0");
+    var mm = String(d.getMonth()+1).padStart(2,"0");
+    var yyyy = d.getFullYear();
+    return dd + "-" + mm + "-" + yyyy;
+  }
+  return raw;
+}
+
+function renderTasks(tasks) {
+  var el = document.getElementById("tasksList");
+  if (!el) return;
+  var isAdmin = view === "admin";
+  if (!tasks || !tasks.length) {
+    el.innerHTML = '<div class="empty">No tasks ' + (isAdmin ? "assigned yet" : "assigned to you yet") + '</div>';
+    return;
+  }
+
+  var filter = window.taskFilter || "all";
+  var filtered = tasks.filter(function(t) {
+    if (filter === "pending")   return t.status === "Pending";
+    if (filter === "done")      return t.status === "Done";
+    if (filter === "cancelled") return t.status === "Cancelled";
+    if (filter === "rejected")  return t.status === "Rejected";
+    return true;
+  });
+
+  var filterTabs = [["all","All"],["pending","⏳ Pending"],["done","✅ Done"],["rejected","🚫 Rejected"],["cancelled","❌ Cancelled"]];
+  var tabHtml = '<div style="display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap">' +
+    filterTabs.map(function(tab) {
+      var active = filter === tab[0];
+      return '<button style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:9px;border:1.5px solid ' +
+        (active?"#0C3C35":"#DDD") + ';background:' + (active?"#0C3C35":"#fff") +
+        ';color:' + (active?"#fff":"#555") + ';cursor:pointer" onclick="window.taskFilter=\'' + tab[0] + '\';renderTasks(window.lastTasks)">' + tab[1] + '</button>';
+    }).join("") + '</div>';
+
+  el.innerHTML = tabHtml + (filtered.length ? filtered.map(function(t) {
+    var feedback = t.feedback || "";
+    var dueDate  = fmtTaskDate(t.dueDate);
+    var isPending = t.status === "Pending";
+    return '<div class="task-card" style="border-left-color:' + getStatusColor(t.status) + '">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+        '<div class="task-title">' + esc(t.flat) + " — " + esc(t.task) + '</div>' +
+        '<div style="font-size:9px;font-weight:700;color:' + getStatusColor(t.status) + '">' + esc(t.status) + '</div>' +
+      '</div>' +
+      '<div class="task-meta">👤 ' + esc(t.assignedTo) + ' | 📅 ' + esc(dueDate) + ' ' + esc(t.dueTime) + ' | By: ' + esc(t.assignedBy) + '</div>' +
+      (t.notes ? '<div class="task-meta" style="color:#333">📝 ' + esc(t.notes) + '</div>' : "") +
+      (feedback ? '<div class="scmt" style="margin-top:4px">💬 ' + esc(feedback) + '</div>' : "") +
+      (isPending ? (
+        '<div class="action-btns" style="margin-top:8px">' +
+        (isAdmin
+          ? '<button class="task-done-btn" style="background:#C9921A" onclick="openEditTask(\'' + esc(t.id) + '\')">✏️ Edit</button>' +
+            '<button class="task-done-btn" style="background:#712B13;margin-left:4px" onclick="confirmCancelTask(\'' + esc(t.id) + '\')">❌ Cancel</button>'
+          : '<button class="task-done-btn" style="background:#C0392B" onclick="confirmRejectTask(\'' + esc(t.id) + '\')">🚫 Reject</button>' +
+            '<button class="task-done-btn" style="background:#1A7A6E;margin-left:4px" onclick="markTaskDone(\'' + esc(t.id) + '\')">✅ Mark Done</button>'
+        ) +
+        '</div>'
+      ) : "") +
+      '</div>';
+  }).join("") : '<div class="empty">No ' + filter + ' tasks</div>');
+}
+
+function openTaskModal() {
+  document.getElementById("taskModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+  // Set default date to today
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2,"0");
+  var mm = String(today.getMonth()+1).padStart(2,"0");
+  var yyyy = today.getFullYear();
+  document.getElementById("tDate").value = yyyy + "-" + mm + "-" + dd;
+}
+
+function closeTaskModal() {
+  document.getElementById("taskModal").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+async function saveTask() {
+  var flatEl   = document.getElementById("tFlat");
+  var selected = Array.from(flatEl.selectedOptions).map(function(o){ return o.value; });
+  var flat     = selected.join(", ");
+  var assignTo = document.getElementById("tAssign").value;
+  var task     = document.getElementById("tTask").value;
+  var dueDate  = document.getElementById("tDate").value;
+  var dueTime  = document.getElementById("tTime").value;
+  var notes    = document.getElementById("tNotes").value;
+  if (!flat||!assignTo||!task||!dueDate) {
+    var st = document.getElementById("tSt");
+    st.textContent = "❌ Please select at least one flat, assign to, task and date";
+    st.style.display = "block"; st.className = "mstatus err";
+    return;
+  }
+  var btn = document.getElementById("tSaveBtn");
+  btn.disabled = true; btn.textContent = "⏳ Saving...";
+  try {
+    var url = API + "?action=saveTask&flat=" + encodeURIComponent(flat) +
+      "&assignedTo=" + encodeURIComponent(assignTo) +
+      "&task=" + encodeURIComponent(task) +
+      "&dueDate=" + encodeURIComponent(dueDate) +
+      "&dueTime=" + encodeURIComponent(dueTime) +
+      "&notes=" + encodeURIComponent(notes) +
+      "&assignedBy=" + encodeURIComponent(userName);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) { closeTaskModal(); loadData(); }
+    else throw new Error(d.error || "Save failed");
+  } catch(e) {
+    var st = document.getElementById("tSt");
+    st.textContent = "❌ " + e.message;
+    st.style.display = "block"; st.className = "mstatus err";
+    btn.disabled = false; btn.textContent = "✅ Assign Task";
+  }
+}
+
+async function markTaskDone(taskId) {
+  try {
+    var url = API + "?action=markTaskDone&taskId=" + encodeURIComponent(taskId) + "&doneBy=" + encodeURIComponent(userName);
+    var res = await fetch(url);
+    var d = await res.json();
+    if (d.success) loadData();
+    else alert("Error: " + (d.error||"Failed"));
+  } catch(e) { alert("Error: " + e.message); }
+}
+
+// ─── USER MANAGEMENT ─────────────────────────────────────────
+function renderUsers() {
+  var el = document.getElementById("usersList");
+  if (!el) return;
+  var users = [
+    {pw:"agpl12", name:"Olaide",      role:"Supervisor"},
+    {pw:"agpl15", name:"Esther",      role:"Supervisor"},
+    {pw:"bula12", name:"Anisi",       role:"Housekeeper"},
+  ];
+  el.innerHTML = users.map(function(u) {
+    var isDisabled = disabledUsers.includes(u.pw);
+    var statusColor = isDisabled ? "#C0392B" : "#1A7A6E";
+    var statusText  = isDisabled ? "Suspended" : "Active";
+    return '<div class="user-row">' +
+      '<div>' +
+        '<div class="user-name">' + u.name + '</div>' +
+        '<div class="user-role">' + u.role + ' · <span style="color:' + statusColor + ';font-weight:700">' + statusText + '</span></div>' +
+      '</div>' +
+      '<label class="toggle">' +
+        '<input type="checkbox" ' + (!isDisabled ? "checked" : "") + ' onchange="toggleUser(\'' + u.pw + '\',this.checked)">' +
+        '<span class="toggle-slider"></span>' +
+      '</label>' +
+    '</div>';
+  }).join("") +
+  '<div style="font-size:10px;color:#888;margin-top:12px;padding-top:10px;border-top:1px solid #F0F0F0">Toggle to enable or disable dashboard access. Changes take effect on next login.</div>';
+}
+
+function toggleUser(pw, enabled) {
+  if (enabled) {
+    disabledUsers = disabledUsers.filter(function(p){ return p !== pw; });
+  } else {
+    if (!disabledUsers.includes(pw)) disabledUsers.push(pw);
+  }
+  localStorage.setItem("ih_disabled", JSON.stringify(disabledUsers));
+}
+
+// ─── CHARTS ──────────────────────────────────────────────────
+function drawMonth(data) {
+  var ctx = document.getElementById("mChart");
+  if (mCh1) mCh1.destroy();
+  mCh1 = new Chart(ctx, { type:"bar", data:{ labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], datasets:[{ data:data.map(function(m){return m.revenue;}), backgroundColor:"#6A3FA0", borderRadius:4 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:9}},grid:{display:false}}, y:{ticks:{font:{size:9},callback:function(v){return "$"+v;}},grid:{color:"#f0f0f0"}} } } });
+}
+
+function drawQuarter(data) {
+  var ctx = document.getElementById("qChart");
+  if (mCh2) mCh2.destroy();
+  mCh2 = new Chart(ctx, { type:"bar", data:{ labels:data.map(function(q){return "Q"+q.quarter;}), datasets:[{label:"Revenue",data:data.map(function(q){return q.revenue;}),backgroundColor:"#1A7A6E",borderRadius:4},{label:"VAT",data:data.map(function(q){return q.vat;}),backgroundColor:"#C9921A",borderRadius:4}] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{font:{size:10}},grid:{display:false}}, y:{ticks:{font:{size:9},callback:function(v){return "$"+v;}},grid:{color:"#f0f0f0"}} } } });
+  document.getElementById("qLeg").innerHTML = '<span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#1A7A6E;display:inline-block"></span>Revenue</span><span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#C9921A;display:inline-block"></span>VAT</span>';
+}
+
+// ─── TABS ────────────────────────────────────────────────────
+function switchTab(tabId) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
+  document.querySelectorAll(".sec").forEach(function(s){ s.classList.remove("active"); });
+  var tb = document.querySelector('.tab[data-tab="' + tabId + '"]');
+  var sc = document.getElementById("sec-" + tabId);
+  if (tb) tb.classList.add("active");
+  if (sc) sc.classList.add("active");
+  // Load search hint when switching to search
+  if (tabId === "search") {
+    var el = document.getElementById("searchResults");
+    if (el && !el.innerHTML) el.innerHTML = '<div class="empty">Type a guest name or booking number above</div>';
+  }
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────
+function set(id, val) { var el = document.getElementById(id); if(el) el.textContent = val; }
+function v(id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; }
+function fmt(n) { return new Intl.NumberFormat("en-FJ",{maximumFractionDigits:0}).format(Math.round(n||0)); }
+function fmtD(n) { return (n||0).toFixed(2); }
+function esc(s) { var d = document.createElement("div"); d.textContent = s||""; return d.innerHTML; }
+
+setInterval(function(){ if (cache) loadData(); }, 5 * 60 * 1000);
+</script>
+
+<!-- FOOTER -->
+<div class="footer">
+  <img src="https://adesanmiglobal.com/wp-content/uploads/2025/08/Logo-Jpeg.jpg" alt="Adesanmi Global" onerror="this.style.display='none'">
+  <div class="footer-text">Powered by</div>
+  <a href="https://adesanmiglobal.com" target="_blank" class="footer-link">Adesanmi Global Pte Limited</a>
+  <div class="footer-text" style="margin-top:4px">© 2026 Ideal Homes Nadi — All rights reserved</div>
+</div>
+</body>
+</html>
