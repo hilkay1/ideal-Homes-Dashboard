@@ -880,8 +880,10 @@ function renderOngoing(list, isSup) {
     return;
   }
   el.innerHTML = list.map(function(g) {
-    var out  = g.outstanding > 0;
-    var room = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var out      = g.outstanding > 0;
+    var room     = g.roomNumber ? g.roomType + " · Rm " + g.roomNumber : g.roomType;
+    var phone    = g.phone || "";
+    var daysLeft = (g.daysLeft !== undefined && g.daysLeft !== null) ? g.daysLeft : 0;
     var daysColor = daysLeft <= 1 ? "#C0392B" : daysLeft <= 2 ? "#C9921A" : "#1A7A6E";
     var actionBtns = phone ? (
       '<div class="action-btns">' +
